@@ -116,7 +116,19 @@
             </p>
             <br>
 
-          <h4> Institutional Review Board (IRB) </h4>
+          <h4> Study Design and Power analysis </h4>
+            <p>
+              
+            </p>
+            <br>
+
+          <h4> Data analysis plan (to be made pre-data-collection) </h4>
+            <p>
+              
+            </p>
+            <br>
+
+          <h4> Ethics and the Institutional Review Board (IRB) </h4>
             <p>
               
             </p>
@@ -128,7 +140,7 @@
                 <li>
                   Once you collect the data, save the "raw" data somewhere safe, and then commit an anonymized version to version control (Git).
                   <br>
-                  Anonymizing means removing the workerids (or replacing them with numbers/letters) and other identifiable information (IP address, etc)
+                  Anonymizing means redacting the workerids (replacing them with numbers/letters) and other identifiable information (IP address, etc)
                   <br>
                   Do all analyses on the anonymized data.
                 </li>
@@ -158,18 +170,33 @@
 
           <h4> Making an external HIT: HTML/Javascript with mTurk </h4>
             <p>
-              
+              The <a href="http://cocolab.stanford.edu/mturk-tools.html">Computation and Cognition Lab wiki</a> has detailed instructions on how to run external HITs on mTurk. This involves a guide to downloading Amazon's Command Line Tools, writing an experiment, running your experiment, etc. That should be your first stop.
+
+              <ol>
+                <li>
+                  We have a class account for running participants on mTurk.Once you have Amazon's Command Line Tools installed (see Cocolab wiki link above), you will need to modify your mturk.properties file with the access key and password (get this from the TAs). <br><br>
+                  This is confidential information which <b>should NOT</b> be put on public version control (i.e. do NOT put your mturk.properties file in a public git repository.) If the credentials gets leaked (e.g. by being on a public repo), then we'll have to re-establish them, making life difficult for many people.
+                </li>
+                <br>
+                <li>
+                  Once you have CLT set up, start making your experiment (see the above wiki for a helpful link, or below for more resources on HTML/Javascript)
+                </li>
+                <br>
+                <li>
+                  Once you have your experiment coded, put it up on the Mechanical Turk Sandbox to test it out. The Sandbox has the same functionality as the "live" mTurk, just that you don't have to pay real money. Because there's no money, there are no "real" participants there, so you needn't worry about people taking your HIT on the Sandbox. The Sandbox is mainly for developers to troubleshoot their HITs.
+                </li>
+                <br>
+                <li>
+                  Get approval from the instructor regarding study design, ethics, power analysis, data analysis plan, etc.
+                </li>
+              </ol>
+
+
+
             </p>
             <br>
 
           <h5> HTML/Javascript </h5>
-            <p>
-            
-            </p>
-            <br>
-
-
-          <h5> Submiterator </h5>
             <p>
             
             </p>
