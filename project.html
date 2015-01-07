@@ -80,11 +80,19 @@
           
           <h2>General guidelines</h2>
           
-           <p>
+<!--            <p>
             (Under construction)
            </p>
-
+ -->
             <h4>Selecting a project</h4>
+
+            Here is a shortlist of potential replication project ideas: link.
+            <br>
+            <br>
+
+            We understand that students may prefer to replicate a paper in their own research area or related areas. If you would like to suggest another paper for replication, please carefully consider the feasibility of replicating the experiment online (e.g. a deliverable manipulation), then consult the teaching staff.
+
+
            <!--  <p>
               Students completing Psych 254 will:
               <ul>
@@ -106,7 +114,23 @@
 
           <h4> Mechanical Turk </h4>
             <p>
-              
+              In this class we will be running our replication projects on Amazon's Mechanical Turk (AMT/mTurk). mTurk is a platform on which <b>Workers</b> (or "Turkers") can complete Human Intelligence Tasks (<b>HITs</b>) for monetary compensation. HITs are put up by <b>Requesters</b>. mTurk originally was set up to do large-scale tasks that require human intelligence (e.g. labeling photos, finding telephone numbers, etc), but has recently been used by social scientists to conduct (large-scale) online experiments.
+              <br><br>
+              There are many issues to consider when running studies online. Here's just a very short list.
+              <ul>
+                <li>
+                  You will be reaching a different population (there have been several studies now on Turker demographics) that might be different from "typical" psychological studies (done with WEIRD participants -- white, educated, industrialized, rich and democratic -- see Henrich, Heine, and Norenzayan, 2010).
+                </li>
+                <li>
+                  There are constraints on what can or cannot be done -- some psychological manipulations are impossible over the web.
+                </li>
+                <li>
+                  Design considerations. Some Turkers multitask, and most of them do HITs for many hours a day, so appropriate designs would include attention checks, manipulation checks, etc.
+                </li>
+              </ul>
+
+              In this class, all replication projects will be launched using a common class account. This saves you the hassle of applying for a personal Requester account (which lately has become not-as-straightforward...), and also simplifies funding logistics. We will be giving more detailed instructions in class on how to access the class account and launch HITs etc.
+                   
             </p>
             <br>
 
@@ -130,7 +154,11 @@
 
           <h4> Ethics and the Institutional Review Board (IRB) </h4>
             <p>
-              
+              <ul>
+                <li>
+                  Note that Amazon workerIDs are actually tied to their (public) Amazon account, and thus constitute identifiable information. Thus, you should anonymize data by redacting workerIDs (and other identifiable information).
+                </li>
+              </ul>
             </p>
             <br>
 
@@ -138,13 +166,13 @@
             <p>
               <ul>
                 <li>
-                  Once you collect the data, save the "raw" data somewhere safe, and then commit an anonymized version to version control (Git).
-                  <br>
-                  Anonymizing means redacting the workerids (replacing them with numbers/letters) and other identifiable information (IP address, etc). A quick one liner is:
+                  Once you collect the data, save the "raw" data somewhere safe, and then commit an anonymized version to version control (Git). <br>
+                  Do all analyses on the anonymized data. (This is to prevent cases where others are unable to reproduce your analayses because it might rely somehow on identifiable information. If you start with anonymized data, your analyses would never use any of this information.)
+                  <br><br>
+                  Anonymizing means redacting the workerids (e.g. replacing them with numbers/letters) and other identifiable information (IP address, etc). A quick one liner (in R) is:
                   <br>
                         <code>d0$workerid <- match(d0$workerid, unique(sort(d0$workerid)))</code>
                   <br>
-                  Do all analyses on the anonymized data.
                 </li>
                 <br>
                 <li>
