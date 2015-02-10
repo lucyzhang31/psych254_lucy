@@ -21,7 +21,16 @@ First install and load the package.
 ```{r}
 install.packages("ggplot2")
 library(ggplot2)
+library(reshape2)
+library(bootstrap)
+library(lme4)
+library(stringr)
+library(lubridate)
+library(plyr) # first load plyr then dplyr from https://github.com/hadley/dplyr
+library(dplyr)
+library(tidyr)
 ```
+
 
 Now we're going to use qplot. qplot is the easy interface, meant to replace plot. You can give it simple `qplot(x,y)` examples, or slightly more complex examples like `qplot(x, y, col=grp, data=d)`. 
 
@@ -35,11 +44,18 @@ qplot(diamonds$carat, diamonds$price)
 Scatter plots are trivial, and easy to add features to. Modify this plot so that it uses the dataframe rather than working from variables in the general namespace (good to get away from retyping `diamonds$` every time you reference a variable). 
 
 ```{r}
+d<-diamonds
+as.numeric(d$carat)
+d %>%
+  qplot(carat, price)
 ```
 
 Try adding clarity and cut, using shape and color as your visual variables. 
 
 ```{r}
+qplot(diamonds$clarity, diamonds$price)
+qplot(diamonds$cut, diamonds$price)
+qplot(diamonds$color, diamonds$price)
 ```
 
 One of the primary benefits of `ggplot2` is the use of facets - also known as small multiples in the Tufte vocabulary. That last plot was probably hard to read. Facets could make it better. Try adding a `facets = x ~ y` argument. `x ~ y` means row facets are by x, column facets by y. 
