@@ -1,6 +1,6 @@
 ---
 title: 'Psych 254 W15 PS #2'
-author: "Mike Frank"
+author: "Mike Frank, Lucy completed"
 date: "February 4, 2015"
 output: html_document
 ---
@@ -19,7 +19,7 @@ I've adapted this for psych 254 purposes
 First install and load the package.
 
 ```{r}
-install.packages("ggplot2")
+#install.packages("ggplot2")
 library(ggplot2)
 library(reshape2)
 library(bootstrap)
@@ -45,22 +45,27 @@ Scatter plots are trivial, and easy to add features to. Modify this plot so that
 
 ```{r}
 d<-diamonds
-as.numeric(d$carat)
-d %>%
-  qplot(carat, price)
+qplot(carat, price, data = d)
 ```
 
 Try adding clarity and cut, using shape and color as your visual variables. 
 
 ```{r}
-qplot(diamonds$clarity, diamonds$price)
-qplot(diamonds$cut, diamonds$price)
-qplot(diamonds$color, diamonds$price)
+qplot(clarity, price, data=d)
+qplot(cut, price, data=d)
+#qplot(color, price)
+
+qplot(carat, price, shape = cut, color = clarity, data = d)
+qplot(carat, price, shape = clarity, color = cut, data = d)
 ```
 
 One of the primary benefits of `ggplot2` is the use of facets - also known as small multiples in the Tufte vocabulary. That last plot was probably hard to read. Facets could make it better. Try adding a `facets = x ~ y` argument. `x ~ y` means row facets are by x, column facets by y. 
 
+Can't get ggplot facet to work
 ```{r}
+qplot(carat, price, facets = cut ~ clarity, data = d)
+qplot(carat, price, facets = clarity ~ cut, data=d)
+
 ```
 
 But facets can also get overwhelming. Try to strike a good balance between color, shape, and faceting.
@@ -68,6 +73,18 @@ But facets can also get overwhelming. Try to strike a good balance between color
 HINT: `facets = . ~ x` puts x on the columns, but `facets = ~ x` (no dot) *wraps* the facets. These are underlying calls to different functions, `facet_wrap` (no dot) and `facet_grid` (two arguments). 
 
 ```{r}
+qplot(carat, price, color = clarity, facets = ~ cut, data = d)
+qplot(carat, price, color = cut, facets = ~ clarity, data = d)
+qplot(carat, price, color = cut, facets = . ~ clarity, data = d)
+qplot(carat, price, color = clarity, facets = . ~ cut, data = d)
+
+ggplot(diamonds, aes(x=carat, y=price)) + geom_point(data=d, shape=1) + facet_grid(~cut)
+ggplot(diamonds, aes(x=carat, y=price)) + geom_point(data=d, shape=1) + facet_grid(color~cut)
+ggplot(diamonds, aes(x=carat, y=price)) + geom_point(data=d, shape=1) + facet_grid(color~cut)
+ggplot(diamonds, aes(x=carat, y=price)) + geom_point(data=d, shape=1) + facet_wrap(~cut)
+ggplot(diamonds, aes(x=carat, y=price)) + geom_point(data=d, shape=1) + facet_wrap(color~cut)
+
+
 ```
 
 The basic unit of a ggplot plot is a "geom" - a mapping between data (via an "aesthetic") and a particular geometric configuration on coordinate axes. 
@@ -75,16 +92,34 @@ The basic unit of a ggplot plot is a "geom" - a mapping between data (via an "ae
 Let's try some other geoms and manipulate their parameters. First, try a histogram (`geom="hist"`). 
 
 ```{r}
+qplot(price, geom = 'histogram', data = d)
+qplot(carat, geom = 'histogram', data = d)
+qplot(cut, price, geom = 'boxplot', data = d)
+qplot(clarity, price, geom = 'boxplot', data = d)
+qplot(clarity, price, geom = 'boxplot', data = d)
+
+ggplot(diamonds, aes(x=carat)) + geom_histogram(data=d, binwidth=2,colour="white")
+ggplot(diamonds, aes(x=price)) + geom_histogram(data=d, binwidth=2,colour="white")
+ggplot(diamonds, aes(x=price)) + geom_histogram(data=d, binwidth=1000,colour="pink")
+
 ```
 
 Now facet your histogram by clarity and cut. 
 
 ```{r}
+ggplot(diamonds, aes(x=price)) + geom_histogram(data=d, binwidth=1000,colour="pink") + facet_wrap(~cut)
+ggplot(diamonds, aes(x=price)) + geom_histogram(data=d, binwidth=1000,colour="pink") + facet_wrap(~clarity)
+ggplot(diamonds, aes(x=price)) + geom_histogram(data=d, binwidth=1000,colour="pink") + facet_wrap(cut~clarity)
+
 ```
 
 I like a slightly cleaner look to my plots. Luckily, ggplot allows you to add "themes" to your plots. Try doing the same plot but adding `+ theme_bw()` or `+ theme_classic()`. Different themes work better for different applications, in my experience. 
 
 ```{r}
+ggplot(diamonds, aes(x=price)) + geom_histogram(data=d, binwidth=1000,colour="pink") + facet_wrap(~clarity)+theme_classic()
+ggplot(diamonds, aes(x=price)) + geom_histogram(data=d, binwidth=1000,colour="pink") + facet_wrap(~clarity)+theme_bw()
+
+
 ```
 
 Part 1B: Exploring ggplot2 using ggplot
@@ -105,12 +140,22 @@ Try writing this as a single set of additions (e.g. one line of R code, though y
 
 
 ```{r}
+d2<-(ggplot(diamonds, aes(x = carat, y = price, colour = carat))
+  + geom_point())
+d2
+
+(ggplot(diamonds, aes(x = carat, y = price, colour = clarity))
+  + geom_point())
 ```
 
 
 You can also set the aesthetic separately for each geom, and make some great plots this way. Though this can get complicated. Try using `ggplot` to build a histogram of prices. 
 
 ```{r}
+ggplot(diamonds, aes(x = price)) + geom_histogram()
+ggplot(diamonds, aes(x = price, colour=clarity)) + geom_histogram()
+
+
 ```
 
 Part 2: Diving into real data: Sklar et al. (2012)
@@ -142,16 +187,28 @@ d.b <- read.csv("../data/sklar_expt6b_corrected.csv")
 Gather these datasets into long form and get rid of the Xs in the headers.
 
 ```{r}
+d.a.long <- gather(d.a, subid, rt, X1:X21)
+d.a.long$subid <- sub('X', '', d.a.long$subid)
+d.a.long$cond <- 'A'
+
+d.b.long <- gather(d.b, subid, rt, X22:X42)
+d.b.long$subid <- sub('X', '', d.b.long$subid)
+d.b.long$cond <- 'B'
 ```
 
 Bind these together. Check out `bind_rows`.
 
 ```{r}
+d.all.long <- bind_rows(d.a.long, d.b.long)
+d.all.long$subid <- as.numeric(d.all.long$subid)
+d.all.long$cond <- as.factor(d.all.long$cond)
 ```
 
 Merge these with subject info. You will need to look into merge and its relatives, `left_join` and `right_join`. Call this dataframe `d`, by convention. 
 
 ```{r}
+d <- left_join(d.all.long, subinfo)
+stopifnot(nrow(d) == nrow(d.all.long))
 ```
 
 Clean up the factor structure.
@@ -167,21 +224,45 @@ Data Analysis Preliminaries
 Examine the basic properties of the dataset. First, take a histogram.
 
 ```{r}
+d$rt <- as.numeric(d$rt)
+hist(d$rt)
+qplot(rt, geom = 'histogram', data = d)
+qplot(objective.test, geom = 'histogram', data = d)
 ```
 
 Challenge question: what is the sample rate of the input device they are using to gather RTs?
 
 ```{r}
+sort(unique(d$target))
+sort(unique(d$prime.result))
 ```
 
 Sklar et al. did two manipulation checks. Subjective - asking participants whether they saw the primes - and objective - asking them to report the parity of the primes (even or odd) to find out if they could actually read the primes when they tried. Examine both the unconscious and conscious manipulation checks (this information is stored in subinfo). What do you see? Are they related to one another?
 
 ```{r} 
+hist(subinfo$objective.test)
+hist(subinfo$subjective.test)
+
+
+(ggplot(d, aes(x = subjective.test, y = objective.test))
+  + geom_point())
+
+(ggplot(d, aes(x = subjective.test, y = rt, colour = congruent))
+  + geom_point())
+
+(ggplot(d, aes(x = objective.test, y = rt, colour = congruent))
+  + geom_point())
+
+(ggplot(d, aes(x = objective.test, y = subjective.test))
+  + geom_point()) + stat_smooth(method="glm", family="binomial", se=F)
+
 ```
 
 OK, let's turn back to the measure and implement Sklar et al.'s exclusion criterion. You need to have said you couldn't see (subjective test) and also be not significantly above chance on the objective test (< .6 correct). Call your new data frame `ds`.
 
 ```{r}
+ds <- d[d$objective.test < .6 & d$subjective.test == 0, ]
+head(ds)
 ```
 
 Sklar et al.'s analysis
@@ -192,18 +273,40 @@ Sklar et al. show a plot of a "facilitation effect" - the time to respond to inc
 HINT: first take averages within subjects, then compute your error bars across participants, using the `sem` function (defined above). 
 
 ```{r}
+# subject data
+d.subj <- aggregate(rt ~ subid + operand + presentation.time + congruent, ds, FUN = 'mean')
+d.subj <- spread(d.subj, congruent, rt)
+d.subj <- mutate(d.subj, facilitation = no - yes)
+
+# get sem
+d.summary <- aggregate(facilitation ~ operand + presentation.time, d.subj, FUN = mean)
+names(d.summary)[3] <- 'mean_facilitation' 
+d.sem <- aggregate(facilitation ~ operand + presentation.time, d.subj, FUN = sem)
+d.summary$sem_facilitation = d.sem$facilitation
 ```
 
 Now plot this summary, giving more or less the bar plot that Sklar et al. gave (though I would keep operation as a variable here. Make sure you get some error bars on there (e.g. `geom_errorbar` or `geom_linerange`). 
 
 ```{r}
+ggplot(d.summary, aes(x = presentation.time, y = mean_facilitation)) + geom_bar(stat = 'summary', fun.y = 'mean') + facet_grid(.~operand) + geom_errorbar(aes(ymin = mean_facilitation - sem_facilitation, ymax = mean_facilitation + sem_facilitation), width = .5)
 ```
 
 What do you see here? How close is it to what Sklar et al. report? Do the error bars match? How do you interpret these data? 
+#Here we see that there is facilitation for subtraction but not for addition when presented with a prime for 1700 ms.  In other words, people are faster at saying a number when they are subconsciously primed with the same number (via subtraction problem) before the trial. However, they are slowed when this prime is an addtion problem. 
 
 Challenge problem: verify Sklar et al.'s claim about the relationship between RT and the objective manipulation check.
+#Here I ran the same analysis using the trials that objective teset results are greater than .6. The error bars are huge.  There might be a slight faciliation effect but no differences betwen subtraction and addition trials.
 
 ```{r}
+ds2 <- d[d$objective.test > .6 & d$subjective.test == 0, ]
+d.subj2 <- aggregate(rt ~ subid + operand + presentation.time + congruent, ds2, FUN = 'mean')
+d.subj2 <- spread(d.subj2, congruent, rt)
+d.subj2 <- mutate(d.subj2, facilitation = no - yes)
+d.summary2 <- aggregate(facilitation ~ operand + presentation.time, d.subj2, FUN = mean)
+names(d.summary2)[3] <- 'mean_facilitation' 
+d.sem2 <- aggregate(facilitation ~ operand + presentation.time, d.subj2, FUN = sem)
+d.summary2$sem_facilitation2 = d.sem2$facilitation
+ggplot(d.summary2, aes(x = presentation.time, y = mean_facilitation)) + geom_bar(stat = 'summary', fun.y = 'mean') + facet_grid(.~operand) + geom_errorbar(aes(ymin = mean_facilitation - sem_facilitation2, ymax = mean_facilitation + sem_facilitation2), width = .5)
 ```
 
 Your own analysis
@@ -212,6 +315,9 @@ Your own analysis
 Show us what you would do with these data, operating from first principles. What's the fairest plot showing a test of Sklar et al.'s original hypothesis that people can do arithmetic "non-consciously"?
 
 ```{r}
+(ggplot(d, aes(x = distance, y = rt, colour = congruent))
+  + geom_point())
+q
 ```
 
 Challenge problem: Do you find any statistical support for Sklar et al.'s findings?
