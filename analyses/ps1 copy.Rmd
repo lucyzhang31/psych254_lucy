@@ -1,0 +1,182 @@
+---
+title: "dplyr and tidyr ps1"
+author: "Lucy Zhang"
+date: "January 25, 2015"
+output: html_document
+---
+
+This is problem set #1, in which we hope you will practice the packages tidyr and dplyr. There are some great cheat sheets from [RStudio](http://www.rstudio.com/resources/cheatsheets/).
+
+The data set
+------------
+
+This data set comes from a replication of [Janiszewski and Uy (2008)](http://dx.doi.org/10.1111/j.1467-9280.2008.02057.x), who investigated whether the precision of the anchor for a price influences the amount of adjustment.
+
+In the data frame, the `Input.condition` variable represents the experimental condition (under the rounded anchor, the rounded anchor, over the rounded anchor). `Input.price1`, `Input.price2`, and `Input.price3` are the anchors for the `Answer.dog_cost`, `Answer.plasma_cost`, and `Answer.sushi_cost` items.
+
+Preliminaries
+-------------
+Done
+```{r}
+library(ggplot2)
+library(reshape2)
+library(bootstrap)
+library(lme4)
+library(stringr)
+library(lubridate)
+library(plyr) # first load plyr then dplyr from https://github.com/hadley/dplyr
+library(dplyr)
+library(tidyr)
+```
+
+Part 1: Data cleaning
+---------------------
+
+
+```{r data1}
+d <- read.csv("/Users/lucyzhang/psych254_lucy/data/janiszewski_rep_exercise.csv")
+```
+
+
+Part 2: Making these data tidy
+------------------------------
+
+Now let's start with the cleaned data, so that we are all beginning from the same place.
+
+```{r data2}
+
+
+d <- read.csv("/Users/lucyzhang/psych254_lucy/data/janiszewski_rep_cleaned.csv")
+
+
+d.tidy<-select(d, WorkerId, Input.price1, Input.price2, Input.price3, Input.condition, Answer.dog_cost, Answer.plasma_cost, Answer.sushi_cost)
+
+```
+
+Renaming variables
+
+```{r rename}
+d.tidy<-rename(d.tidy, sushi=Answer.sushi_cost)
+d.tidy<-rename(d.tidy, condition=Input.condition)
+d.tidy<-rename(d.tidy, price1=Input.price1); d.tidy<-rename(d.tidy, price2=Input.price2); d.tidy<-rename(d.tidy, price3=Input.price3)
+d.tidy<-rename(d.tidy, dog=Answer.dog_cost); d.tidy<-rename(d.tidy, plasma=Answer.plasma_cost)
+d.tidy2<-select(d.tidy, WorkerId, condition, dog, plasma, sushi)
+```
+
+Gather
+
+```{r gather}
+d.tidy3<-gather(d.tidy2, item, answerprice, -condition, -WorkerId)
+```
+
+Spread
+
+```{r spread}
+d.wide <- spread(d.tidy3, item, answerprice)
+```
+
+
+Part 3: Manipulating the data using dplyr
+-----------------------------------------
+
+```{r}
+d.raw <- read.csv("/Users/lucyzhang/psych254_lucy/data/janiszewski_rep_exercise.csv")
+d.unique.subs<-distinct(d.raw, WorkerId)
+```
+
+Graphs
+
+```{r}
+hist(d.tidy$dog)
+hist(d.tidy$sushi)
+hist(d.tidy$plasma)
+```
+
+Summarise
+```{r}
+summarise(d.tidy2, dog=sum(dog))
+summarise(d.tidy2, dog=mean(dog))
+summarise(d.tidy2, plasma=mean(plasma))
+summarise(d.tidy2, sushi=mean(sushi, na.rm=TRUE))
+```
+
+Group_by
+
+```{r}
+d.tidy3 %>% 
+  group_by(item, na.rm=TRUE) %>%
+  summarise(price=mean(answerprice, na.rm=TRUE))
+
+```
+The expression we were given 
+
+```{r}
+d.tidy <- d %>%
+  select(WorkerId, Input.condition, 
+         starts_with("Answer"), 
+         starts_with("Input")) %>%
+  rename(workerid = WorkerId,
+         condition = Input.condition,
+         plasma_anchor = Input.price1,
+         dog_anchor = Input.price2,
+         sushi_anchor = Input.price3,
+         dog_cost = Answer.dog_cost,
+         plasma_cost = Answer.plasma_cost, 
+         sushi_cost = Answer.sushi_cost) %>%
+  gather(name, cost, 
+         dog_anchor, plasma_anchor, sushi_anchor, 
+         dog_cost, plasma_cost, sushi_cost) %>%
+  separate(name, c("item", "type"), sep = "_") %>%
+  spread(type, cost)
+```
+
+
+* By computing absolute value of percentage change in price, and 
+
+```{r}
+pcts <- d.tidy %>%
+  mutate(pct_change = abs((anchor-cost)/anchor)) %>%
+  group_by(condition) %>%
+  group_by(item, add=TRUE) %>%
+  summarize(pct_change=mean(pct_change, na.rm=TRUE))
+
+chisq.test(pcts$pct_change)
+
+
+```
+
+Z-scores
+
+To do the second, you will need to `group` first by item, compute z-scores with respect to items, then further group by condition.
+
+HINT: `scale(x)` returns a complicated data structure that doesn't play nicely with dplyr. try `scale(x)[,1]` to get what you need.
+
+HINT: by default, `group_by` undoes any previous groupings. If you want to add new grouping variables *on top* of pre-existing ones, specify `add = TRUE`, e.g., `d %>% group_by(var1) %>% group_by(var2, add = TRUE)`.
+
+```{r}
+z.scores <- d.tidy %>%
+  group_by(item) %>%
+  mutate(z=scale(cost)[,1]) %>%
+  group_by(condition, add=TRUE) %>%
+  summarize(z=mean(z, na.rm=TRUE))
+```
+
+Graphing
+
+```{r}
+qplot(item, pct_change, fill=condition,
+      position="dodge",
+      stat="identity", geom="bar",
+      data=pcts)
+```
+
+and the z-scores:
+
+```{r}
+qplot(item, z, fill=condition,
+      position="dodge",
+      stat="identity", geom="bar",
+      data=z.scores)
+```
+
+Oh well. This replication didn't seem to work out straightforwardly.

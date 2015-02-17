@@ -1,0 +1,48 @@
+---
+title: "Sklar"
+author: "Lucy Zhang"
+date: "February 9, 2015"
+output: html_document
+---
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+library(ggplot2)
+library(reshape2)
+library(bootstrap)
+library(lme4)
+library(stringr)
+library(lubridate)
+library(plyr) # first load plyr then dplyr from https://github.com/hadley/dplyr
+library(dplyr)
+library(tidyr)
+```
+
+reading in the files:
+
+```{r}
+d<-read.csv("sklar_expt6_subinfo_corrected.csv")
+da<-read.csv("sklar_expt6a_corrected.csv")
+db<-read.csv("sklar_expt6b_corrected.csv")
+da.tidy<-da %>% gather(ID, RT, X1:X21)
+db.tidy<-db %>% gather(ID, RT, X22:X42)
+data<-rbind(db.tidy, da.tidy)
+
+```
+Some test plots
+```{r}
+p<- ggplot(data, aes(x=distance, y=RT)) 
+p + geom_point(aes(colour = congruent))
+
+plot(data$congruent,data$RT,xlab="Congruent Prime",ylab="Reaction time") # plot with Prime congruence on x-axis and RT (0 or 1) on y-axis
+g=glm(data$RT~data$congruent,family=binomial,dat) # run a logistic regression model (in this case, generalized linear model with logit link). see ?glm
+curve(predict(g,data.frame(data$congruent=x),type="resp"),add=TRUE) # draws a curve based on prediction from logistic regression model
+
+hist(data$RT)
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
