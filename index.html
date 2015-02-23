@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Psych 254</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- my modifications -->
+    <link href="mycss.css" rel="stylesheet">
+
+
+  </head>
+  <body>
+    
+      <!-- Part 1: Wrap all page content here -->
+    <div class="wrap">
+
+      <!-- Fixed navbar -->
+      <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+          <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="index.html">Psych 254</a>
+            <div class="nav-collapse collapse">
+              <ul class="nav">
+                <li class="divider-vertical"></li>
+                <li class="active"><a href="index.html">Home</a></li>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#schedule">Schedule</a></li>
+                <li><a href="project.html">Project</a></li>
+                
+                <!-- <li><a href="others.html">Others</a></li> -->
+                
+                <!--
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li class="nav-header">Nav header</li>
+                    <li><a href="#">Separated link</a></li>
+                    <li><a href="#">One more separated link</a></li>
+                  </ul>
+                </li>
+              -->
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Begin page content -->
+      <div class="container">
+
+        <!--
+        <div class="page-header">
+          <h1>Sticky footer with fixed navbar</h1>
+        </div>
+        <p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS. A fixed navbar has been added within <code>#wrap</code> with <code>padding-top: 60px;</code> on the <code>.container</code>.</p>
+        -->
+
+        <div class="row-fluid">
+          <div class="span12">
+            <center>
+              <h1>Psych 254: Lab in Experimental Methods</h1>
+              <h3>Winter 2015</h3>
+            </center>
+          </div>
+        </div>
+        <div class="row-fluid">
+        <div class="span4 offset1">  
+          <h3>Class Details</h3>
+            Meeting Days: Monday, Wednesday
+          <br>
+            Meeting Times: <strike>2:15PM - 4:05PM</strike> <br>
+            &nbsp;&nbsp;&nbsp;&nbsp; <b>1:30PM - 3:30PM</b>
+          <br>
+            Meeting Places:
+          <!-- <a href="http://campus-map.stanford.edu/?srch=Thornton110"> -->
+            <strike> Thornton Hall 110 </strike>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp; <b>Mon: 420-050 <br> 
+            &nbsp;&nbsp;&nbsp;&nbsp; Wed: 420-102</b>
+          <!-- </a> -->
+          <br><br>
+            Please send all correspondences to the teaching staff at psych254-win1415-staff (at) lists.stanford.edu
+
+        </div>
+        <div class="span3">  
+          <h3>
+            Instructor
+          </h3>
+          <h4>
+            Michael Frank
+          </h4>
+          mcfrank (at) stanford (dot) edu
+          <br> 
+            Room 278, Jordan Hall
+          <br> 
+            Office Hours: by appointment <a href="http://mcfrank.youcanbook.me">here</a><br>
+
+        </div>
+        <div class="span3">  
+          <h3> 
+            Teaching Assistants 
+          </h3>
+
+          <h4>
+            Desmond Ong
+          </h4>
+          desmond.ong (at) stanford (dot) edu
+          <br> 
+            Room 330, Jordan Hall
+          <br> 
+            Office Hours: by appointment <a href="https://dco.youcanbook.me/">here</a>.
+          
+          <br><br>
+
+          <h4> 
+            Long Ouyang 
+          </h4>
+            louyang (at) stanford.edu
+          <br> 
+            Room 330, Jordan Hall
+          <br> 
+            Office Hours: by appointment
+          
+          
+          </div>
+        </center>
+        </div>
+        <br>
+
+        <div class="row-fluid">
+          <div class="span12 offset1">
+          <h3>Announcements:</h3>
+            <p>
+                <ul>
+                  <li>21 Jan 2015: Problem Set 1 (dplyr/tidyr) due Sunday 25th Jan, 11:59pm
+                  </li>
+                  <li>14 Jan 2015: Relevant blogposts on various topics relating to reproducibility:
+                    <ul>
+                      <li><a href="http://datacolada.org/">Datacolada</a> (really, just read the whole thing!):
+                        <ul>
+                          <li><a href="http://datacolada.org/2014/05/01/20-we-cannot-afford-to-study-effect-size-in-the-lab/">We cannot afford to study effect size in the lab</a></li>
+                          <li><a href="http://datacolada.org/2014/04/04/18-mturk-vs-the-lab-either-way-we-need-big-samples/">MTurk vs. the lab: either way we need big samples</a></li>
+                        </ul>
+                      </li>
+                      <li><a href="babieslearninglanguage.blogspot.com">Mike's blog</a> (also contains irrelevant stuff about my daughter's language learning):
+                        <ul>
+    <li><a href="http://babieslearninglanguage.blogspot.com/2014/11/musings-on-file-drawer-effect.html">Musings on the file drawer effect</a></li>
+    <li><a href="http://babieslearninglanguage.blogspot.com/2014/09/sharing-research-using-rmarkdown.html">Sharing research using RMarkdown</a></li>
+    <li><a href="http://babieslearninglanguage.blogspot.com/2014/06/shifting-our-cultural-understanding-of.html">Shifting our cultural understanding of replication </a>(probably my favorite thing I've written on this topic)</li>
+    <li><a href="http://babieslearninglanguage.blogspot.com/2014/04/data-analysis-one-step-deeper.html">Data analysis: one step deeper</a></li>
+    <li><a href="http://babieslearninglanguage.blogspot.com/2013/07/thoughts-on-preregistration.html">Thoughts on preregistration</a></li>
+    </ul>
+                      </li>
+                      <li><a href="http://sometimesimwrong.typepad.com/">sometimesimwrong</a> (Simine Vaziri's blog):
+                        <ul>
+                          <li><a href="http://sometimesimwrong.typepad.com/wrong/2015/01/modus-tollens.html">modus tollens, bitches</a></li>
+                          <li><a href="http://sometimesimwrong.typepad.com/wrong/2014/07/the-simpleminded-and-the-muddleheaded.html">the simpleminded and the muddleheaded</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>6 Jan 2015: Note Time and Location change for class </li>
+                  <li>
+                    5 Jan 2015: Please take <a href="http://goo.gl/forms/SFB2aIVXZT">this survey</a> to determine course eligibility.
+                  </li>
+                  <li>
+                    17 Nov 2014: <a href="http://pigee.wordpress.com/minimal-and-incomplete-methodological-literacy-in-personality-psychology/">Here's</a> a great resource of readings regarding Questionable Research Practices (QRPs) in psychology and how to avoid them.
+                  </li>
+                  <li>
+                    26 Oct 2014: If you wish to sign up for Psych 254, please email the instructor. Priority will be given to psych graduate students.
+                  </li>
+                </ul>
+              </p>
+            </div>
+          </div>
+
+
+
+        <div class="row-fluid">
+        <div class="span10 offset1">
+
+          <a name="overview">
+          <h3>Course Overview</h3>
+          </a>
+           
+            <h4>Course Goals</h4>
+            <p>
+              Students completing Psych 254 will:
+              <ul>
+                <li>
+                  Be able to perform a psychology experiment on the web,
+                </li>
+                <li>
+                  Be able to analyze a study in terms of reliability (e.g. power, statistical choices), and validity (e.g. design, sampling),
+                </li>
+                <li>
+                  Master best practices for experimental data management, storage, and analysis, and
+                </li>
+                <li>
+                  Have a reproducible workflow for experimental data analysis and visualization, including comfort with a variety of R packages, including ggplot2, dplyr, tidyr, and lmer.
+                </li>
+              </ul>
+            </p>
+            <br>
+
+          <h4>Pre-requisites</h4>
+            <p>
+              This course is a requirement for graduate students in the Psychology department, and generally assumes the skills of an entering graduate student. In particular, students must have:
+              <ul>
+                <li> 
+                  Sufficient background in statistics, having <b>taken Psych 252 or equivalent</b>.
+                </li>
+                <li>
+                  Some basic programming experience in <b>R</b> is important as well.
+                </li>
+              </ul>
+              Without these prerequisites, keeping up with course content and assignments will be challenging. If you do not have them, please speak with someone from the course team.
+              <br>
+              <br>
+              In addition, we will be relying heavily on version control using git and github. Please take a moment to set up a git account at <a href="https://github.com/">https://github.com/</a>, and to get it working on your computer before class starts. You may also want to look into requesting an education account, at <a href="https://education.github.com/">https://education.github.com/ </a>
+            </p>
+            <br>
+
+            <h4>Readings</h4>
+            <p>
+            Readings are in <a href="https://drive.google.com/folderview?id=0B49TdRlL2Z3ERFdoS3lGeGpYNGM&usp=sharing">this folder</a>. We will be using scans from two books:
+            <ul>
+              <li>
+                Gelman, A. &amp; Hill, J. (2006). Data analysis using regression and multilevel/hierarchical models. Cambridge University Press.
+              </li>
+              <li>
+                Rosenthal, R., &amp; Rosnow, R. L. (2008). Essentials of behavioral research: Methods and data analysis (3rd ed.). McGraw-Hill.
+              </li>
+            </ul>
+            They are great books; I hope they will be useful references for students after the course is finished, so if you would like to try and buy either, go ahead.
+            </p>
+            <br>
+
+          <h4>Problem Sets</h4>
+            <p>
+              We will have a number of short problem sets that you begin in class and complete at home. Problem sets will be done using <a href="http://rmarkdown.rstudio.com/">R Markdown</a>. We recommend using R Markdown with RStudio.
+            </p>
+            <h4>Additional Resources</h4>
+            <p>
+            <ul>
+              <li>Lecture 2b: Sampling, Reliability, and Validity           </li>
+              <ul>
+                <li><a href="http://papers.ssrn.com/sol3/papers.cfm?abstract_id=2333729">Sequential analyses</a></li>
+                <li><a href="http://en.wikipedia.org/wiki/Flynn_effect">The Flynn Effect</a></li>
+                <li><a href="http://vserver1.cscs.lsa.umich.edu/~crshalizi/weblog/523.html">Thoughtful article on <em>g</em></a> (intelligence factor from factor analyis), by Cosima Shalizi<br>
+                  
+                </li>
+              </ul>
+            </ul>
+            </p>
+<h4>Grading</h4>
+            <ul>
+                <li> 
+                  30%: Problem Sets (4 problem sets)
+                </li>
+                <li>
+                  50%: Final project components, including presentations, data collection, analysis, and writeup
+                </li>
+                <li>
+                  10%: Attendance and participation
+                </li>
+              </ul>
+            <br>
+
+            <h4>Final Project</h4>
+            <p>
+              This course follows the model described in <a href="readings/Frank-Saxe-(2012)-TeachingReplication.pdf">Frank &amp; Saxe (2012)</a>: we will be doing replications of recent published papers of interest in order to provide independent, converging evidence for the reproducibility of the scientific literature. The hope is that student projects will lead to broadly-useful knowledge about the viability of published results in an online context. We will circulate a list of publications for possible replication during the first week of the course; students will also have the option of replicating a result related to their own research interests.
+              <br>
+              <br>
+              The final project for this course will be a high-quality, web-based replication of a single experiment from a published paper. Students will choose a paper, either from the provided list or, with instructor approval, another from the literature, and attempt a replication on the web. Your goal will be a replication report suitable for submission to the Open Science Collaboration or http://psychfiledrawer.org, using the Open Science Collaboration replication template for the final writeup (http://www.openscienceframework.org).
+            </p>
+
+
+            <br>
+            <h4>Other Policies</h4>
+            <ul>
+            <li>
+              <b>Class Practicum</b> 
+              <br>
+              Please bring your computer. You will not need to take notes (we will post all code and PowerPoint slides for each class), but we will be using R or some other piece of software during the second half of every class.
+            </li>
+            <br>
+            <li>
+              <b>Working in groups</b>
+              <br>
+              Work for the course will include both problem sets and a final project. For the problem sets, you are encouraged to work in groups. Your writeup must be your own, however. Please mark who you worked with on your writeup. For the final project, you must complete your own replication project, but you are encouraged to ask for help from your peers.
+            </li>
+            <br>
+            <li>
+              <b>Honor Code &amp; Late Policy.</b>
+              <br>
+              One-half grade will be subtracted from the assigned grade for each day any assignment is submitted late. Please familiarize yourself with Stanford's honor code, available on the judicial affairs <a href="http://studentaffairs.stanford.edu/communitystandards/policy/honor-code">website</a>. We will adhere to it and follow through on its penalty guidelines.
+            </li>
+            <br>
+            <li>
+              <b>Students with Documented Disabilities</b>
+              <br>
+              Students who may need an academic accommodation based on the impact of a disability must initiate the request with the Office of Accessible Education (OAE).
+              Professional staff will evaluate the request with required documentation, recommend reasonable accommodations, and prepare an Accommodation Letter for faculty dated in the current quarter in which the request is made. Students should contact the OAE as soon as possible since timely notice is needed to coordinate accommodations. The OAE is located at 563 Salvatierra Walk (phone: 723-1066, <a href="https://oae.stanford.edu/">OAE website</a>).
+            </li>
+            </ul>
+          </div>
+        </div>
+          
+        <div class="row-fluid">
+          <div class="offset1">
+            <a name="schedule">
+              <h3>Schedule:</h3>
+              </a>
+
+	             <iframe width="950px" height="550px" src="https://docs.google.com/spreadsheets/d/10npPK3MjQLOgR94ZTnjbZRcljYiGLPKO5TPaRqAmwM0/pubhtml?chrome=false" style="border: none"></iframe>
+          </div>
+        </div>
+
+            
+
+
+      </div> <!-- end page container -->
+
+      <div class="push"></div>
+    </div> <!-- end page wrap -->
+
+
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+    $(".nav li").click(function(x) {
+      $(".nav li").removeClass("active");
+      $(this).addClass("active");
+    })
+    </script>
+  </body>
+</html>
