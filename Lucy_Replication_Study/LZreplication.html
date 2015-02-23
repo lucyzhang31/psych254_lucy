@@ -22,7 +22,7 @@
   	<center>
 		<h2>Stanford Problem Solving Study</h2>
 	</center>
-	<p class="block-text">Thank you for your interest in the Stanford problem-solving study. This study examines how your social experiences influence problem-solving. First, you will answer several demographic questions to determine whether you are eligible to participate in the study. If you are eligible to participate in the study, you will automatically progress to the study. During the study, you will be asked to solve several word puzzles and to think about yourself and others who are close to you.  If you are not eligible to participate in the study, you will be exited from the study.
+	<p class="block-text">Thank you for your interest in the Stanford problem-solving study. This study examines how your academic and social experiences influence problem-solving. First, you will answer several demographic questions to determine whether you are eligible to participate in the study. If you are eligible to participate in the study, you will automatically progress to the study. During the study, you will be asked to solve several word puzzles and to think about yourself and others who are close to you.  If you are not eligible to participate in the study, you will be exited from the study.
 		</p>
 	<center>
 	<button type="button" onclick="this.blur(); experiment.instructions()">Start</button>
@@ -34,133 +34,177 @@
 <!-- The Demographics  slide. -->
 <center>
 <div class="slide" id="Demographics" style="width: 500px; margin: 0 auto; text-align: center; padding: 20px 15px 10px 10px">
-INSERT DEMOS HERE
+INSERT DEMOGRAPHICS QUESTIONS HERE
 
 <button type="button" onclick="experiment.next()">Continue</button>
-<center>
+</center>
 </div>
 
 <!-- The instructions  slide. -->
-<center>
-<div class="slide" id="instructions">
-	<b>You are eligible to participate in the study.</b>
-	<br>
-	<p>
-	On the next few pages are several anagram word puzzles. You have 5 minutes to complete as many puzzles as you can.  Please rearrange the letters in the word provided to create a new word.  You must use all the letters in the word provided to create the new word. You can insert or take out spaces to make your new word or phrase.  You will be provided an optional space to use while working on each problem. Please write your answer in the answer box. If you do not know the answer please write your best guess in the answer box. Once you click "Next" you will NOT be allowed to your answer.  Your answers will be evaluated at the end of the task.
-</p>
-<p> Examples: </p>
-<p> Any car -> Canary </p>
-<p> Silent -> Listen </p>
 
+<div class="slide" id="instructions">
+	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
+	<b>You are eligible to participate in the study.</b>
+<br> <br> <br> <br>
+	<p>
+		<h2> Part 1: Word Puzzle Task </h2>
+	<p> In this task, you will complete a series of word puzzles commonly referred to as "anagrams." An anagram is a word that is formed by rearranging ALL of the letters of another word. For this task, please complete as many anagrams as you can. You will have 5 minutes to do this task. After 5 minutes, the survey will move on.
+  <br>		
+<p> If you are not sure of the right answer, please make your best guess and to move on to the next question. </p>
+<p> Once you click "Next" to move to a new anagram, you will NOT be able to return to a previous page. </p>
+<p> <b> Sample Items: </b> </p>	
+<p> Example 1:     lasting         <br> Answer:           salting   </p>        		
+<p> Example 2:     swing           <br>     Answer:            wings    </p>       
+	
+</p>
 <button type="button" onclick="experiment.next(); experiment.startTimer();">Continue</button>
-<center>
-</div>
+
+</div> </div>
+
 
 
 <!-- The "stage" slide Part 1 will be displayed here -->
 <div class="slide" id="stage">
+	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
+
 	<center>
 	<br><br>
-	Instructions: You have 5 minutes to complete as many puzzles as you can.  Please rearrange the letters in the word provided to create a new word.  You must use all the letters in the word provided to create the new word. You can insert or take out spaces to make your new word or phrase.  You will be provided an optional space to use while working on each problem. Please write your answer in the answer box. If you do not know the answer please write your best guess in the answer box. Once you click "Next" you will NOT be allowed to your answer.  Your answers will be evaluated at the end of the task.
-    <br>
-	<h2 id="anagrams" size="20">{{}}</h2>
+	Instructions: You have 5 minutes to complete as many anagrams as you can.  Please rearrange the letters in the word provided to create a new word.  You must use ALL the letters in the word provided to create the new word. Please write your answer in the answer box. If you do not know the answer please write your best guess in the answer box. Once you click "Next" you will NOT be allowed to your answer.  Your answers will be evaluated at the end of the task.
+    <br>    <br>
+	Word: <h2 id="anagrams" size="20">{{}}</h2>
 	<br>
-	Use this space for your work: <br>
-	<textarea name="AnagramWork" cols=48 rows=6></textarea> </input>
-	<br> <br>
-	Write your answer here:<br>
+	Answer:<br>
 	<input type="text" id="anagramAnswer"> </input>
 	<br>
 	<br>
 	<button onclick="experiment.next()">Next</button>
-	</center>
+
 <br>
-You have <span id="logout-timer"></span> remaining to complete these word puzzles.
-</div>
+<br>
+You have <span id="logout-timer"></span> seconds remaining to complete these word puzzles.
+<br>
+You have <span id="count"></span> word puzzles remaining.
+
+	</center>
+
+</div>	</div>
 
 <!-- The pause before the feedback slide. -->
 <center>
 <div class="slide" id="pause">
-	Your responses are being scored.  This should take a few seconds... 
-</div>
+	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
+<br><br>
+	The computer will now calculate how well you have done and show you how well you did in relation to others who have done this task in the past.  Please wait while the computer calculates your score... 
+</div></div>
 
 <!-- The failure feedback slide. NEED TO ADD A DELAY AT THE BEGINNING-->
 <div class="slide" id="failurefeedback">
-	<!-- <div style="width: 500px; margin: 0 auto; text-align: center; padding: 20px 15px 10px 10px"> -->
+	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
 	<br><br>
 	<br><br>
-	Your answers have been scored.  You scored: 
+	Part 1: Word Puzzle Task Results 
+ 
+<p> Compared to others who have done this part of the Word Puzzle Task
+in the past, you have scored:</p>
 
-	<p> <font size="5" font color="red"> WELL BELOW AVERAGE </font></p>
+	<p> <font size="5" font color="red"> <u> WELL BELOW AVERAGE </u></font></p>
 <br><br>
 Please click continue to proceed to the next task.
 <br><br>
 	<button onclick="experiment.afterFeedback()">Continue</button>
-</div>
+</div></div>
 
 <!-- The manipulation check  slide. ADD RADIO BUTTONS -->
 
 <div class="slide" id="check">
+	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
 	Please rate your experience of the anagram word puzzle task.   
 	<br><br>
-	How do you feel about your performance on this anagram word puzzle task?
+1. Overall, how do you feel about how you did on the task? 
 	<br>
-	1 Extremely Pleased
-	2 Somewhat Pleased
-	3 A Little Pleased
-	4 Neither Pleased Nor Displeased
-	5 A Little Displeased 
-	6 Somewhat Displeased
-	7 Extremely Displeased
+	1 Extremely Displeased
+	2 Very Displeased
+	3 Somewhat Displeased
+	4 Neutral
+	5 Somewhat Pleased 
+	6 Very Pleased
+	7 Extremely Pleased
 	<br><br>
-	How well do you think you performed on this anagram word puzzle task?
+2. Overall, how well do you think you think you did on the task?
 	<br>
-	1 Extremely Well
-	2 Somewhat Well
-	3 A Little Well
-	4 Neither Well Nor Badly
-	5 A Little Badly 
-	6 Somewhat Badly
-	7 Extremely Badly
+	1 Extremely Badly
+	2 Very Badly 
+	3 Somewhat Badly
+	4 Neutral
+	5 Somewhat Well 
+	6 Very Well
+	7 Extremely Well
 	<br><br>
+3. How many anagrams do you think you solved out of 12?
+
 	<button onclick="experiment.condition()">Continue</button>
-</div>
+</div></div>
 
-<!-- The condition slide. NEED TO FIX THE RANDOM ASSIGNMENT OF CONDITION-->
+<!-- The mother condition slide.-->
 <center>
-<div class="slide" id="condition">
-	Now you will be asked about your personal experiences.  Please answer the following questions honestly. 
-	<br><br>
+<div class="slide" id="mother">
+	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
+In this task, you will answer some questions about your mother.	<br><br>
     <br><br>
-	In a few sentences please describe <h2 id="condition" size="20">{{}}</h2>.
-	<br> <br>
-	<textarea name="conditionresponse" cols=100 rows=15></textarea> </input>
+    Please type your mother's initials here: <textarea name="motherinitials" cols=10 rows=1></textarea> </input>
     <br><br>
+Describe your mother in a couple of sentences:	<br> <br>
+	<textarea name="conditionresponse" cols=80 rows=15></textarea> </input>
+    <br><br>
+    Please click "Continue" to move on to the next task.
+    <br>
 	<button onclick="experiment.instructions2()">Continue</button>
-</div>
+</div></div>
 
+<!-- The self condition slide.-->
+<center>
+<div class="slide" id="self">
+	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
+In this task, you will answer some questions about yourself.	<br><br>
+    <br><br>
+    Please type your initials here: <textarea name="selfintials" cols=10 rows=1></textarea> </input>
+    <br><br>
+Describe yourself in a couple of sentences:	<br> <br>
+	<textarea name="conditionresponse" cols=80 rows=15></textarea> </input>
+    <br><br>
+    Please click "Continue" to move on to the next task.
+    <br>
+	<button onclick="experiment.instructions2()">Continue</button>
+</div></div>
 
 
 <!-- The instructions2  slide. -->
 
 <div class="slide" id="instructions2">
-	Now you will complete more anagram word puzzles. You have as much time as you need. Please complete as many of the anagrams as you can. You may press QUIT at any time to end this portion of the study.  Below are instructions for completing the anagrams.
+	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
+				<h2> Part 2: Word Puzzle Task </h2>
 
-	<p> Please rearrange the letters in the word provided to create a new word.  You must use all the letters in the word provided to create the new word. You can insert or take out spaces to make your new word or phrase.  You will be provided an optional space to use while working on each problem. Please write your answer in the answer box. If you do not know the answer please write your best guess in the answer box. Once you click "Next" you will NOT be allowed to your answer.  Your answers will be evaluated at the end of the task. </p>
+	As in Word Puzzle Task Part 1, you will be presented with anagram word puzzles to solve. If you are not sure of the right answer, feel free to make your best guess and to move on to the next question.
+ 
+<br><p>Please note, once you continue on to a new anagram, you will NOT be able to return to a previous page.</p>
+ <p>You have a maximum of 5 minutes to do 12 anagrams. At the end of 5 minutes, the survey will continue on. Please use your time wisely. </p>
+ 
+	<p> <b> Sample Items: </b> </p>	
+<p> Example 1:     lasting         <br> Answer:           salting   </p>        		
+<p> Example 2:     swing           <br>     Answer:            wings    </p>     
 
-<p> Examples: </p>
-<p> Any car -> Canary </p>
-<p> Silent -> Listen </p>
+<br><p>Please click "Continue" to begin the next task.</p>
 
 <button type="button" onclick="experiment.next2()">Continue</button>
 
-</div>
+</div></div>
 
 <!-- The "stage2" slide part 2. -->
 <div class="slide" id="stage2">
 	<center>
 	<br><br>
-	Instructions: Please rearrange the letters in the word provided to create a new word.  You must use all the letters in the word provided to create the new word. You can insert or take out spaces to make your new word or phrase.  You will be provided an optional space to use while working on each problem. Please write your answer in the answer box. If you do not know the answer please write your best guess in the answer box. Once you click "Next" you will NOT be allowed to your answer.  Your answers will be evaluated at the end of the task.
+	<br><br>
+	Instructions: You have 5 minutes to complete as many anagrams as you can.  Please rearrange the letters in the word provided to create a new word.  You must use ALL the letters in the word provided to create the new word. Please write your answer in the answer box. If you do not know the answer please write your best guess in the answer box. Once you click "Next" you will NOT be allowed to your answer.  
 	<br><br>
     <br><br>
 	<h2 id="anagrams2" size="20">{{}}</h2>

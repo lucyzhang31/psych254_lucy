@@ -49,18 +49,16 @@ function shuffledArray(arrLength)
 
 //Creates the variable all anagram from which to draw anagrams
 var allAnagrams = [
-      {anagram: "praised"},
-      {anagram: "tacker"},
-      {anagram: "repartee"}, 
-      {anagram: "flirting"}, 
-      {anagram: "dispel"}, 
-      {anagram: "treason"}, 
-      {anagram: "imprints"}, 
-      {anagram: "relatives"},
-      {anagram: "present"}, 
-      {anagram: "hustling"}, 
-      {anagram: "articles"},
-      {anagram: "tablet"}  ],
+      {anagram: "Near Giant"},
+      {anagram: "Admirer"},
+      {anagram: "Dormitory"}, 
+      {anagram: "Strange Kiwi"}, 
+      {anagram: "Roam China"}, 
+      {anagram: "Sumo Iris"}, 
+      {anagram: "Cop Outs"}, 
+      {anagram: "One Tunic"},
+      {anagram: "Order Pig"}, 
+      {anagram: "Swear Oft"} ],
 
 myAnagramOrder = shuffledArray(allAnagrams.length);
 
@@ -69,19 +67,27 @@ totalTrialNumber = allAnagrams.length;
 
 //Creates the variable all anagram from which to draw anagrams
 var allAnagrams2 = [
-      {anagram: "trail"},
-      {anagram: "strain"},
-      {anagram: "verse"}, 
-      {anagram: "backward"}, 
-      {anagram: "refining"}, 
-      {anagram: "covert"}, 
-      {anagram: "silting"}, 
-      {anagram: "relay"}, 
-      {anagram: "wreathes"},
-      {anagram: "proteins"},
-      {anagram: "kitchen"},
-      {anagram: "vowels"}]
-      
+      {anagram: "Balk Tables"},
+      {anagram: "A Tropic"},
+      {anagram: "Venus Ire"}, 
+      {anagram: "Grab Wind Soon"}, 
+      {anagram: "Emanate"}, 
+      {anagram: "Radio Set"}, 
+      {anagram: "Remote"}, 
+      {anagram: "A Motto"}, 
+      {anagram: "Dictionary"},
+      {anagram: "Rich Eat OK"},
+      {anagram: "Is Alone"},
+      {anagram: "Latest Lie"},
+      {anagram: "Bagel Deal"},
+      {anagram: "War Pros"},
+      {anagram: "Paroled"}, 
+      {anagram: "In Nets"},
+      {anagram: "Roman Hat"},
+      {anagram: "Regal"},
+      {anagram: "Car Dust"},
+      {anagram: "Awful Recoil"},          
+      {anagram: "Ring Late"} ],
 
 myAnagramOrder2 = shuffledArray(allAnagrams2.length);
 
@@ -92,11 +98,9 @@ totalTrialNumber2 = allAnagrams2.length;
 showSlide("introduction");
 
 
-conditionSelf = Math.round(Math.random());
 
-var n;
+
 var timeLeft, myInterval;
-var startTime, endTime;
 
 // ## The main event
 // I implement the sequence as an object with properties and methods. The benefit of encapsulating everything in an object is that it's conceptually coherent (i.e. the <code>data</code> variable belongs to this particular sequence and not any other) and allows you to **compose** sequences to build more complicated experiments. For instance, if you wanted an experiment with, say, a survey, a reaction time test, and a memory test presented in a number of different orders, you could easily do so by creating three separate sequences and dynamically setting the <code>end()</code> function for each sequence so that it points to the next. **More practically, you should stick everything in an object and submit that whole object so that you don't lose data (e.g. randomization parameters, what condition the subject is in, etc). Don't worry about the fact that some of the object properties are functions -- mmturkey (the Turk submission library) will strip these out.**
@@ -118,64 +122,40 @@ var experiment = {
   },
 
   instructions: function() {
-    showSlide("instructions");   
-    experiment.data.push({"conditionSelf": conditionSelf}); 
+    showSlide("instructions");    
   },
 
-
-
-  callTimeout: function() {
-    experiment.data.push({"timeLeft": timeLeft})
-    showSlide("pause");
-    setTimeout(function(){showSlide("failurefeedback")}, 5000);
-    clearInterval(myInterval);
-  },
   startTimer: function() {
     timeLeft = 300
     myInterval = setInterval(function() {
       $('#logout-timer').html(timeLeft);
       timeLeft = timeLeft-1;
-      if(timeLeft<0) {
-        experiment.callTimeout();
-      }
     }, 1000);
 
-    // setTimeout(function(){
-    //   if(timeLeft<0) {
-    //     showSlide("pause");
-    //     setTimeout(function(){showSlide("failurefeedback")}, 5000);
-    //   }
-    //   clearInterval(myInterval);
-    // }, 300000);
+    
+    setTimeout(function(){
+      if(timeLeft<0) {
+        showSlide("pause");
+        setTimeout(function(){showSlide("failurefeedback")}, 5000);
+      }
+      clearInterval(myInterval);
+    }, 300000);
     //setTimeout(function(){showSlide("failurefeedback")}, X+5000);
   },
   
   // The work horse of the sequence - what to do on every trial.
   next: function() {
-
-    if(trialNumber>0) {
-        endTime = (new Date()).getTime();
-        experiment.data.push({
-          "trialNumber": trialNumber,
-          "anagramText": n.anagram,
-          "answer": $('#anagramAnswer').val(),
-          "reactionTime": endTime - startTime
-        });
-        $('#anagramAnswer').val('');
-    }
-
     // If the number of remaining trials is 0, we're done, so call the end function.
     //if (experiment.trials.length == 0) {
     if(trialNumber == totalTrialNumber ) {
-      experiment.callTimeout();
-      // clearInterval(myInterval);
-      // showSlide("pause")
-      // setTimeout(function(){showSlide("failurefeedback")}, 5000);
+      clearInterval(myInterval);
+      showSlide("pause")
+      setTimeout(function(){showSlide("failurefeedback")}, 5000);
     } else {
     
     // Get the current trial - <code>shift()</code> removes the first element of the array and returns it.
     //var n = myAnagramOrder.shift();
-    n = allAnagrams[myAnagramOrder[trialNumber]];
+    var n = allAnagrams[myAnagramOrder[trialNumber]];
     
     showSlide("stage");
     // Display the number stimulus.
@@ -183,7 +163,7 @@ var experiment = {
 
     
     // Get the current time so we can compute reaction time later.
-    startTime = (new Date()).getTime();
+    var startTime = (new Date()).getTime();
     
     trialNumber = trialNumber+1;
     } 
@@ -198,13 +178,8 @@ var experiment = {
     showSlide("check");    
   },
 
-  condition: function() {
-    if(conditionSelf==1) {
-      showSlide("self");      
-    } else {
-      showSlide("mother");      
-    }
-
+    condition: function() {
+    showSlide("condition");    
   },
 
    demographics: function() {
@@ -216,7 +191,7 @@ instructions2: function() {
   },  
 
 finished: function() {
-    experiment.end();
+    showSlide("finished");    
   },  
 
 // //Timer--NEED HELP MAKING THIS TIMER WORK
@@ -232,33 +207,20 @@ finished: function() {
   next2: function() {
     // If the number of remaining trials is 0, we're done, so call the end function.
     //if (experiment.trials.length == 0) {
-    if(trialNumber2>0) {
-        endTime = (new Date()).getTime();
-        experiment.data.push({
-          "trialNumber2": trialNumber2,
-          "anagramText": n.anagram,
-          "answer": $('#anagramAnswer2').val(),
-          "reactionTime": endTime - startTime
-        });
-        $('#anagramAnswer2').val('');
-    }
-
-
-
     if(trialNumber2 == totalTrialNumber2 ) {
       experiment.end();
     } else {
     
     // Get the current trial - <code>shift()</code> removes the first element of the array and returns it.
     //var n = myAnagramOrder.shift();
-    n = allAnagrams2[myAnagramOrder2[trialNumber2]];
+    var n = allAnagrams2[myAnagramOrder2[trialNumber2]];
     
     showSlide("stage2");
     // Display the number stimulus.
     $("#anagrams2").text(n.anagram);
     
     // Get the current time so we can compute reaction time later.
-    startTime = (new Date()).getTime();
+    var startTime2 = (new Date()).getTime();
     
     trialNumber2 = trialNumber2+1;
     }
