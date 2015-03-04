@@ -1,6 +1,6 @@
 ---
 title: 'Psych 254 W15 PS #3'
-author: "Mike Frank"
+author: "Mike Frank, Lucy Completed"
 date: "February 22, 2015"
 output: html_document
 ---
@@ -20,6 +20,9 @@ Let's start by convincing ourselves that t-tests have the appropriate false posi
 First do this using a `for` loop.
 
 ```{r}
+d <- 30
+for (i in 1:30) {print(i)}
+
 ```
 
 Next, do this using the `replicate` function:

@@ -1,9 +1,9 @@
+// Show the introduction slide -- this is what we want subjects to see first.
+showSlide("introduction");
 
-// Shows slides. We're using jQuery here - the **$** is the jQuery selector function, which takes as input either a DOM element or a CSS selector string.
+//Slide show to hide all slides and show the ones we want
 function showSlide(id) {
-  // Hide all slides
 	$(".slide").hide();
-	// Show just the slide we want to show
 	$("#"+id).show();
 }
 
@@ -26,28 +26,7 @@ function shuffledArray(arrLength)
  return arr;
 }
 
-// Get a random integer less than n.
-// function randomInteger(n) {
-//   return Math.floor(Math.random()*n);
-// }
-
-// // Get a random element from an array (e.g., <code>random_element([4,8,7])</code> could return 4, 8, or 7). This is useful for condition randomization.
-// function random_anagram(array) {
-//   return array[randomInteger(array.length)];
-// }
-
-// ## Configuration settings
-// var allKeyBindings = [
-//       {"p": "odd", "q": "even"},
-//       {"p": "even", "q": "odd"} ],
-//     allTrialOrders = [
-//       [1,3,2,5,4,9,8,7,6],
-//       [8,4,3,7,5,6,2,1,9] ],
-//     myKeyBindings = randomElement(allKeyBindings),
-//     myTrialOrder = randomElement(allTrialOrders),
-//     pOdd = (myKeyBindings["p"] == "odd");
-
-//Creates the variable all anagram from which to draw anagrams
+//Creates the variable all anagram from which to draw anagrams for the first set
 var allAnagrams = [
       {anagram: "praised"},
       {anagram: "tacker"},
@@ -67,7 +46,7 @@ myAnagramOrder = shuffledArray(allAnagrams.length);
 trialNumber = 0;
 totalTrialNumber = allAnagrams.length;
 
-//Creates the variable all anagram from which to draw anagrams
+//Creates the variable all anagram from which to draw anagrams for the second set
 var allAnagrams2 = [
       {anagram: "trail"},
       {anagram: "strain"},
@@ -82,54 +61,71 @@ var allAnagrams2 = [
       {anagram: "kitchen"},
       {anagram: "vowels"}]
       
-
 myAnagramOrder2 = shuffledArray(allAnagrams2.length);
 
 trialNumber2 = 0;
 totalTrialNumber2 = allAnagrams2.length;
 
-// Show the introduction slide -- this is what we want subjects to see first.
-showSlide("introduction");
-
-
+//Select a random number between 0 and 1 (1=self, 0=mother)
 conditionSelf = Math.round(Math.random());
 
 var n;
 var timeLeft, myInterval;
+var timeLeft2, myInterval2;
 var startTime, endTime;
+var startTime2, endTime2;
 
-// ## The main event
-// I implement the sequence as an object with properties and methods. The benefit of encapsulating everything in an object is that it's conceptually coherent (i.e. the <code>data</code> variable belongs to this particular sequence and not any other) and allows you to **compose** sequences to build more complicated experiments. For instance, if you wanted an experiment with, say, a survey, a reaction time test, and a memory test presented in a number of different orders, you could easily do so by creating three separate sequences and dynamically setting the <code>end()</code> function for each sequence so that it points to the next. **More practically, you should stick everything in an object and submit that whole object so that you don't lose data (e.g. randomization parameters, what condition the subject is in, etc). Don't worry about the fact that some of the object properties are functions -- mmturkey (the Turk submission library) will strip these out.**
-
+// ## The main event to collect data then submit it to Mturk after pause
 var experiment = {
-  // Parameters for this sequence.
-  //trials: myTrialOrder,
-  // fix this
-  // Experiment-specific parameters - which keys map to odd/even
-  //keyBindings: myKeyBindings,
-  // An array to store the data that we're collecting.
   data: [],
-  // The function that gets called when the sequence is finished.
   end: function() {
-    // Show the finish slide.
     showSlide("finished");
-    // // Wait 1.5 seconds and then submit the whole experiment object to Mechanical Turk (mmturkey filters out the functions so we know we're just submitting properties [i.e. data])
     setTimeout(function() { turk.submit(experiment) }, 1500);
   },
 
-  instructions: function() {
-    showSlide("instructions");   
-    experiment.data.push({"conditionSelf": conditionSelf}); 
+//Show instructions slide after click
+  eligibility: function() {
+    showSlide("eligibility");   
   },
 
+//Show instructions slide after click
+  instructions: function() {
+    // select the checked ethnicity radio button and see if it's value is 3
+    // (which corresponds to East Asian)
 
+    var ethnicity = $("[name='Ethnicity']:checked").val();
+    var age = $("[name='Age']:checked").val();
+    var gender = $("[name='Gender']:checked").val();
+    var education = $("[name='Education']:checked").val();
+    var employment = $("[name='Employment']:checked").val();
 
+    var properEthnicity = (ethnicity == "EastAsian");
+    var properAge = (age == "18to25");
+
+    if(properEthnicity && properAge) {
+      showSlide("instructions");      
+     } else {
+       showSlide("ineligible");      
+     };
+    experiment.data.push({
+      "conditionSelf": conditionSelf, 
+      "Ethnicity": ethnicity, 
+      "Age": age,
+      "Gender": gender,
+      "Education": education,
+      "Employment": employment
+  }); 
+  },
+
+//Show pause slide after click then failure feedback 
   callTimeout: function() {
     experiment.data.push({"timeLeft": timeLeft})
     showSlide("pause");
     setTimeout(function(){showSlide("failurefeedback")}, 5000);
     clearInterval(myInterval);
   },
+
+//Have timer for the first set of anagrams
   startTimer: function() {
     timeLeft = 300
     myInterval = setInterval(function() {
@@ -139,18 +135,9 @@ var experiment = {
         experiment.callTimeout();
       }
     }, 1000);
-
-    // setTimeout(function(){
-    //   if(timeLeft<0) {
-    //     showSlide("pause");
-    //     setTimeout(function(){showSlide("failurefeedback")}, 5000);
-    //   }
-    //   clearInterval(myInterval);
-    // }, 300000);
-    //setTimeout(function(){showSlide("failurefeedback")}, X+5000);
   },
   
-  // The work horse of the sequence - what to do on every trial.
+  // Anagrams part 1: what to do on every trial.
   next: function() {
 
     if(trialNumber>0) {
@@ -158,111 +145,208 @@ var experiment = {
         experiment.data.push({
           "trialNumber": trialNumber,
           "anagramText": n.anagram,
-          "answer": $('#anagramAnswer').val(),
+          "anagramAnswer": $('#anagramAnswer').val(),
           "reactionTime": endTime - startTime
         });
         $('#anagramAnswer').val('');
     }
-
-    // If the number of remaining trials is 0, we're done, so call the end function.
-    //if (experiment.trials.length == 0) {
     if(trialNumber == totalTrialNumber ) {
       experiment.callTimeout();
-      // clearInterval(myInterval);
-      // showSlide("pause")
-      // setTimeout(function(){showSlide("failurefeedback")}, 5000);
     } else {
-    
-    // Get the current trial - <code>shift()</code> removes the first element of the array and returns it.
-    //var n = myAnagramOrder.shift();
     n = allAnagrams[myAnagramOrder[trialNumber]];
-    
     showSlide("stage");
-    // Display the number stimulus.
     $("#anagrams").text(n.anagram);
-
-    
-    // Get the current time so we can compute reaction time later.
     startTime = (new Date()).getTime();
-    
     trialNumber = trialNumber+1;
     } 
   },
 
-//condition: function() {
-  //condition = Math.round(Math.random()) 
-  //if (condition == 0) { your mother } else { yourself }
-    //  },
+//Show the check slide after the failure feedback slide, push data, create variables
 
   afterFeedback: function() {
     showSlide("check");    
   },
 
+//Shows self condition if random number is 1, mother condition if zero
   condition: function() {
     if(conditionSelf==1) {
       showSlide("self");      
     } else {
       showSlide("mother");      
     }
+        var perform1 = $("[name='Perform1']:checked").val();
+        var feel1 = $("[name='Feel1']:checked").val();
+        var guessanagram1 = $('#guessanagram1').val();
+
+        experiment.data.push({
+          "Perform1": perform1,
+          "Feel1": feel1,
+          "guessanagram1": guessanagram1});
 
   },
 
+//Show demographics slide on click
    demographics: function() {
-    showSlide("demographics");    
+        var perform2 = $("[name='Perform2']:checked").val();
+        var feel2 = $("[name='Feel2']:checked").val();
+        var guessanagram2 = $('#guessanagram2').val();
+
+    showSlide("demographics");   
+    experiment.data.push({
+          "Perform2": perform2,
+          "Feel2": feel2,
+          "guessanagram2": guessanagram2}); 
   },  
   
+//show instructions on click
 instructions2: function() {
-    showSlide("instructions2");    
+    var motherinitials = $('#motherinitials').val();
+    var motherconditionresponse = $('#motherconditionresponse').val();
+    var selfintials = $('#selfintials').val();
+    var selfconditionresponse = $('#selfconditionresponse').val();
+
+  experiment.data.push({
+          "motherinitials": motherinitials,
+          "motherconditionresponse": motherconditionresponse,
+          "selfintials": selfintials,
+          "selfconditionresponse": selfconditionresponse
+        });
+    showSlide("instructions2");
   },  
 
+//Call finished function to record data on MTurk
 finished: function() {
+          var guessanagram1 = $('#guessanagram1').val();
+
+   var CityBorn = $('#CityBorn').val();
+   var StateBorn = $('#StateBorn').val();
+   var CountryBorn = $('#CountryBorn').val();
+   var AgeLiveUS = $('#AgeLiveUS').val();
+   var OtherLanguageSpoken = $('#OtherLanguageSpoken').val();
+   var MotherBorn = $('#MotherBorn').val();
+   var FatherBorn = $('#FatherBorn').val();
+   var MotherEthnicity = $("[name='MotherEthnicity']:checked").val();
+   var FatherEthnicity = $("[name='FatherEthnicity']:checked").val();
+   var MotherEducation = $("[name='MotherEducation']:checked").val();
+   var FatherEducation = $("[name='FatherEducation']:checked").val();
+   var MotherLive = $("[name='MotherLive']:checked").val();
+   var FatherLive = $("[name='FatherLive']:checked").val();
+   var SES = $("[name='SES']:checked").val();
+   var Income = $("[name='Income']:checked").val();
+   var StudyAbout = $('#StudyAbout').val();
+   var Suspicious = $('#Suspicious').val();
+   var Difficult = $('#Difficult').val();
+
+   experiment.data.push({
+          "CityBorn": CityBorn,
+          "StateBorn": StateBorn,
+          "CountryBorn": CountryBorn,
+          "AgeLiveUS": AgeLiveUS,
+          "OtherLanguageSpoken": OtherLanguageSpoken,
+          "MotherBorn": MotherBorn,
+          "FatherBorn": FatherBorn,
+          "MotherEthnicity": MotherEthnicity,
+          "FatherEthnicity": FatherEthnicity,
+          "MotherEducation": MotherEducation,
+          "FatherEducation": FatherEducation,
+          "MotherLive": MotherLive,
+          "FatherLive": FatherLive,
+          "SES": SES,
+          "Income": Income,
+          "StudyAbout": StudyAbout,
+          "Suspicious": Suspicious,
+          "Difficult": Difficult
+        }); 
+
     experiment.end();
   },  
 
-// //Timer--NEED HELP MAKING THIS TIMER WORK
-//   var timer = document.getElementById("logout-timer")
-//     , now = new Date()
-//     , deadline = new Date(now.getFullYear, now.getMonth, now.getDate, now.getHours, now.getMinutes + 5);
- 
-//   timer.innerHTML = countdown(deadline).toString();
-//   setInterval(function(){
-//     timer.innerHTML = countdown(deadline ).toString();
-//   }, 1000);
+//This is the timeout after the second set
+callTimeout2: function() {
+    experiment.data.push({"timeLeft2": timeLeft2})
+    showSlide("check2");
+    clearInterval(myInterval2)
+  },
 
+//SEcond part timer 
+  startTimer2: function() {
+    timeLeft2 = 300
+    myInterval2 = setInterval(function() {
+      $('#logout-timer2').html(timeLeft2);
+      timeLeft2 = timeLeft2-1;
+      if(timeLeft2<0) {
+        experiment.callTimeout2();
+      }
+    }, 1000);
+  },
+
+//For the second set, function for anagrams
   next2: function() {
-    // If the number of remaining trials is 0, we're done, so call the end function.
-    //if (experiment.trials.length == 0) {
+
     if(trialNumber2>0) {
-        endTime = (new Date()).getTime();
+        endTime2 = (new Date()).getTime();
         experiment.data.push({
           "trialNumber2": trialNumber2,
-          "anagramText": n.anagram,
-          "answer": $('#anagramAnswer2').val(),
-          "reactionTime": endTime - startTime
+          "anagramText2": n.anagram,
+          "anagramAnswer2": $('#anagramAnswer2').val(),
+          "reactionTime2": endTime2 - startTime2
         });
         $('#anagramAnswer2').val('');
     }
-
-
-
     if(trialNumber2 == totalTrialNumber2 ) {
-      experiment.end();
+    experiment.callTimeout2 ();
     } else {
-    
-    // Get the current trial - <code>shift()</code> removes the first element of the array and returns it.
-    //var n = myAnagramOrder.shift();
     n = allAnagrams2[myAnagramOrder2[trialNumber2]];
-    
     showSlide("stage2");
-    // Display the number stimulus.
     $("#anagrams2").text(n.anagram);
-    
-    // Get the current time so we can compute reaction time later.
-    startTime = (new Date()).getTime();
-    
+    startTime2 = (new Date()).getTime();
     trialNumber2 = trialNumber2+1;
-    }
-  }
+    } 
+  },
+
+
+//Show the check 2 slide after the second trial, push data, create variables
+
+  check2: function() {
+    showSlide("check2");    
+  },
+
+// //Craete a variable to check if the participant is actively participating
+// var isActive = true;
+
+// //Create a function to populate the "isactive" variable
+// function checkIt(){
+//   nCheck = 1
+//   var myTimer = setInterval(function(){ 
+//         if(instructionPart != "questions") { // if you're not at questions yet...
+//           experiment.recordWindow("windowCheck_" + nCheck);
+
+//           window.onfocus = function () { 
+//             isActive = true; 
+//           }; 
+
+//           window.onblur = function () { 
+//             isActive = false; 
+//           }; 
+
+//         } else {
+//           clearInterval(myTimer);
+//         }
+//         console.log(isActive);
+//         nCheck ++;
+//   }, 10000);
+// },
+
+// //Reccord the data from the attentio
+// recordWindow: function(name) {
+//     var windowHeight = $(window).height();
+//     var windowWidth = $(window).width();
+//     data = {
+//       question: name,
+//       answer: windowHeight + " by " + windowWidth + "; active=" + isActive
+//     };
+//     experiment.allData.push(data);
+//   },
 
 }
 

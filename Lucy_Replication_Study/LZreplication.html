@@ -22,23 +22,141 @@
   	<center>
 		<h2>Stanford Problem Solving Study</h2>
 	</center>
-	<p class="block-text">Thank you for your interest in the Stanford problem-solving study. This study examines how your academic and social experiences influence problem-solving. First, you will answer several demographic questions to determine whether you are eligible to participate in the study. If you are eligible to participate in the study, you will automatically progress to the study. During the study, you will be asked to solve several word puzzles and to think about yourself and others who are close to you.  If you are not eligible to participate in the study, you will be exited from the study.
+	<p class="block-text">Thank you for your interest in the Stanford problem-solving study. This study examines how your academic and social experiences influence problem-solving. First, you will answer several demographic questions to determine whether you are eligible to participate in the study. If you are not eligible to participate, you will not be paid and you will be exited from survey.  If you are eligible to participate in the study, you will automatically progress to the study.  During the study, you will be asked to solve several word puzzles and to think about yourself and others who are close to you.
 		</p>
 	<center>
-	<button type="button" onclick="this.blur(); experiment.instructions()">Start</button>
+	<button type="button" onclick="this.blur(); experiment.eligibility()">Start</button>
+		<button type="button" onclick="this.blur(); experiment.demographics()">Test</button>
+
 	</center>
 	<!-- Legal blurb that we're required to show. -->
 	<p class="block-text" id="legal">Legal information: By answering the following questions, you are participating in a study being performed by researchers in the Stanford Department of Psychology. If you have questions about this research, please contact Lucy Zhang at <a href="mailto://stanfordsubjects@gmail.com">stanfordsubjects@gmail.com</a>. You must be at least 18 years old to participate. Your participation in this research is voluntary. You may decline to answer any or all of the following questions. You may decline further participation, at any time, without adverse consequences. Your anonymity is assured; the researchers who have requested your participation will not receive any personally identifying information about you.</p>
 </div>
 
-<!-- The Demographics  slide. -->
+<!-- The Demographics  slide to gauge eligiblity. -->
 <center>
-<div class="slide" id="Demographics" style="width: 500px; margin: 0 auto; text-align: center; padding: 20px 15px 10px 10px">
-INSERT DEMOGRAPHICS QUESTIONS HERE
+<div class="slide" id="eligibility">
+	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
+<b>Please answer the following questions to determine whether you are eligible for the survey.  If you are eligible for the survey, you will be immediately directed to it.  If you are not eligible for the survey, you will get an ineligible message. Please DO NOT take the demographics survey more than once. You will not be paid if you re-take the demographics survey at any time.</b>
+<br><br><br>
 
-<button type="button" onclick="experiment.next()">Continue</button>
+<p class="block-text"> How old are you? </p>
+<p class="block-text"> 
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Age" value="18to25">
+18-25
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Age" value="26to35">
+26-35
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Age" value="36to45">
+36-45
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Age" value="46to55">
+46-55
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Age" value="55andolder">
+55 and older
+</p>
+<p class="block-text"> What is your gender? </p>
+<p class="block-text"> 
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Gender" value="Female">
+Female
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Gender" value="Male">
+Male
+</p>
+<p class="block-text"> What is your ethnic or racial background? </p>
+<p class="block-text"> 
+	
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Ethnicity" value="Black">
+	African American/Black
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Ethnicity" value="White">
+	Caucasian/White
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Ethnicity" value="EastAsian">
+	East Asian
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Ethnicity" value="Latino">
+	Hispanic/Latino/Latina
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Ethnicity" value="MidEast">
+	Middle Eastern
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Ethnicity" value="Mixed">
+	Mixed
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Ethnicity" value="Native">
+	Native American
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Ethnicity" value="PacficIslander">
+	Pacific Islander
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Ethnicity" value="SouthAsian">
+	South Asian
+	<br>
+</p>
+<p class="block-text"> What is the highest level of education you have completed? </p>
+<p class="block-text"> 
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Education" value="1">
+Some high school
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Education" value="2">
+Completed high school
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Education" value="3">
+Some college/Associate's degree
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Education" value="4">
+Bachelor's degree
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Education" value="5">
+MA, MD, PhD, or other professional degree
+</p>
+<p class="block-text"> Are you currently employed? </p>
+<p class="block-text"> 
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Employment" value="1">
+Yes
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Employment" value="0">
+No
+</p>
+
+<button type="button" onclick="experiment.instructions()">Continue</button>
 </center>
-</div>
+</div></div>
+
+<!-- The ineligible  slide. -->
+
+<div class="slide" id="ineligible">
+	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
+	<center>
+	<b>You are ineligible to participate in the study. Please DO NOT take the demographics survey more than once. You will not be paid if you re-take the demographics survey at any time. </b>
+</center>
+</div></div>
 
 <!-- The instructions  slide. -->
 
@@ -69,7 +187,7 @@ INSERT DEMOGRAPHICS QUESTIONS HERE
 
 	<center>
 	<br><br>
-	Instructions: You have 5 minutes to complete as many anagrams as you can.  Please rearrange the letters in the word provided to create a new word.  You must use ALL the letters in the word provided to create the new word. Please write your answer in the answer box. If you do not know the answer please write your best guess in the answer box. Once you click "Next" you will NOT be allowed to your answer.  Your answers will be evaluated at the end of the task.
+	Instructions: You have 5 minutes to complete as many anagrams as you can.  Please rearrange the letters in the word provided to create a new word.  You must use ALL the letters in the word provided to create the new word. Please write your answer in the answer box. If you do not know the answer please write your best guess in the answer box. Once you click "Next" you will NOT be allowed to change your answer.  Your answers will be evaluated at the end of the task.
     <br>    <br>
 	Word: <h2 id="anagrams" size="20">{{}}</h2>
 	<br>
@@ -82,8 +200,8 @@ INSERT DEMOGRAPHICS QUESTIONS HERE
 <br>
 <br>
 You have <span id="logout-timer"></span> seconds remaining to complete these word puzzles.
-<br>
-You have <span id="count"></span> word puzzles remaining.
+<br><br>
+You have completed <span id="trialnumber"></span> of 12 word puzzles.
 
 	</center>
 
@@ -97,19 +215,19 @@ You have <span id="count"></span> word puzzles remaining.
 	The computer will now calculate how well you have done and show you how well you did in relation to others who have done this task in the past.  Please wait while the computer calculates your score... 
 </div></div>
 
-<!-- The failure feedback slide. NEED TO ADD A DELAY AT THE BEGINNING-->
+<!-- The failure feedback slide.-->
 <div class="slide" id="failurefeedback">
 	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
 	<br><br>
 	<br><br>
-	Part 1: Word Puzzle Task Results 
- 
+	<h2> Part 1: Word Puzzle Task Results </h2>
+ <br>
 <p> Compared to others who have done this part of the Word Puzzle Task
 in the past, you have scored:</p>
 
 	<p> <font size="5" font color="red"> <u> WELL BELOW AVERAGE </u></font></p>
 <br><br>
-Please click continue to proceed to the next task.
+Please click "Continue" to answer a couple of questions about your experience with this task.
 <br><br>
 	<button onclick="experiment.afterFeedback()">Continue</button>
 </div></div>
@@ -118,29 +236,74 @@ Please click continue to proceed to the next task.
 
 <div class="slide" id="check">
 	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
-	Please rate your experience of the anagram word puzzle task.   
+<b>Please answer the following questions about your experience with the Part 1: Word Puzzle Task and how well you did on the task. There are no right or wrong answers. </b>
 	<br><br>
-1. Overall, how do you feel about how you did on the task? 
+	<p class="block-text"> Overall, how do you feel about how you did on the task?  </p>
+<p class="block-text"> 
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Feel1" value="1">
+Extremely Displeased
 	<br>
-	1 Extremely Displeased
-	2 Very Displeased
-	3 Somewhat Displeased
-	4 Neutral
-	5 Somewhat Pleased 
-	6 Very Pleased
-	7 Extremely Pleased
-	<br><br>
-2. Overall, how well do you think you think you did on the task?
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Feel1" value="2">
+Very Displeased
 	<br>
-	1 Extremely Badly
-	2 Very Badly 
-	3 Somewhat Badly
-	4 Neutral
-	5 Somewhat Well 
-	6 Very Well
-	7 Extremely Well
-	<br><br>
-3. How many anagrams do you think you solved out of 12?
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Feel1" value="3">
+Somewhat Displeased
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Feel1" value="4">
+Neutral
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Feel1" value="5">
+Somewhat Pleased
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Feel1" value="6">
+Very Pleased
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Feel1" value="7">
+Extremely Pleased
+</p>
+<br>
+	<p class="block-text"> Overall, how well do you think you think you did on the task?   </p>
+	<p>"On the task, I did..."</p>
+<p class="block-text"> 
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Perform1" value="1">
+Extremely Badly
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Perform1" value="2">
+Very Badly
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Perform1" value="3">
+Somewhat Badly
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Perform1" value="4">
+Neither Badly Nor Well
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Perform1" value="5">
+Somewhat Well
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Perform1" value="6">
+Very Well
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Perform1" value="7">
+Extremely Well
+</p>
+<br>
+<p class="block-text"> How many anagrams do you think you solved out of 12?</p>
+<input type="text" id="guessanagram1" size=20>
+</p>
 
 	<button onclick="experiment.condition()">Continue</button>
 </div></div>
@@ -149,32 +312,32 @@ Please click continue to proceed to the next task.
 <center>
 <div class="slide" id="mother">
 	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
-In this task, you will answer some questions about your mother.	<br><br>
+<b>In this task, you will answer some questions about your mother.	</b><br><br>
     <br><br>
-    Please type your mother's initials here: <textarea name="motherinitials" cols=10 rows=1></textarea> </input>
-    <br><br>
+    Please type your mother's initials here: <textarea id="motherinitials" cols=10 rows=1></textarea> </input>
+    <br><br><br>
 Describe your mother in a couple of sentences:	<br> <br>
-	<textarea name="conditionresponse" cols=80 rows=15></textarea> </input>
+	<textarea id="motherconditionresponse" cols=80 rows=15></textarea> </input>
     <br><br>
-    Please click "Continue" to move on to the next task.
+    Please click "Continue" to move on to the next task. 
     <br>
-	<button onclick="experiment.instructions2()">Continue</button>
+	<button onclick="experiment.instructions2();">Continue</button>
 </div></div>
 
 <!-- The self condition slide.-->
 <center>
 <div class="slide" id="self">
 	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
-In this task, you will answer some questions about yourself.	<br><br>
+<b>In this task, you will answer some questions about yourself.</b>	<br><br>
     <br><br>
-    Please type your initials here: <textarea name="selfintials" cols=10 rows=1></textarea> </input>
-    <br><br>
+    Please type your initials here: <textarea id="selfintials" cols=10 rows=1></textarea> </input>
+    <br><br><br>
 Describe yourself in a couple of sentences:	<br> <br>
-	<textarea name="conditionresponse" cols=80 rows=15></textarea> </input>
+	<textarea id="selfconditionresponse" cols=80 rows=15></textarea> </input>
     <br><br>
     Please click "Continue" to move on to the next task.
     <br>
-	<button onclick="experiment.instructions2()">Continue</button>
+	<button onclick="experiment.instructions2();">Continue</button>
 </div></div>
 
 
@@ -184,7 +347,7 @@ Describe yourself in a couple of sentences:	<br> <br>
 	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
 				<h2> Part 2: Word Puzzle Task </h2>
 
-	As in Word Puzzle Task Part 1, you will be presented with anagram word puzzles to solve. If you are not sure of the right answer, feel free to make your best guess and to move on to the next question.
+	As in Part 1: Word Puzzle Task, you will be presented with anagram word puzzles to solve. You have 5 minutes to complete as many anagrams as you can.  Please rearrange the letters in the word provided to create a new word.  You must use ALL the letters in the word provided to create the new word. Please write your answer in the answer box. If you are not sure of the right answer, feel free to make your best guess and to move on to the next puzzle.
  
 <br><p>Please note, once you continue on to a new anagram, you will NOT be able to return to a previous page.</p>
  <p>You have a maximum of 5 minutes to do 12 anagrams. At the end of 5 minutes, the survey will continue on. Please use your time wisely. </p>
@@ -195,47 +358,428 @@ Describe yourself in a couple of sentences:	<br> <br>
 
 <br><p>Please click "Continue" to begin the next task.</p>
 
-<button type="button" onclick="experiment.next2()">Continue</button>
+<button type="button" onclick="experiment.next2(); experiment.startTimer2();">Continue</button>
 
 </div></div>
 
 <!-- The "stage2" slide part 2. -->
 <div class="slide" id="stage2">
+		<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
 	<center>
 	<br><br>
 	<br><br>
-	Instructions: You have 5 minutes to complete as many anagrams as you can.  Please rearrange the letters in the word provided to create a new word.  You must use ALL the letters in the word provided to create the new word. Please write your answer in the answer box. If you do not know the answer please write your best guess in the answer box. Once you click "Next" you will NOT be allowed to your answer.  
-	<br><br>
-    <br><br>
-	<h2 id="anagrams2" size="20">{{}}</h2>
-	<br> <br>
-	Use this space for your work: <br>
-	<textarea name="AnagramWork2" cols=48 rows=6></textarea> </input>
-	<br> <br>
-	Write your answer here:<br>
+	Instructions: Please rearrange the letters in the word provided to create a new word.  You must use ALL the letters in the word provided to create the new word.  Write your answer in the answer box. Please complete as many anagrams as you can. If you are not sure of the right answer, make your best guess and move on to the next question.
+	 <br>    <br>
+	Word: <h2 id="anagrams2" size="20">{{}}</h2>
+	<br>
+	Answer:<br>
 	<input type="text" id="anagramAnswer2"> </input>
 	<br>
 	<br>
-	<button onclick="experiment.next2()">Next</button>
-		<button onclick="experiment.demographics()">Quit</button>
+	<br>
+	<button onclick="experiment.next2()">Next</button> 
+<br>
+<br>
+You have <span id="logout-timer2"></span> seconds remaining to complete these word puzzles.
+<br><br>
+You have completed <span id="trialnumber2"></span> of 12 word puzzles.
+
 	</center>
-</div>
+
+</div>	</div>
+
+<!-- Check2: Emotion questions after stage 2 -->
+<div class="slide" id="check2">
+		<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
+	<center>
+<br><br>
+<b> You have now completed the Part 2: Word Puzzle Task.  Please answer the following questions about your experience with the Part 2: Word Puzzle Task and how well you did on the task. There are no right or wrong answers. </b>
+	<br><br>
+	<p class="block-text"> Overall, how do you feel about how you did on the task?  </p>
+<p class="block-text"> 
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Feel2" value="1">
+Extremely Displeased
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Feel2" value="2">
+Very Displeased
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Feel2" value="3">
+Somewhat Displeased
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Feel2" value="4">
+Neutral
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Feel2" value="5">
+Somewhat Pleased
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Feel2" value="6">
+Very Pleased
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Feel2" value="7">
+Extremely Pleased
+</p>
+<br>
+	<p class="block-text"> Overall, how well do you think you think you did on the task?   </p>
+	<p>"On the task, I did..."</p>
+<p class="block-text"> 
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Perform2" value="1">
+Extremely Badly
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Perform2" value="2">
+Very Badly
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Perform2" value="3">
+Somewhat Badly
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Perform2" value="4">
+Neither Badly Nor Well
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Perform2" value="5">
+Somewhat Well
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Perform2" value="6">
+Very Well
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Perform2" value="7">
+Extremely Well
+</p>
+<br>
+<p class="block-text"> How many anagrams do you think you solved out of 12?</p>
+<input type="text" name="guessanagram2" size=20>
+</p>
+
+	<button onclick="experiment.demographics()">Continue</button>
+
+	</center>
+
+</div>	</div>
 
 <!-- The demographics slide. INPUT DEMOGRAPHICS AND IDENTITY QUESTIONS -->
-<center>
 <div class="slide" id="demographics">
-Please answer the following demographics questions about yourself.
+<b>Please answer the following demographics questions about yourself.</b>
+<br>
+<br>
 	<br>
+<p class="block-text"> Where were you born?</p>
+<p>City: <input type="text" id="CityBorn" size=40></p>
+State: <input type="text" id="StateBorn" size=40></p>
+Country: <input type="text" id="CountryBorn" size=40></p>
 	<br>
-	<button onclick="experiment.finished()">Finish Study</button>
+	<p class="block-text"> If you were not born in the U.S., at what age did you begin living in the U.S.?</p>
+<p><input type="text" id="AgeLiveUS" size=20> </p>
+<br>
+	<p class="block-text"> What languages, if any, do you speak other than English? </p>
+<p><input type="text" id="OtherLanguageSpoken" size=40></p>
+<br>
+	<p class="block-text"> Where was your mother born? (City, State, Country) </p>
+<p><input type="text" id="MotherBorn" size=40>  </p>
+<br>
+	<p class="block-text"> Where was your father born? (City, State, Country)</p>
+<p><input type="text" id="FatherBorn" size=40>  </p>
+<br>
+<p class="block-text"> What is your mother's ethnic or racial background? </p>
+<p class="block-text"> 
+	
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="MotherEthnicity" value="1">
+	African American/Black
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="MotherEthnicity" value="2">
+	Caucasian/White
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="MotherEthnicity" value="3">
+	East Asian
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="MotherEthnicity" value="4">
+	Hispanic/Latino/Latina
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="MotherEthnicity" value="5">
+	Middle Eastern
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="MotherEthnicity" value="6">
+	Mixed
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="MotherEthnicity" value="7">
+	Native American
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="MotherEthnicity" value="8">
+	Pacific Islander
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="MotherEthnicity" value="9">
+	South Asian
+	<br>
+	<p class="block-text"> What is your father's ethnic or racial background? </p>
+<p class="block-text"> 
+	
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="FatherEthnicity" value="1">
+	African American/Black
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="FatherEthnicity" value="2">
+	Caucasian/White
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="FatherEthnicity" value="3">
+	East Asian
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="FatherEthnicity" value="4">
+	Hispanic/Latino/Latina
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="FatherEthnicity" value="5">
+	Middle Eastern
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="FatherEthnicity" value="6">
+	Mixed
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="FatherEthnicity" value="7">
+	Native American
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="FatherEthnicity" value="8">
+	Pacific Islander
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="FatherEthnicity" value="9">
+	South Asian
+	<br>
+<p class="block-text"> What is the highest level of education your mother has completed? </p>
+<p class="block-text"> 
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="MotherEducation" value="1">
+Some high school
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="MotherEducation" value="2">
+Completed high school
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="MotherEducation" value="3">
+Some college/Associate's degree
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="MotherEducation" value="4">
+Bachelor's degree
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="MotherEducation" value="5">
+MA, MD, PhD, or other professional degree
+</p>
+<p class="block-text"> What is the highest level of education your father has completed? </p>
+<p class="block-text"> 
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="FatherEducation" value="1">
+Some high school
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="FatherEducation" value="2">
+Completed high school
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="FatherEducation" value="3">
+Some college/Associate's degree
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="FatherEducation" value="4">
+Bachelor's degree
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="FatherEducation" value="5">
+MA, MD, PhD, or other professional degree
+</p>
+<p class="block-text"> When was the last time you permanently lived with your mother? </p>
+<p class="block-text"> 
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="MotherLive" value="1">
+Never
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="MotherLive" value="2">
+I currently live with my mother
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="MotherLive" value="3">
+0-1 years ago
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="MotherLive" value="4">
+1-2 years ago
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="MotherLive" value="5">
+2-3 years ago
+<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="MotherLive" value="6">
+3-4 years ago
+<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="MotherLive" value="7">
+4-5 years ago
+<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="MotherLive" value="8">
+More than 5 years ago
+</p>
+<p class="block-text"> When was the last time you permanently lived with your father? </p>
+<p class="block-text"> 
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="FatherLive" value="1">
+Never
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="FatherLive" value="2">
+I currently live with my father
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="FatherLive" value="3">
+0-1 years ago
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="FatherLive" value="4">
+1-2 years ago
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="FatherLive" value="5">
+2-3 years ago
+<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="FatherLive" value="6">
+3-4 years ago
+<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="FatherLive" value="7">
+4-5 years ago
+<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="FatherLive" value="8">
+More than 5 years ago
+</p>
+<p class="block-text"> What is your socioeconomic level? </p>
+<p class="block-text"> 
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="SES" value="1">
+Lower income
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="SES" value="2">
+Lower middle income
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="SES" value="3">
+Middle income
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="SES" value="4">
+Upper middle income
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="SES" value="5">
+Upper income
+<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="SES" value="6">
+I don't know
+</p>
+<p class="block-text"> Approximately what is your annual combined household income? </p>
+<p class="block-text"> 
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Income" value="1">
+Less than $10,000
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Income" value="2">
+$10,001-$20,000
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Income" value="3">
+$20,001-$30,000
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Income" value="4">
+$30,001-$40,000
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Income" value="5">
+$40,001-$50,000
+<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Income" value="6">
+$50,001-$60,000
+<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Income" value="7">
+$60,001-$70,000
+<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Income" value="8">
+$70,001-$80,000
+<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Income" value="9">
+$80,001-$90,000
+<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Income" value="10">
+$90,001-$100,000
+<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="Income" value="11">
+	Over $100,001
+</p>
+
+<p class="block-text"> What do you think the study was about? </p>
+<p class="block-text"> 
+<textarea id="StudyAbout" cols=80 rows=5></textarea> </input>
+<br>
+<p class="block-text"> Sometimes participants are suspicious when they participate in surveys like this one. Were you suspicious at any time during the study? If yes, why?  </p>
+<p class="block-text"> 
+<textarea id="Suspicious" cols=80 rows=5></textarea> </input>
+<br>
+<p class="block-text"> Was there anything strange or difficult to answer in the study? If so, please describe what it was and why. </p>
+<p class="block-text"> 
+<textarea id="Difficult" cols=80 rows=5></textarea> </input>
+<br>
+	<button onclick="experiment.finished()">Finish</button>
+<br>
 </div>
 
 <!-- The finish slide. -->
 <center>
 <div class="slide" id="finished">
-	You're finished - thanks for participating! 
+	  <div style="width: 500px; margin: 0 auto; text-align: center; background-color: #white; padding: 20px 15px 10px 10px">
+
+	<b>You're finished - thanks for participating! </b>
+<p> Debriefing: In this study, you were asked to complete anagram word puzzles, given failure feedback, then asked to think of someone (e.g., yourself or your mother), and finally asked to complete more anagram word puzzles.  There was some deception used in this study so that the aim would not affect your responses.  We wanted to investigate how thinking of oneself or one's mother may motivate participants following failure feedback, and whether there are cultural differences in motivation following failure.  The failure feedback you received was not real, and your anagram puzzles were not scored at any time in this study. I want to remind you that your data is completely confidential and that your responses will help us learn more about motivation in response to failure feedback.  Please do not reveal the nature of this study at any time, as we are still collecting responses from other Mechanical Turk participants.  Thank you!
+	<br><br>
 	<p>Your responses will automatically be submitted to Mechanical Turk with no need to input a code for submission.</p>
-</div>
+</div></div>
 </center>
 
 <!-- Include the <a href="experiment.html">JavaScript file for the experiment</a>. As written, that script immediately executes commands, so we include it here at the end of the HTML file to ensure that resources referenced by the script actually exist. For instance, one of the immediately executed commands is <code>showSlide("instructions")</code>. If we loaded experiment.js, say, in the <code>head</code> section, <code>showSlide("instructions")</code> would fail because the <code>instructions</code> slide doesn't exist yet. It is possible to load the script in <code>head</code> but you have to ensure that any immediately executed commands, if they rely on potentially uninitialized HTML elements, are _delayed_ until the page is ready, using either [window.onload][onload] or jQuery's more robust [$(document).ready()][domReady]  -->
