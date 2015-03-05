@@ -74,6 +74,8 @@ var timeLeft, myInterval;
 var timeLeft2, myInterval2;
 var startTime, endTime;
 var startTime2, endTime2;
+var myCounter, myCounter2
+var counter1, counter2;
 
 // ## The main event to collect data then submit it to Mturk after pause
 var experiment = {
@@ -128,6 +130,9 @@ var experiment = {
 //Have timer for the first set of anagrams
   startTimer: function() {
     timeLeft = 300
+    myCounter = setInterval(function() {
+      $('#counter1').html(trialNumber-1);
+    }, 10);    
     myInterval = setInterval(function() {
       $('#logout-timer').html(timeLeft);
       timeLeft = timeLeft-1;
@@ -139,7 +144,6 @@ var experiment = {
   
   // Anagrams part 1: what to do on every trial.
   next: function() {
-
     if(trialNumber>0) {
         endTime = (new Date()).getTime();
         experiment.data.push({
@@ -271,6 +275,9 @@ callTimeout2: function() {
 //SEcond part timer 
   startTimer2: function() {
     timeLeft2 = 300
+    myCounter2 = setInterval(function() {
+      $('#counter2').html(trialNumber2-1);
+    }, 10);   
     myInterval2 = setInterval(function() {
       $('#logout-timer2').html(timeLeft2);
       timeLeft2 = timeLeft2-1;
