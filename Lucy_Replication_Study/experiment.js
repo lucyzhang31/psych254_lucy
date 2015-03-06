@@ -104,9 +104,9 @@ var experiment = {
     var properEthnicity = (ethnicity == "EastAsian");
     var properAge = (age == "18to25");
 
-    if (ethnicity == null) {
-        alert("Ethnicity must be selected");
-        return false};
+    // if (ethnicity == null) {
+    //     alert("Ethnicity must be selected");
+    //     return false};
 
     if(properEthnicity && properAge) {
       showSlide("instructions");      
