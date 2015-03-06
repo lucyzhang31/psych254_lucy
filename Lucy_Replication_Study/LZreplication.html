@@ -11,6 +11,10 @@
 	
 	<!-- Include the cascading style sheet (CSS), which lets us separate style from content. This stylesheet is important because it defines the notion of a **slide** and also makes things look nicer, which subjects appreciate. It's worth looking at the [source code](style.html). -->
 	<link rel="stylesheet" href="style.css" />
+
+	<!--Brings in the j query validate plugin-->
+	<script src="js/jquery.validate.js"?</script>
+
 </head>
 <body>
 
@@ -22,7 +26,7 @@
   	<center>
 		<h2>Stanford Problem Solving Study</h2>
 	</center>
-	<p class="block-text">Thank you for your interest in the Stanford problem-solving study. This study examines how your academic and social experiences influence problem-solving. First, you will answer several demographic questions to determine whether you are eligible to participate in the study. If you are not eligible to participate, you will not be paid and you will be exited from survey.  If you are eligible to participate in the study, you will automatically progress to the study.  During the study, you will be asked to solve several word puzzles and to think about yourself and others who are close to you.
+	<p class="block-text">Thank you for your interest in the Stanford problem-solving study.  This study examines how your academic and social experiences influence problem-solving.  You must be 18-25 to participate in this study. First, you will answer several demographic questions to determine whether you are eligible to participate in the study. If you are not eligible to participate, you will receive $.10 for your time and be exited from the study. If you are eligible to participate in the study, you will automatically progress to the study. You will be bonused $1.00 upon completion of the study.  During the study, you will be asked to solve several word puzzles and to think about yourself and others who are close to you.
 		</p>
 	<center>
 	<button type="button" onclick="this.blur(); experiment.eligibility()">Start</button>
@@ -37,8 +41,28 @@
 <center>
 <div class="slide" id="eligibility">
 	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
-<b>Please answer the following questions to determine whether you are eligible for the survey.  If you are eligible for the survey, you will be immediately directed to it.  If you are not eligible for the survey, you will get an ineligible message. Please DO NOT take the demographics survey more than once. You will not be paid if you re-take the demographics survey at any time.</b>
+<b>Please answer the following questions to determine whether you are eligible for the survey.  If you are not eligible to participate, you will receive $.10 for your time and be exited from the study. If you are eligible to participate in the study, you will automatically progress to the study. You will be bonused $1.00 upon completion of the study. Please DO NOT take the demographics survey more than once. </b>
 <br><br><br>
+<form class="cmxform" id="prescreendemoForm" method="get" action="form-handler.html" autocomplete="off"
+<fieldset>
+	<legend> How old are you? </legend>
+		<label for ="age_18to25"> 
+			<input type="checkbox" id="age_18to25" value="18to25" name="age"
+			18-25 </label>
+		<label for ="age_26to35"> 
+			<input type="checkbox" id="age_26to35" value="26to35" name="age"
+			26-35 </label>
+		<label for ="age_26to35"> 
+			<input type="checkbox" id="age_36to45" value="36to45" name="age"
+			36-45 </label>
+		<label for ="age_46to55"> 
+			<input type="checkbox" id="age_46to55" value="46to55" name="age"
+			46-55 </label>
+		<label for ="age_56up"> 
+			<input type="checkbox" id="age_56up" value="56up" name="age"
+			56 and older </label>
+		<label for="age" class="error"> Please select your age. 
+</fieldset>
 
 <p class="block-text"> How old are you? </p>
 <p class="block-text"> 
@@ -154,7 +178,7 @@ No
 <div class="slide" id="ineligible">
 	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
 	<center>
-	<b>You are ineligible to participate in the study. Please DO NOT take the demographics survey more than once. You will not be paid if you re-take the demographics survey at any time. </b>
+	<b>You are ineligible to participate in the study. Please DO NOT take the demographics survey more than once. You will be paid $.10 for your time. </b>
 </center>
 </div></div>
 
@@ -163,7 +187,7 @@ No
 <div class="slide" id="instructions">
 	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
 	<b>You are eligible to participate in the study.</b>
-<br> <br> <br> <br>
+<br> <br> 
 	<p>
 		<h2> Part 1: Word Puzzle Task </h2>
 	<p> In this task, you will complete a series of word puzzles commonly referred to as "anagrams." An anagram is a word that is formed by rearranging ALL of the letters of another word. For this task, please complete as many anagrams as you can. You will have 5 minutes to do this task. After 5 minutes, the survey will move on.
@@ -474,6 +498,7 @@ Extremely Well
 <br>
 <br>
 	<br>
+
 <p class="block-text"> Where were you born?</p>
 <p>City: <input type="text" id="CityBorn" size=40></p>
 State: <input type="text" id="StateBorn" size=40></p>
@@ -617,7 +642,7 @@ MA, MD, PhD, or other professional degree
 <p class="block-text"> 
 	&nbsp;&nbsp;&nbsp;&nbsp;
 	<input type="radio" name="MotherLive" value="1">
-Never
+I have never lived with my mother
 	<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;
 	<input type="radio" name="MotherLive" value="2">
@@ -651,7 +676,7 @@ More than 5 years ago
 <p class="block-text"> 
 	&nbsp;&nbsp;&nbsp;&nbsp;
 	<input type="radio" name="FatherLive" value="1">
-Never
+I have never lived with my father
 	<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;
 	<input type="radio" name="FatherLive" value="2">
@@ -766,8 +791,29 @@ $90,001-$100,000
 <p class="block-text"> 
 <textarea id="Difficult" cols=80 rows=5></textarea> </input>
 <br>
-<center>	<button onclick="experiment.finished()">Finish</button></center>
+<p class="block-text"> Did you read the instructions and complete the HIT accordingly? </p>
+<p class="block-text"> 
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="readinstructions" value="1">
+Yes	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="readinstructions" value="0">
+No
 <br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="readinstructions" value="2">
+I was confused	<br>
+<p class="block-text"> Did you use an internet tool or any other outside sources to complete the anagrams at any time? </p>
+<p class="block-text"> 
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="readinstructions" value="1">
+Yes	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="readinstructions" value="0">
+No
+<br>
+<center>	<button onclick="experiment.finished()">Finish</button></center>
+
 </div>
 
 <!-- The finish slide. -->

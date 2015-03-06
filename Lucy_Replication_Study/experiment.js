@@ -104,6 +104,10 @@ var experiment = {
     var properEthnicity = (ethnicity == "EastAsian");
     var properAge = (age == "18to25");
 
+    if (ethnicity == null) {
+        alert("Ethnicity must be selected");
+        return false};
+
     if(properEthnicity && properAge) {
       showSlide("instructions");      
      } else {
@@ -311,21 +315,36 @@ callTimeout2: function() {
     } 
   },
 
-
-//Show the check 2 slide after the second trial, push data, create variables
+//Show the check 2 slide after the second trial
 
   check2: function() {
     showSlide("check2");    
   },
 
-// //Craete a variable to check if the participant is actively participating
-// var isActive = true;
+//Check answers from anagrams
+// checkanagrams: function () {
+//     var part1numbercorrect 
 
+//     = parseInt((document.getElementById("num1")), 10);
+//     var num2 = parseInt((document.getElementById("num2")), 10);
+//     ans = document.forms.problem.answer;
+//     ans.value = num1 + num2;
+//     if (ans == correct) {
+//         alert("woot");
+//     } else {
+//         alert("nope");
+//     }
+// }
+
+// //Craete a variable to check if the participant is actively participating
+// 
+// var isActive1 = true;
+    
 // //Create a function to populate the "isactive" variable
 // function checkIt(){
 //   nCheck = 1
-//   var myTimer = setInterval(function(){ 
-//         if(instructionPart != "questions") { // if you're not at questions yet...
+//   var myTimercheck = setInterval(function(){ 
+//         if(showSlide != "demographics") { // if you're not at questions yet...
 //           experiment.recordWindow("windowCheck_" + nCheck);
 
 //           window.onfocus = function () { 
@@ -337,7 +356,7 @@ callTimeout2: function() {
 //           }; 
 
 //         } else {
-//           clearInterval(myTimer);
+//           clearInterval(myTimercheck);
 //         }
 //         console.log(isActive);
 //         nCheck ++;
