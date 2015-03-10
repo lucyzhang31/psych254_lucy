@@ -7,22 +7,13 @@
 	
 	<!-- Include my library, [mmturkey][mmturkey], which manages submitting data to Mechanical Turk. This defines a global object, <code>turk</code>, and attaches five properties to it, <code>hitId</code>, <code>assignmentId</code>, <code>workerId</code>, <code>previewMode</code>, and <code>turkSubmitTo</code>. It also provides a single method, <code>submit(data)</code>, which you use to submit data to Turk. If no submission URL has been provided (because, e.g. you're testing your code outside of the Turk environment), <code>submit</code> displays what would have been submitted (without, obviously, any Turk-specific variables like <code>workerId</code> and <code>assignmentId</code>).  -->
 	<!-- [mmturkey]: http://github.com/longouyang/mmturkey -->
-	<script src="mmturkey-0.6.1.js"></script>
+	<script src="mmturkey-0.6.js"></script>
 	
 	<!-- Include the cascading style sheet (CSS), which lets us separate style from content. This stylesheet is important because it defines the notion of a **slide** and also makes things look nicer, which subjects appreciate. It's worth looking at the [source code](style.html). -->
 	<link rel="stylesheet" href="style.css" />
 
 	<!--Brings in the j query validate plugin-->
-	<script src="jquery.validate.js"?></script>
-
-<style>
-
-label.error {
-    display: none;
-    color: red;
-  }
-</style>
-
+	<script src="jquery.validate.js"></script>
 </head>
 <body>
 
@@ -46,135 +37,122 @@ label.error {
 </div>
 
 <!-- The Demographics  slide to gauge eligiblity. -->
+<center>
 <div class="slide" id="eligibility">
 	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
-
-<form class="cmxform" id="prescreendemoform" method="get" action novalidate="novalidate" autocomplete="off">
 <b>Please answer the following questions to determine whether you are eligible for the survey.  If you are not eligible to participate, you will receive $.10 for your time and be exited from the study. If you are eligible to participate in the study, you will automatically progress to the study. You will be bonused $1.00 upon completion of the study. Please DO NOT take the demographics survey more than once. </b>
 <br><br><br>
-<fieldset id="age">
-	<p class="block-text">
-		<legend> 	How old are you? </legend> </p>
-		<p class="block-text">
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="age_18to25">
-			<input type="radio" id="age_18to25" value="18to25" name="age" aria-required="true" class="error">
-			18-25 </label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="age_26to35">
-			<input type="radio" id="age_26to35" value="26to35" name="age" class="error">
-			26-35 </label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="age_26to35">
-			<input type="radio" id="age_36to45" value="36to45" name="age" class="error">
-			36-45 </label><br> 
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="age_46to55">
-			<input type="radio" id="age_46to55" value="46to55" name="age" class="error">
-			46-55 </label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="age_56up">
-			<input type="radio" id="age_56up" value="56up" name="age" class="error">
-	 		56 and older </label></p>
-	 	<label for="age" class="error" style="display: inline;"> This field is required. </label>
-	 </fieldset>
-	 <fieldset id="gender">
-	 	<p class="block-text">
-		<legend> 	What is your gender? </legend> </p>
-			<p class="block-text">
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="gender_female">
-			<input type="radio" id="gender_female" value="female" name="gender" aria-required="true" class="error">
-			Female <br></label>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="gender_male">
-			<input type="radio" id="gender_male" value="male" name="gender" class="error">
-			Male </label></p>
-			<label for="gender" class="error" style="display; inline;"> This field is required.</label>
-	</fieldset>
-	<fieldset id="ethnicity">
-		<p class="block-text">
-		<legend> What is your ethnicity? </legend> </p>
-			<p class="block-text">
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="ethnicity_aa">
-			<input type="radio" id="ethnicity_aa" value="1" name="ethnicity"  aria-required="true" class="error"> 
-			African American/Black </label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="ethnicity_white">
-			<input type="radio" class="radio"  id="ethnicity_white" value="2" name="ethnicity" class="error">
-			Caucasian/White </label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="ethnicity_ea">
-			<input type="radio" class="radio" id="ethnicity_ea" value="3" name="ethnicity" class="error">
-			East Asian </label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="ethnicity_latino">
-			<input type="radio" class="radio" id="ethnicity_latino" value="4" name="ethnicity" class="error">
-			Hispanic/Latino/Latina </label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="ethnicity_mideast">
-			<input type="radio" class="radio" id="ethnicity_mideast" value="5" name="ethnicity" class="error">
-			Middle Eastern </label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="ethnicity_mixed">
-			<input type="radio" class="radio" id="ethnicity_mixed" value="6" name="ethnicity" class="error">
-			Mixed </label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="ethnicity_native">
-			<input type="radio" class="radio"  id="ethnicity_native" value="7" name="ethnicity" class="error">
-			Native American</label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="ethnicity_pacific">
-			<input type="radio" class="radio" id="ethnicity_pacific" value="8" name="ethnicity" class="error">
-			Pacific Islander</label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="ethnicity_sa">
-			<input type="radio" class="radio" id="ethnicity_sa" value="9" name="ethnicity" class="error">
-			South Asian </label></p>
-			<label for="ethnicity" class="error" style="display; inline;"> This field is required.</label>
-	 </fieldset>
-	 <fieldset id="education">
-		<p class="block-text"> 
-		<legend >  What is the highest level of education you have completed?  </legend> </p>
-		<p class="block-text"> 
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="education_somehs">
-			<input type="radio" id="education_somehs" value="1" name="education" aria-required="true" class="error"> 
-			Some high school </label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="education_completedhs">
-			<input type="radio"id="education_completedhs" value="2" name="education" class="error"> 
-			Completed high school	</label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="education_somecollege">
-			<input type="radio" id="education_somecollege" value="3" name="education" class="error"> 
-			Some college/Associate's degree </label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="education_bachelors">
-			<input type="radio"  id="education_bachelors" value="4" name="education" class="error"> 
-			Bachelor's degree </label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="education_highered">
-			<input type="radio" id="education_highered" value="5" name="education" class="error"> 
-			MA, MD, PhD, or other professional degree </label></p>
-			<label for="education" class="error" style="display; inline;"> This field is required.</label>
-	</fieldset>
-	<fieldset id="employment">
-		<p class="block-text"> 		
-		<label for ="employment" >  Are you currently employed?  </label> </p>
-		<p class="block-text"> 
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="employment_yes">
-			<input type="radio" id="employment_yes" value="1" name="employment" aria-required="true" class="error"> 
-			Yes </label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="employment_no">
-			<input type="radio" id="employment_no" value="0" name="employment" class="error"> 
-			No	</label></p>
-			<label for="employment" class="error" style="display; inline;"> This field is required.</label>
-</fieldset>
+<form id="prescreendemoForm" autocomplete="off">
+
+<p class="block-text"> How old are you? <label for="age" class="error"></label></p>
+<p class="block-text"> 
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="age" value="18to25">
+18-25
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="age" value="26to35">
+26-35
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="age" value="36to45">
+36-45
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="age" value="46to55">
+46-55
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="age" value="55andolder">
+55 and older
+
+</p>
+<p class="block-text"> What is your gender? <label for="gender" class="error"></label></p>
+<p class="block-text"> 
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="gender" value="Female">
+Female
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="gender" value="Male">
+Male
+</p>
+<p class="block-text"> What is your ethnic or racial background? <label for="ethnicity" class="error"></label></p>
+<p class="block-text"> 
+	
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="ethnicity" value="Black">
+	African American/Black
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="ethnicity" value="White">
+	Caucasian/White
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="ethnicity" value="EastAsian">
+	East Asian
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="ethnicity" value="Latino">
+	Hispanic/Latino/Latina
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="ethnicity" value="MidEast">
+	Middle Eastern
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="ethnicity" value="Mixed">
+	Mixed
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="ethnicity" value="Native">
+	Native American
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="ethnicity" value="PacficIslander">
+	Pacific Islander
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="ethnicity" value="SouthAsian">
+	South Asian
+	<br>
+</p>
+<p class="block-text"> What is the highest level of education you have completed? <label for="education" class="error"></label></p>
+<p class="block-text"> 
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="education" value="1">
+Some high school
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="education" value="2">
+Completed high school
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="education" value="3">
+Some college/Associate's degree
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="education" value="4">
+Bachelor's degree
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="education" value="5">
+MA, MD, PhD, or other professional degree
+</p>
+<p class="block-text"> Are you currently employed? <label for="employment" class="error"></label></p>
+<p class="block-text"> 
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="employment" value="1">
+Yes
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="employment" value="0">
+No
+</p>
+
 <input type="submit" value="Continue"></input>
+</form>
+</center>
 </div></div>
 
 <!-- The ineligible  slide. -->
@@ -341,9 +319,9 @@ Extremely Well
 <div class="slide" id="mother">
 	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
 <b>In this task, you will answer some questions about your mother.	</b><br><br>
-    <br>
-    Please type your mother's initials here: <textarea id="motherinitials" cols=10 rows=1></textarea> </input>
     <br><br>
+    Please type your mother's initials here: <textarea id="motherinitials" cols=10 rows=1></textarea> </input>
+    <br><br><br>
 Describe your mother in a couple of sentences:	<br> <br>
 	<textarea id="motherconditionresponse" cols=80 rows=15></textarea> </input>
     <br><br>
@@ -357,9 +335,9 @@ Describe your mother in a couple of sentences:	<br> <br>
 <div class="slide" id="self">
 	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
 <b>In this task, you will answer some questions about yourself.</b>	<br><br>
-    <br>
-    Please type your initials here: <textarea id="selfintials" cols=10 rows=1></textarea> </input>
     <br><br>
+    Please type your initials here: <textarea id="selfintials" cols=10 rows=1></textarea> </input>
+    <br><br><br>
 Describe yourself in a couple of sentences:	<br> <br>
 	<textarea id="selfconditionresponse" cols=80 rows=15></textarea> </input>
     <br><br>
@@ -810,10 +788,10 @@ I was confused	<br>
 <p class="block-text"> Did you use an internet tool or any other outside sources to complete the anagrams at any time? </p>
 <p class="block-text"> 
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="usedtool" value="1">
+	<input type="radio" name="readinstructions" value="1">
 Yes	<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="usedtool" value="0">
+	<input type="radio" name="readinstructions" value="0">
 No
 <br>
 <center>	<button onclick="experiment.finished()">Finish</button></center>

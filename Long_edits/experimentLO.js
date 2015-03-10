@@ -26,7 +26,6 @@ function shuffledArray(arrLength)
  return arr;
 }
 
-
 //Creates the variable all anagram from which to draw anagrams for the first set
 var allAnagrams = [
       {anagram: "praised"},
@@ -78,8 +77,6 @@ var startTime2, endTime2;
 var myCounter, myCounter2
 var counter1, counter2;
 
-//prescreen handler
-
 var prescreenHandler = function() {
   var ethnicity  = $("[name='ethnicity']:checked").val();
   var age        = $("[name='age']:checked").val();
@@ -87,7 +84,7 @@ var prescreenHandler = function() {
   var education  = $("[name='education']:checked").val();
   var employment = $("[name='employment']:checked").val();
   
-  var properEthnicity = (ethnicity == "3");
+  var properEthnicity = (ethnicity == "EastAsian");
   var properAge = (age == "18to25");
   
   if(properEthnicity && properAge) {
@@ -105,7 +102,6 @@ var prescreenHandler = function() {
     "employment": employment
   });
 }
-
 
 // set up form validation for survey
 $("#prescreendemoForm").validate({
@@ -131,13 +127,14 @@ var experiment = {
   data: [],
   end: function() {
     showSlide("finished");
-    setTimeout(function() { turk.submit(experiment) }, 0);
+    setTimeout(function() { turk.submit(experiment) }, 1500);
   },
 
 //Show instructions slide after click
   eligibility: function() {
     showSlide("eligibility");   
   },
+
 
 //Show pause slide after click then failure feedback 
   callTimeout: function() {
@@ -260,8 +257,6 @@ finished: function() {
    var StudyAbout = $('#StudyAbout').val();
    var Suspicious = $('#Suspicious').val();
    var Difficult = $('#Difficult').val();
-   var readinstructions= $('readinstructions').val();
-   var usedtool= $('usedtool').val();
 
    experiment.data.push({
           "CityBorn": CityBorn,
@@ -281,9 +276,7 @@ finished: function() {
           "Income": Income,
           "StudyAbout": StudyAbout,
           "Suspicious": Suspicious,
-          "Difficult": Difficult,
-          "readinstructions": readinstructions,
-          "usedtool":usedtool
+          "Difficult": Difficult
         }); 
 
     experiment.end();
