@@ -122,6 +122,81 @@ $("#prescreendemoForm").validate({
   }
 });
 
+var demoHandler = function() {
+   var born = $('#born').val();
+   var AgeLiveUS = $('#AgeLiveUS').val();
+   var OtherLanguageSpoken = $('#OtherLanguageSpoken').val();
+   var MotherBorn = $('#MotherBorn').val();
+   var FatherBorn = $('#FatherBorn').val();
+   var MotherEthnicity = $("[name='MotherEthnicity']:checked").val();
+   var FatherEthnicity = $("[name='FatherEthnicity']:checked").val();
+   var MotherEducation = $("[name='MotherEducation']:checked").val();
+   var FatherEducation = $("[name='FatherEducation']:checked").val();
+   var MotherLive = $("[name='MotherLive']:checked").val();
+   var FatherLive = $("[name='FatherLive']:checked").val();
+   var SES = $("[name='SES']:checked").val();
+   var Income = $("[name='Income']:checked").val();
+   var StudyAbout = $('#StudyAbout').val();
+   var Suspicious = $('#Suspicious').val();
+   var Difficult = $('#Difficult').val();
+ 
+ experiment.end();
+
+   experiment.data.push({
+          "born": born,
+          "AgeLiveUS": AgeLiveUS,
+          "OtherLanguageSpoken": OtherLanguageSpoken,
+          "MotherBorn": MotherBorn,
+          "FatherBorn": FatherBorn,
+          "MotherEthnicity": MotherEthnicity,
+          "FatherEthnicity": FatherEthnicity,
+          "MotherEducation": MotherEducation,
+          "FatherEducation": FatherEducation,
+          "MotherLive": MotherLive,
+          "FatherLive": FatherLive,
+          "SES": SES,
+          "Income": Income,
+          "StudyAbout": StudyAbout,
+          "Suspicious": Suspicious,
+          "Difficult": Difficult
+});
+}
+
+// set up form validation for prescreen survey
+$("#demos").validate({
+  submitHandler: demoHandler,
+  rules: {
+    born: "required",
+    AgeLiveUS: "required",
+    OtherLanguageSpoken: "required",
+    MotherBorn: "required",
+    FatherBorn: "required",
+    MotherEthnicity: "required",
+    FatherEthnicity: "required",
+    MotherEducation: "required",
+    FatherEducation: "required",
+    MotherLive: "required",
+    FatherLive: "required",
+    SES: "required",
+    Income: "required",
+  },
+  messages: {
+    born: "Required",
+    AgeLiveUS: "Required",
+    OtherLanguageSpoken: "Required",
+    MotherBorn: "Required",
+    FatherBorn: "Required",
+    MotherEthnicity: "Required",
+    FatherEthnicity: "Required",
+    MotherEducation: "Required",
+    FatherEducation: "Required",
+    MotherLive: "Required",
+    FatherLive: "Required",
+    SES: "Required",
+    Income: "Required"
+  }
+});
+
 
 var check1Handler = function() {
     var perform1 = $("[name='Perform1']:checked").val();
@@ -154,13 +229,12 @@ $("#check1").validate({
   }
 });
 
-//Show demographics slide on click
 var check2Handler = function() {
     var perform2 = $("[name='Perform2']:checked").val();
     var feel2 = $("[name='Feel2']:checked").val();
     var guessanagram2 = $('#guessanagram2').val();
-
-    showSlide("demographics");   
+    
+    showSlide("demographics");
 
         experiment.data.push({
           "Perform2": perform2,
@@ -184,6 +258,72 @@ $("#check2").validate({
   }
 });
 
+var motherData= {
+motherinitials: "motherinitials", 
+MotherDescription: "MotherDescription"}
+
+function motherHandler() {
+  // extract all questionnaire data into 
+
+  var questionnaireData = {};
+
+  // select the textareas, text inputs, and *checked* radio buttons
+  // then add them to the questionnaireData
+  $("#mother textarea, #mother input[type='text'], #mother input[type='radio']:checked").each(function(i, x) { 
+    questionnaireData[x.name] = $(x).val();
+  })
+    showSlide("instructions2");
+
+  motherData.questionnaire = questionnaireData
+
+  turk.submit(experimentData)
+}
+
+$("#mother").validate({
+  submitHandler: motherHandler,
+  rules: {
+    MotherInitials: "required",
+    MotherDescription: "required"
+  },
+  messages: {
+    MotherInitials: "Required",
+    MotherDescription: "Required"
+  }
+});
+
+
+var selfData= {
+selfinitials: "selfinitials", 
+selfDescription: "selfDescription"}
+
+function selfHandler() {
+  // extract all questionnaire data into 
+
+  var questionnaireData = {};
+
+  // select the textareas, text inputs, and *checked* radio buttons
+  // then add them to the questionnaireData
+  $("#self textarea, #self input[type='text'], #self input[type='radio']:checked").each(function(i, x) { 
+    questionnaireData[x.name] = $(x).val();
+  })
+    showSlide("instructions2");
+    
+  selfData.questionnaire = questionnaireData
+
+  turk.submit(experimentData)
+}
+
+$("#self").validate({
+  submitHandler: selfHandler,
+  rules: {
+    SelfInitials: "required",
+    SelfDescription: "required"
+  },
+  messages: {
+    SelfInitials: "Required",
+    SelfDescription: "Required"
+  }
+});
 // //test 
 // var experimentData= {
 //     "conditionSelf": conditionSelf, 
@@ -303,63 +443,20 @@ var experiment = {
   // },  
   
 //show instructions on click
-instructions2: function() {
-    var motherinitials = $('#motherinitials').val();
-    var motherconditionresponse = $('#motherconditionresponse').val();
-    var selfintials = $('#selfintials').val();
-    var selfconditionresponse = $('#selfconditionresponse').val();
+// instructions2: function() {
+//     var motherinitials = $('#motherinitials').val();
+//     var motherconditionresponse = $('#motherconditionresponse').val();
+//     var selfintials = $('#selfintials').val();
+//     var selfconditionresponse = $('#selfconditionresponse').val();
 
-  experiment.data.push({
-          "motherinitials": motherinitials,
-          "motherconditionresponse": motherconditionresponse,
-          "selfintials": selfintials,
-          "selfconditionresponse": selfconditionresponse
-        });
-    showSlide("instructions2");
-  },  
-
-//Call finished function to record data on MTurk
-finished: function() {
-          var guessanagram1 = $('#guessanagram1').val();
-
-   var born = $('#born').val();
-   var AgeLiveUS = $('#AgeLiveUS').val();
-   var OtherLanguageSpoken = $('#OtherLanguageSpoken').val();
-   var MotherBorn = $('#MotherBorn').val();
-   var FatherBorn = $('#FatherBorn').val();
-   var MotherEthnicity = $("[name='MotherEthnicity']:checked").val();
-   var FatherEthnicity = $("[name='FatherEthnicity']:checked").val();
-   var MotherEducation = $("[name='MotherEducation']:checked").val();
-   var FatherEducation = $("[name='FatherEducation']:checked").val();
-   var MotherLive = $("[name='MotherLive']:checked").val();
-   var FatherLive = $("[name='FatherLive']:checked").val();
-   var SES = $("[name='SES']:checked").val();
-   var Income = $("[name='Income']:checked").val();
-   var StudyAbout = $('#StudyAbout').val();
-   var Suspicious = $('#Suspicious').val();
-   var Difficult = $('#Difficult').val();
-
-   experiment.data.push({
-          "born": born,
-          "AgeLiveUS": AgeLiveUS,
-          "OtherLanguageSpoken": OtherLanguageSpoken,
-          "MotherBorn": MotherBorn,
-          "FatherBorn": FatherBorn,
-          "MotherEthnicity": MotherEthnicity,
-          "FatherEthnicity": FatherEthnicity,
-          "MotherEducation": MotherEducation,
-          "FatherEducation": FatherEducation,
-          "MotherLive": MotherLive,
-          "FatherLive": FatherLive,
-          "SES": SES,
-          "Income": Income,
-          "StudyAbout": StudyAbout,
-          "Suspicious": Suspicious,
-          "Difficult": Difficult
-        }); 
-
-    experiment.end();
-  },  
+//   experiment.data.push({
+//           "motherinitials": motherinitials,
+//           "motherconditionresponse": motherconditionresponse,
+//           "selfintials": selfintials,
+//           "selfconditionresponse": selfconditionresponse
+//         });
+//     showSlide("instructions2");
+//   },  
 
 //This is the timeout after the second set
 callTimeout2: function() {

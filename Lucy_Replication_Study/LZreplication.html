@@ -332,33 +332,37 @@ Extremely Well
 <!-- The mother condition slide.-->
 <center>
 <div class="slide" id="mother">
+		<form id="mother" method="get" action="">
 	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
 <b>In this task, you will answer some questions about your mother.	</b><br><br>
     <br><br>
-    Please type your mother's initials here: <textarea id="motherinitials" cols=10 rows=1></textarea> </input>
+    <label for="MotherInitials">Please type your mother's initials here: </label>
+    <textarea id="MotherInitials" name="common" cols="10" rows="1" minlength="1" class="required" /></textarea>
     <br><br><br>
-Describe your mother in a couple of sentences:	<br> <br>
-	<textarea id="motherconditionresponse" cols=80 rows=15></textarea> </input>
+<label for="MotherDescription">Describe your mother in a couple of sentences:</label>	<br> <br>
+<textarea id="MotherDescription" name="common" cols="100" rows="20" minlength="1" class="required" /></textarea>
     <br><br>
     Please click "Continue" to move on to the next task. 
     <br>
-	<button onclick="experiment.instructions2();">Continue</button>
+	<input class="submit" type="submit" value="Continue" />
 </div></div>
 
 <!-- The self condition slide.-->
 <center>
 <div class="slide" id="self">
+	<form id="self" method="get" action="">
 	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
 <b>In this task, you will answer some questions about yourself.</b>	<br><br>
     <br><br>
-    Please type your initials here: <textarea id="selfintials" cols=10 rows=1></textarea> </input>
+    <label for="SelfInitials">Please type your initials here: </label>
+    	<textarea id="SelfInitials" name="common" cols="10" rows="1" minlength="1" class="required" /></textarea>
     <br><br><br>
-Describe yourself in a couple of sentences:	<br> <br>
-	<textarea id="selfconditionresponse" cols=80 rows=15></textarea> </input>
+<label for="SelfDescription">Describe yourself in a couple of sentences:</label>	<br> <br>
+	<textarea id="SelfDescription" name="common" cols="100" rows="20" minlength="1" class="required" /></textarea>
     <br><br>
     Please click "Continue" to move on to the next task.
     <br>
-	<button onclick="experiment.instructions2();">Continue</button>
+	<input class="submit" type="submit" value="Continue" />
 </div></div>
 
 
@@ -414,7 +418,8 @@ Anagrams completed (of 12): <span id="counter2"></span>
 	<center>
 <br><br>
 <b> You have now completed the Part 2: Word Puzzle Task.  Please answer the following questions about your experience with the Part 2: Word Puzzle Task and how well you did on the task. There are no right or wrong answers. </b>
-<form id="check1" method="get" autocomplete="off">
+<br><br>
+<form id="check2" method="get" autocomplete="off">
 
 <p class="block-text">  Overall, how do you feel about how you did on the task?  <label for="Feel2" class="error"></label></p>
 <p class="block-text"> 
@@ -494,7 +499,7 @@ Extremely Well
 <br>
 <br>
 	<br>
-<form id="demos" autocomplete="off">
+<form id="demos" method="get" autocomplete="off">
 <p class="block-text"> Where were you born? (City, State, Country)<label for="born" class="error"></label></p>
  <input type="text" id="born" size=40 class="required" minlength="5">
 	<br>
