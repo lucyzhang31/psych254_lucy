@@ -1,0 +1,84 @@
+<html>
+<head>
+	<title>Category learning experiment</title>
+	<script src="jquery-1.11.2.min.js"></script>
+	<script src="jquery.validate.min.js"></script>
+	<script src="mmturkey.0.6.js?nowarn"></script>
+  <style>
+  textarea, input[type="text"] {
+    font-family: Courier;
+    font-weight: bold;
+    font-size: 13px;
+    padding: 4px;
+    border: 1px solid gray;
+  }
+
+  label {
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+
+  label.error {
+    display: none;
+    color: red;
+  }
+
+  li {
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+
+  li > p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+
+  </style>
+</head>
+<body>
+	<div style='width: 500px; margin: 0 auto'>
+		<h1>Questionnaire</h1>
+		<div style='width: 500px; margin:0 auto'>
+		<form id="form" method="get" action="">
+     <fieldset style='border: none'>
+       
+       <ol>
+       <li>
+          <label for="notice">What, if anything, did you notice that all the different parts had in common?</label>
+          <p><textarea id="notice" name="common" cols="50" rows="4" minlength="1" class="required" /></textarea></p>
+        </li>
+       <li>
+         <label for="age">Age in years: </label>
+         <input type="text" id="age" name="age" size="3" class="required" minlength="2" />
+       </li>
+       <li>
+         <p>Gender:</p>
+         <p><input type="radio" name="gender" value="f"> Female</p>
+         <p><input type="radio" name="gender" value="m"> Male</p>
+         <label for="gender" class="error"></label>
+       </li>
+       <li>
+          <label for="education">Highest level of education: </label><br />
+          <p><input type="radio" name="education" value="less_than_high_school"> Less than high school</p>
+          <p><input type="radio" name="education" value="high_school"> High school (or equivalent)</p>
+          <p><input type="radio" name="education" value="some_college"> Some college (or equivalent)</p>
+          <p><input type="radio" name="education" value="college"> College (or equivalent)</p>
+          <p><input type="radio" name="education" value="masters"> Master's degree</p>
+          <p><input type="radio" name="education" value="doctoral"> Doctoral degree</p>
+          <p><input type="radio" name="education" value="professional"> Professional degree</p>
+          <label for="education" class="error"></label>
+        </li>
+        </ol>
+       
+       <p>
+        <input class="submit" type="submit" value="Submit" />
+       </p>
+     </fieldset>
+    </form>
+    </div>
+	</div>
+	
+	<script src="design.js"></script>
+</body>
+</html>

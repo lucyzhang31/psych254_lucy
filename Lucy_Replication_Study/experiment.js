@@ -26,7 +26,6 @@ function shuffledArray(arrLength)
  return arr;
 }
 
-
 //Creates the variable all anagram from which to draw anagrams for the first set
 var allAnagrams = [
       {anagram: "praised"},
@@ -78,8 +77,6 @@ var startTime2, endTime2;
 var myCounter, myCounter2
 var counter1, counter2;
 
-//prescreen handler
-
 var prescreenHandler = function() {
   var ethnicity  = $("[name='ethnicity']:checked").val();
   var age        = $("[name='age']:checked").val();
@@ -87,11 +84,11 @@ var prescreenHandler = function() {
   var education  = $("[name='education']:checked").val();
   var employment = $("[name='employment']:checked").val();
   
-  var properEthnicity = (ethnicity == "3");
+  var properEthnicity = (ethnicity == "EastAsian");
   var properAge = (age == "18to25");
   
   if(properEthnicity && properAge) {
-    showSlide("instructions");      
+    showSlide("eligible");      
   } else {
     showSlide("ineligible");      
   };
@@ -106,8 +103,7 @@ var prescreenHandler = function() {
   });
 }
 
-
-// set up form validation for survey
+// set up form validation for prescreen survey
 $("#prescreendemoForm").validate({
   submitHandler: prescreenHandler,
   rules: {
@@ -126,17 +122,119 @@ $("#prescreendemoForm").validate({
   }
 });
 
+
+var check1Handler = function() {
+    var perform1 = $("[name='Perform1']:checked").val();
+    var feel1 = $("[name='Feel1']:checked").val();
+    var guessanagram1 = $('#guessanagram1').val();
+
+    if(conditionSelf==1) {
+      showSlide("self");      
+    } else {
+      showSlide("mother");      
+    };
+        experiment.data.push({
+          "Perform1": perform1,
+          "Feel1": feel1,
+          "guessanagram1": guessanagram1
+    });
+}
+// set up form validation for check1
+$("#check1").validate({
+  submitHandler: check1Handler,
+  rules: {
+    perform1: "required",
+    feel1: "required",
+    guessanagram1: "required"
+  },
+  messages: {
+    perform1: "Required",
+    feel1: "Required",
+    guessanagram1: "Required"
+  }
+});
+
+//Show demographics slide on click
+var check2Handler = function() {
+    var perform2 = $("[name='Perform2']:checked").val();
+    var feel2 = $("[name='Feel2']:checked").val();
+    var guessanagram2 = $('#guessanagram2').val();
+
+    showSlide("demographics");   
+
+        experiment.data.push({
+          "Perform2": perform2,
+          "Feel2": feel2,
+          "guessanagram2": guessanagram2
+    });
+}
+
+// set up form validation for check2
+$("#check2").validate({
+  submitHandler: check2Handler,
+  rules: {
+    perform2: "required",
+    feel2: "required",
+    guessanagram2: "required"
+  },
+  messages: {
+    perform2: "Required",
+    feel2: "Required",
+    guessanagram2: "Required"
+  }
+});
+
+// //test 
+// var experimentData= {
+//     "conditionSelf": conditionSelf, 
+//     "ethnicity": ethnicity, 
+//     "age": age,
+//     "gender": gender,
+//     "education": education,
+//     "employment": employment
+
+// }
+// function prescreenHandler() {
+//   // extract all questionnaire data into 
+
+//   var prescreenData = {};
+
+//   // select the textareas, text inputs, and *checked* radio buttons
+//   // then add them to the prescreenData
+//   $("#form textarea, #form input[type='text'], #form input[type='radio']:checked").each(function(i, x) { 
+//     prescreenData[x.name] = $(x).val();
+//   })
+
+//   experimentData.questionnaire = prescreenData
+
+//   turk.submit(experimentData)
+
+//   var properEthnicity = (ethnicity == "EastAsian");
+//   var properAge = (age == "18to25");
+
+//     if(properEthnicity && properAge) {
+//     showSlide("instructions");      
+//   } else {
+//     showSlide("ineligible");      
+//   };
+// }
+
 // ## The main event to collect data then submit it to Mturk after pause
 var experiment = {
   data: [],
   end: function() {
     showSlide("finished");
-    setTimeout(function() { turk.submit(experiment) }, 0);
+    setTimeout(function() { turk.submit(experiment) }, 1500);
   },
 
 //Show instructions slide after click
-  eligibility: function() {
-    showSlide("eligibility");   
+  eligible: function() {
+    showSlide("instructions");   
+  },
+
+//Show instructions slide after click
+  prescreen: function() {
+    showSlide("prescreen");   
   },
 
 //Show pause slide after click then failure feedback 
@@ -170,9 +268,9 @@ var experiment = {
           "trialNumber": trialNumber,
           "anagramText": n.anagram,
           "anagramAnswer": $('#anagramAnswer').val(),
+          "notes": $('#notes').val(),
           "reactionTime": endTime - startTime
         });
-        $('#anagramAnswer').val('');
     }
     if(trialNumber == totalTrialNumber ) {
       experiment.callTimeout();
@@ -191,36 +289,18 @@ var experiment = {
     showSlide("check");    
   },
 
-//Shows self condition if random number is 1, mother condition if zero
-  condition: function() {
-    if(conditionSelf==1) {
-      showSlide("self");      
-    } else {
-      showSlide("mother");      
-    }
-        var perform1 = $("[name='Perform1']:checked").val();
-        var feel1 = $("[name='Feel1']:checked").val();
-        var guessanagram1 = $('#guessanagram1').val();
 
-        experiment.data.push({
-          "Perform1": perform1,
-          "Feel1": feel1,
-          "guessanagram1": guessanagram1});
+  //  demographics: function() {
+  //       var perform2 = $("[name='Perform2']:checked").val();
+  //       var feel2 = $("[name='Feel2']:checked").val();
+  //       var guessanagram2 = $('#guessanagram2').val();
 
-  },
-
-//Show demographics slide on click
-   demographics: function() {
-        var perform2 = $("[name='Perform2']:checked").val();
-        var feel2 = $("[name='Feel2']:checked").val();
-        var guessanagram2 = $('#guessanagram2').val();
-
-    showSlide("demographics");   
-    experiment.data.push({
-          "Perform2": perform2,
-          "Feel2": feel2,
-          "guessanagram2": guessanagram2}); 
-  },  
+  //   showSlide("demographics");   
+  //   experiment.data.push({
+  //         "Perform2": perform2,
+  //         "Feel2": feel2,
+  //         "guessanagram2": guessanagram2}); 
+  // },  
   
 //show instructions on click
 instructions2: function() {
@@ -242,9 +322,7 @@ instructions2: function() {
 finished: function() {
           var guessanagram1 = $('#guessanagram1').val();
 
-   var CityBorn = $('#CityBorn').val();
-   var StateBorn = $('#StateBorn').val();
-   var CountryBorn = $('#CountryBorn').val();
+   var born = $('#born').val();
    var AgeLiveUS = $('#AgeLiveUS').val();
    var OtherLanguageSpoken = $('#OtherLanguageSpoken').val();
    var MotherBorn = $('#MotherBorn').val();
@@ -260,13 +338,9 @@ finished: function() {
    var StudyAbout = $('#StudyAbout').val();
    var Suspicious = $('#Suspicious').val();
    var Difficult = $('#Difficult').val();
-   var readinstructions= $('readinstructions').val();
-   var usedtool= $('usedtool').val();
 
    experiment.data.push({
-          "CityBorn": CityBorn,
-          "StateBorn": StateBorn,
-          "CountryBorn": CountryBorn,
+          "born": born,
           "AgeLiveUS": AgeLiveUS,
           "OtherLanguageSpoken": OtherLanguageSpoken,
           "MotherBorn": MotherBorn,
@@ -281,9 +355,7 @@ finished: function() {
           "Income": Income,
           "StudyAbout": StudyAbout,
           "Suspicious": Suspicious,
-          "Difficult": Difficult,
-          "readinstructions": readinstructions,
-          "usedtool":usedtool
+          "Difficult": Difficult
         }); 
 
     experiment.end();
@@ -320,9 +392,9 @@ callTimeout2: function() {
           "trialNumber2": trialNumber2,
           "anagramText2": n.anagram,
           "anagramAnswer2": $('#anagramAnswer2').val(),
+          "notes2": $('#notes2').val(),
           "reactionTime2": endTime2 - startTime2
         });
-        $('#anagramAnswer2').val('');
     }
     if(trialNumber2 == totalTrialNumber2 ) {
     experiment.callTimeout2 ();
@@ -335,11 +407,11 @@ callTimeout2: function() {
     } 
   },
 
-//Show the check 2 slide after the second trial
+// //Show the check 2 slide after the second trial
 
-  check2: function() {
-    showSlide("check2");    
-  },
+//   check2: function() {
+//     showSlide("check2");    
+//   },
 
 //Check answers from anagrams
 // checkanagrams: function () {

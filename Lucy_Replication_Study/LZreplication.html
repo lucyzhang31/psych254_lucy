@@ -7,174 +7,153 @@
 	
 	<!-- Include my library, [mmturkey][mmturkey], which manages submitting data to Mechanical Turk. This defines a global object, <code>turk</code>, and attaches five properties to it, <code>hitId</code>, <code>assignmentId</code>, <code>workerId</code>, <code>previewMode</code>, and <code>turkSubmitTo</code>. It also provides a single method, <code>submit(data)</code>, which you use to submit data to Turk. If no submission URL has been provided (because, e.g. you're testing your code outside of the Turk environment), <code>submit</code> displays what would have been submitted (without, obviously, any Turk-specific variables like <code>workerId</code> and <code>assignmentId</code>).  -->
 	<!-- [mmturkey]: http://github.com/longouyang/mmturkey -->
-	<script src="mmturkey-0.6.1.js"></script>
+	<script src="mmturkey-0.6.js"></script>
 	
 	<!-- Include the cascading style sheet (CSS), which lets us separate style from content. This stylesheet is important because it defines the notion of a **slide** and also makes things look nicer, which subjects appreciate. It's worth looking at the [source code](style.html). -->
 	<link rel="stylesheet" href="style.css" />
 
 	<!--Brings in the j query validate plugin-->
-	<script src="jquery.validate.js"?></script>
-
-<style>
-
-label.error {
-    display: none;
-    color: red;
-  }
-</style>
-
+	<script src="jquery.validate.js"></script>
 </head>
 <body>
 
 <!-- The introduction slide. -->
 <div class="slide" id="introduction">
-  <div style="width: 500px; margin: 0 auto; text-align: center; background-color: #8C1516; padding: 20px 15px 10px 10px">
+  <div style="width: 500px; margin: 0 auto; text-align: center; background-color: #8C1516; padding: 10px 10px 10px 10px">
     <img src="images/stanford.png" height="46" width="360" alt="Stanford University">
   </div>
   	<center>
 		<h2>Stanford Problem Solving Study</h2>
 	</center>
-	<p class="block-text">Thank you for your interest in the Stanford problem-solving study.  This study examines how your academic and social experiences influence problem-solving.  You must be 18-25 to participate in this study. First, you will answer several demographic questions to determine whether you are eligible to participate in the study. If you are not eligible to participate, you will receive $.10 for your time and be exited from the study. If you are eligible to participate in the study, you will automatically progress to the study. You will be bonused $1.00 upon completion of the study.  During the study, you will be asked to solve several word puzzles and to think about yourself and others who are close to you.
+	<p class="block-text">Thank you for your interest in the Stanford problem-solving study.  First, you will answer several demographic questions to determine whether you are eligible to participate in the study. If you are not eligible to participate, you will receive $.10 for your time and be exited from the study. If you are eligible to participate in the study, you will automatically progress to the study and be bonused $1.00 upon completion of the study.  During the study, the computer will randomly select different learning tasks for you to do. This study takes 15 minutes of uninterrupted time.
 		</p>
 	<center>
-	<button type="button" onclick="this.blur(); experiment.eligibility()">Start</button>
-	
+	<button type="button" onclick="this.blur(); experiment.prescreen()">Start</button>
+		<button type="button" onclick="this.blur(); experiment.afterFeedback()">Test</button>
+
 
 	</center>
 	<!-- Legal blurb that we're required to show. -->
-	<p class="block-text" id="legal">Legal information: By answering the following questions, you are participating in a study being performed by researchers in the Stanford Department of Psychology. If you have questions about this research, please contact Lucy Zhang at <a href="mailto://stanfordsubjects@gmail.com">stanfordsubjects@gmail.com</a>. You must be at least 18 years old to participate. Your participation in this research is voluntary. You may decline to answer any or all of the following questions. You may decline further participation, at any time, without adverse consequences. Your anonymity is assured; the researchers who have requested your participation will not receive any personally identifying information about you.</p>
+	<p class="block-text" id="legal">Legal information: By answering the following questions, you are participating in a study being performed by researchers in the Stanford Department of Psychology. If you have questions about this research, please contact Lucy Zhang at <a href="mailto://stanfordsubjects@gmail.com">stanfordsubjects@gmail.com</a>. You must be 18 to 25 years old to participate. Your participation in this research is voluntary. You may decline to answer any or all of the following questions. You may decline further participation, at any time, without adverse consequences. Your anonymity is assured; the researchers who have requested your participation will not receive any personally identifying information about you.</p>
 </div>
 
 <!-- The Demographics  slide to gauge eligiblity. -->
-<div class="slide" id="eligibility">
+<center>
+<div class="slide" id="prescreen">
 	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
-
-<form class="cmxform" id="prescreendemoform" method="get" action novalidate="novalidate" autocomplete="off">
 <b>Please answer the following questions to determine whether you are eligible for the survey.  If you are not eligible to participate, you will receive $.10 for your time and be exited from the study. If you are eligible to participate in the study, you will automatically progress to the study. You will be bonused $1.00 upon completion of the study. Please DO NOT take the demographics survey more than once. </b>
 <br><br><br>
-<fieldset id="age">
-	<p class="block-text">
-		<legend> 	How old are you? </legend> </p>
-		<p class="block-text">
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="age_18to25">
-			<input type="radio" id="age_18to25" value="18to25" name="age" aria-required="true" class="error">
-			18-25 </label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="age_26to35">
-			<input type="radio" id="age_26to35" value="26to35" name="age" class="error">
-			26-35 </label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="age_26to35">
-			<input type="radio" id="age_36to45" value="36to45" name="age" class="error">
-			36-45 </label><br> 
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="age_46to55">
-			<input type="radio" id="age_46to55" value="46to55" name="age" class="error">
-			46-55 </label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="age_56up">
-			<input type="radio" id="age_56up" value="56up" name="age" class="error">
-	 		56 and older </label></p>
-	 	<label for="age" class="error" style="display: inline;"> This field is required. </label>
-	 </fieldset>
-	 <fieldset id="gender">
-	 	<p class="block-text">
-		<legend> 	What is your gender? </legend> </p>
-			<p class="block-text">
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="gender_female">
-			<input type="radio" id="gender_female" value="female" name="gender" aria-required="true" class="error">
-			Female <br></label>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="gender_male">
-			<input type="radio" id="gender_male" value="male" name="gender" class="error">
-			Male </label></p>
-			<label for="gender" class="error" style="display; inline;"> This field is required.</label>
-	</fieldset>
-	<fieldset id="ethnicity">
-		<p class="block-text">
-		<legend> What is your ethnicity? </legend> </p>
-			<p class="block-text">
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="ethnicity_aa">
-			<input type="radio" id="ethnicity_aa" value="1" name="ethnicity"  aria-required="true" class="error"> 
-			African American/Black </label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="ethnicity_white">
-			<input type="radio" class="radio"  id="ethnicity_white" value="2" name="ethnicity" class="error">
-			Caucasian/White </label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="ethnicity_ea">
-			<input type="radio" class="radio" id="ethnicity_ea" value="3" name="ethnicity" class="error">
-			East Asian </label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="ethnicity_latino">
-			<input type="radio" class="radio" id="ethnicity_latino" value="4" name="ethnicity" class="error">
-			Hispanic/Latino/Latina </label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="ethnicity_mideast">
-			<input type="radio" class="radio" id="ethnicity_mideast" value="5" name="ethnicity" class="error">
-			Middle Eastern </label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="ethnicity_mixed">
-			<input type="radio" class="radio" id="ethnicity_mixed" value="6" name="ethnicity" class="error">
-			Mixed </label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="ethnicity_native">
-			<input type="radio" class="radio"  id="ethnicity_native" value="7" name="ethnicity" class="error">
-			Native American</label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="ethnicity_pacific">
-			<input type="radio" class="radio" id="ethnicity_pacific" value="8" name="ethnicity" class="error">
-			Pacific Islander</label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="ethnicity_sa">
-			<input type="radio" class="radio" id="ethnicity_sa" value="9" name="ethnicity" class="error">
-			South Asian </label></p>
-			<label for="ethnicity" class="error" style="display; inline;"> This field is required.</label>
-	 </fieldset>
-	 <fieldset id="education">
-		<p class="block-text"> 
-		<legend >  What is the highest level of education you have completed?  </legend> </p>
-		<p class="block-text"> 
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="education_somehs">
-			<input type="radio" id="education_somehs" value="1" name="education" aria-required="true" class="error"> 
-			Some high school </label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="education_completedhs">
-			<input type="radio"id="education_completedhs" value="2" name="education" class="error"> 
-			Completed high school	</label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="education_somecollege">
-			<input type="radio" id="education_somecollege" value="3" name="education" class="error"> 
-			Some college/Associate's degree </label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="education_bachelors">
-			<input type="radio"  id="education_bachelors" value="4" name="education" class="error"> 
-			Bachelor's degree </label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="education_highered">
-			<input type="radio" id="education_highered" value="5" name="education" class="error"> 
-			MA, MD, PhD, or other professional degree </label></p>
-			<label for="education" class="error" style="display; inline;"> This field is required.</label>
-	</fieldset>
-	<fieldset id="employment">
-		<p class="block-text"> 		
-		<label for ="employment" >  Are you currently employed?  </label> </p>
-		<p class="block-text"> 
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="employment_yes">
-			<input type="radio" id="employment_yes" value="1" name="employment" aria-required="true" class="error"> 
-			Yes </label><br>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<label for="employment_no">
-			<input type="radio" id="employment_no" value="0" name="employment" class="error"> 
-			No	</label></p>
-			<label for="employment" class="error" style="display; inline;"> This field is required.</label>
-</fieldset>
+<form id="prescreendemoForm" autocomplete="off">
+
+<p class="block-text"> How old are you? <label for="age" class="error"></label></p>
+<p class="block-text"> 
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="age" value="18to25">
+18-25
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="age" value="26to35">
+26-35
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="age" value="36to45">
+36-45
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="age" value="46to55">
+46-55
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="age" value="55andolder">
+55 and older
+
+</p>
+<p class="block-text"> What is your gender? <label for="gender" class="error"></label></p>
+<p class="block-text"> 
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="gender" value="Female">
+Female
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="gender" value="Male">
+Male
+</p>
+<p class="block-text"> What is your ethnic or racial background? <label for="ethnicity" class="error"></label></p>
+<p class="block-text"> 
+	
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="ethnicity" value="Black">
+	African American/Black
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="ethnicity" value="White">
+	Caucasian/White
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="ethnicity" value="EastAsian">
+	East Asian
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="ethnicity" value="Latino">
+	Hispanic/Latino/Latina
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="ethnicity" value="MidEast">
+	Middle Eastern
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="ethnicity" value="Mixed">
+	Mixed
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="ethnicity" value="Native">
+	Native American
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="ethnicity" value="PacficIslander">
+	Pacific Islander
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="ethnicity" value="SouthAsian">
+	South Asian
+	<br>
+</p>
+<p class="block-text"> What is the highest level of education you have completed? <label for="education" class="error"></label></p>
+<p class="block-text"> 
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="education" value="1">
+Some high school
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="education" value="2">
+Completed high school
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="education" value="3">
+Some college/Associate's degree
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="education" value="4">
+Bachelor's degree
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="education" value="5">
+MA, MD, PhD, or other professional degree
+</p>
+<p class="block-text"> Are you currently employed? <label for="employment" class="error"></label></p>
+<p class="block-text"> 
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="employment" value="1">
+Yes
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="employment" value="0">
+No
+</p>
+
 <input type="submit" value="Continue"></input>
+</form>
+</center>
 </div></div>
 
 <!-- The ineligible  slide. -->
@@ -186,12 +165,24 @@ label.error {
 </center>
 </div></div>
 
-<!-- The instructions  slide. -->
+<!-- The eligible  slide. -->
+<div class="slide" id="eligible">
+	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
+	<br><br>
+	<b>You are eligible to participate in the study.</b>
+	<p>
+In our research, we are developing different kinds of tasks and questionnaires to examine how individuals learn. In this study, the computer will randomly select different tasks for you to do. The combination of tasks that the computer selects for you may not be the same combination that other participants do. Some of the tasks will be math and word puzzles, while others require thinking about yourself and others who are close to you. Finally you will answer a series of questionnaires about yourself and the different experiences that you have had.
+</p>
 
+<p>Please answer honestly and do not use outside sources while participating in this study.</p>
+
+<button type="button" onclick="experiment.eligible()">Continue</button>
+
+</div></div>
+
+<!-- The instructions  slide. -->
 <div class="slide" id="instructions">
 	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
-	<b>You are eligible to participate in the study.</b>
-<br> <br> 
 	<p>
 		<h2> Part 1: Word Puzzle Task </h2>
 	<p> In this task, you will complete a series of word puzzles commonly referred to as "anagrams." An anagram is a word that is formed by rearranging ALL of the letters of another word. For this task, please complete as many anagrams as you can. You will have 5 minutes to do this task. After 5 minutes, the survey will move on.
@@ -199,8 +190,8 @@ label.error {
 <p> If you are not sure of the right answer, please make your best guess and to move on to the next question. </p>
 <p> Once you click "Next" to move to a new anagram, you will NOT be able to return to a previous page. </p>
 <p> <b> Sample Items: </b> </p>	
-<p> Example 1:     lasting         <br> Answer:           salting   </p>        		
-<p> Example 2:     swing           <br>     Answer:            wings    </p>       
+<p> Example 1:     lasting    ->  Answer:           salting   </p>        		
+<p> Example 2:     swing      ->  Answer:            wings    </p>       
 	
 </p>
 <button type="button" onclick="experiment.next(); experiment.startTimer();">Continue</button>
@@ -212,24 +203,24 @@ label.error {
 <!-- The "stage" slide Part 1 will be displayed here -->
 <div class="slide" id="stage">
 	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
-
 	<center>
-	<br><br>
-	Instructions: You have 5 minutes to complete as many anagrams as you can.  Please rearrange the letters in the word provided to create a new word.  You must use ALL the letters in the word provided to create the new word. Please write your answer in the answer box. If you do not know the answer please write your best guess in the answer box. Once you click "Next" you will NOT be allowed to change your answer.  Your answers will be evaluated at the end of the task.
+	Instructions: You must use ALL the letters in the word provided to create the new word. You can use the notes box to work on the problem.  Please write your answer in the answer box. If you do not know the answer please write your best guess in the answer box. Once you click "Next" you will NOT be allowed to change your answer.  Your answers will be evaluated at the end of the task. </center>
     <br>    <br>
-	Word: <h2 id="anagrams" size="20">{{}}</h2>
+	Word: </p> <h2 id="anagrams" size="20">{{}}</h2> </p>
 	<br>
-	Answer:<br>
+	Notes:<br>	
+	<textarea id="notes" cols=50 rows=5></textarea> </input>
+    <br><br>
+	Answer:
 	<input type="text" id="anagramAnswer"> </input>
 	<br>
 	<br>
 	<button onclick="experiment.next()">Next</button>
-
+</p>
 <br>
+Time left: <span id="logout-timer"></span>
 <br>
-You have <span id="logout-timer"></span> seconds remaining to complete these word puzzles.
-<br><br>
-You have completed <span id="counter1"></span> of 12 word puzzles.
+Anagrams completed (of 12): <span id="counter1"></span> 
 
 	</center>
 
@@ -266,10 +257,12 @@ Please click "Continue" to answer a couple of questions about your experience wi
 	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
 <b>Please answer the following questions about your experience with the Part 1: Word Puzzle Task and how well you did on the task. There are no right or wrong answers. </b>
 	<br><br>
-	<p class="block-text"> Overall, how do you feel about how you did on the task?  </p>
+<form id="check1" method="get" autocomplete="off">
+
+	<p class="block-text"> Overall, how do you feel about how you did on the task? <label for="Feel1" class="error"></label></p>
 <p class="block-text"> 
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="Feel1" value="1">
+	<input type="radio" name="Feel1" value="1" class="required">
 Extremely Displeased
 	<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;
@@ -296,12 +289,11 @@ Very Pleased
 	<input type="radio" name="Feel1" value="7">
 Extremely Pleased
 </p>
-<br>
 	<p class="block-text"> Overall, how well do you think you think you did on the task?   </p>
-	<p>"On the task, I did..."</p>
+	<p>"On the task, I did..." <label for="Perform1" class="error"></label></p>
 <p class="block-text"> 
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="Perform1" value="1">
+	<input type="radio" name="Perform1" value="1" class="required">
 Extremely Badly
 	<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;
@@ -329,11 +321,12 @@ Very Well
 Extremely Well
 </p>
 <br>
-<p class="block-text"> How many anagrams do you think you solved out of 12?</p>
-<input type="text" id="guessanagram1" size=20>
+<p class="block-text"> How many anagrams do you think you solved out of 12? <label for="guessanagram1" class="error"></label></p>
+<input type="text" id="guessanagram1" size=20 class="required" minlength="1">
 </p>
 
-	<button onclick="experiment.condition()">Continue</button>
+<input type="submit" value="Continue"></input>
+</form>
 </div></div>
 
 <!-- The mother condition slide.-->
@@ -341,9 +334,9 @@ Extremely Well
 <div class="slide" id="mother">
 	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
 <b>In this task, you will answer some questions about your mother.	</b><br><br>
-    <br>
-    Please type your mother's initials here: <textarea id="motherinitials" cols=10 rows=1></textarea> </input>
     <br><br>
+    Please type your mother's initials here: <textarea id="motherinitials" cols=10 rows=1></textarea> </input>
+    <br><br><br>
 Describe your mother in a couple of sentences:	<br> <br>
 	<textarea id="motherconditionresponse" cols=80 rows=15></textarea> </input>
     <br><br>
@@ -357,9 +350,9 @@ Describe your mother in a couple of sentences:	<br> <br>
 <div class="slide" id="self">
 	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
 <b>In this task, you will answer some questions about yourself.</b>	<br><br>
-    <br>
-    Please type your initials here: <textarea id="selfintials" cols=10 rows=1></textarea> </input>
     <br><br>
+    Please type your initials here: <textarea id="selfintials" cols=10 rows=1></textarea> </input>
+    <br><br><br>
 Describe yourself in a couple of sentences:	<br> <br>
 	<textarea id="selfconditionresponse" cols=80 rows=15></textarea> </input>
     <br><br>
@@ -375,17 +368,15 @@ Describe yourself in a couple of sentences:	<br> <br>
 	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
 				<h2> Part 2: Word Puzzle Task </h2>
 
-	As in Part 1: Word Puzzle Task, you will be presented with anagram word puzzles to solve. You have 5 minutes to complete as many anagrams as you can.  Please rearrange the letters in the word provided to create a new word.  You must use ALL the letters in the word provided to create the new word. Please write your answer in the answer box. If you are not sure of the right answer, feel free to make your best guess and to move on to the next puzzle.
+	As in Part 1: Word Puzzle Task, you will be presented with anagram word puzzles to solve. You have 5 minutes to complete as many anagrams as you can.  	Please rearrange the letters in the word provided to create a new word.  You must use ALL the letters in the word provided to create the new word.  You can use the notes box to work on the problem.  Please write your answer in the answer box. If you are not sure of the right answer, feel free to make your best guess and to move on to the next puzzle.
  
 <br><p>Please note, once you continue on to a new anagram, you will NOT be able to return to a previous page.</p>
  <p>You have a maximum of 5 minutes to do 12 anagrams. At the end of 5 minutes, the survey will continue on. Please use your time wisely. </p>
  
 	<p> <b> Sample Items: </b> </p>	
-<p> Example 1:     lasting         <br> Answer:           salting   </p>        		
-<p> Example 2:     swing           <br>     Answer:            wings    </p>     
-
-<br><p>Please click "Continue" to begin the next task.</p>
-
+<p> Example 1:     lasting   -> Answer:           salting   </p>        		
+<p> Example 2:     swing     -> Answer:            wings    </p>     
+<br>
 <button type="button" onclick="experiment.next2(); experiment.startTimer2();">Continue</button>
 
 </div></div>
@@ -394,23 +385,24 @@ Describe yourself in a couple of sentences:	<br> <br>
 <div class="slide" id="stage2">
 		<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
 	<center>
-	<br><br>
-	<br><br>
-	Instructions: Please rearrange the letters in the word provided to create a new word.  You must use ALL the letters in the word provided to create the new word.  Write your answer in the answer box. Please complete as many anagrams as you can. If you are not sure of the right answer, make your best guess and move on to the next question.
+	Instructions: You must use ALL the letters in the word provided to create the new word.  You can use the notes box to work on the problem.  Write your answer in the answer box. Please complete as many anagrams as you can. If you are not sure of the right answer, make your best guess and move on to the next question.
 	 <br>    <br>
 	Word: <h2 id="anagrams2" size="20">{{}}</h2>
-	<br>
-	Answer:<br>
+	<br><br>
+	Notes:<br>
+	<textarea id="notes2" cols=50 rows=5></textarea> </input>
+	<br><br>
+	Answer:
 	<input type="text" id="anagramAnswer2"> </input>
-	<br>
 	<br>
 	<br>
 	<button onclick="experiment.next2()">Next</button> 
 <br>
 <br>
-You have <span id="logout-timer2"></span> seconds remaining to complete these word puzzles.
-<br><br>
-You have completed <span id="counter2"></span> of 12 word puzzles.
+Time left: <span id="logout-timer2"></span>
+<br>
+Anagrams completed (of 12): <span id="counter2"></span> 
+
 
 	</center>
 
@@ -422,11 +414,12 @@ You have completed <span id="counter2"></span> of 12 word puzzles.
 	<center>
 <br><br>
 <b> You have now completed the Part 2: Word Puzzle Task.  Please answer the following questions about your experience with the Part 2: Word Puzzle Task and how well you did on the task. There are no right or wrong answers. </b>
-	<br><br>
-	<p class="block-text"> Overall, how do you feel about how you did on the task?  </p>
+<form id="check1" method="get" autocomplete="off">
+
+<p class="block-text">  Overall, how do you feel about how you did on the task?  <label for="Feel2" class="error"></label></p>
 <p class="block-text"> 
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="Feel2" value="1">
+	<input type="radio" name="Feel2" value="1" class="required">
 Extremely Displeased
 	<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;
@@ -455,10 +448,10 @@ Extremely Pleased
 </p>
 <br>
 	<p class="block-text"> Overall, how well do you think you think you did on the task?   </p>
-	<p>"On the task, I did..."</p>
+	<p>"On the task, I did..."<label for="Perform2" class="error"></label></p>
 <p class="block-text"> 
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="Perform2" value="1">
+	<input type="radio" name="Perform2" value="1" class="required">
 Extremely Badly
 	<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;
@@ -486,14 +479,13 @@ Very Well
 Extremely Well
 </p>
 <br>
-<p class="block-text"> How many anagrams do you think you solved out of 12?</p>
-<input type="text" name="guessanagram2" size=20>
+<p class="block-text"> How many anagrams do you think you solved out of 12?<label for="guessanagram2" class="error"></label></p>
+<input type="text" id="guessanagram2" size=20 class="required" minlength="1">
 </p>
 
-	<button onclick="experiment.demographics()">Continue</button>
-
-	</center>
-
+<input type="submit" value="Continue"></input>
+</form>
+</center>
 </div>	</div>
 
 <!-- The demographics slide. INPUT DEMOGRAPHICS AND IDENTITY QUESTIONS -->
@@ -502,25 +494,20 @@ Extremely Well
 <br>
 <br>
 	<br>
-
-<p class="block-text"> Where were you born?</p>
-<p>City: <input type="text" id="CityBorn" size=40></p>
-State: <input type="text" id="StateBorn" size=40></p>
-Country: <input type="text" id="CountryBorn" size=40></p>
+<form id="demos" autocomplete="off">
+<p class="block-text"> Where were you born? (City, State, Country)<label for="born" class="error"></label></p>
+ <input type="text" id="born" size=40 class="required" minlength="5">
 	<br>
-	<p class="block-text"> If you were not born in the U.S., at what age did you begin living in the U.S.?</p>
-<p><input type="text" id="AgeLiveUS" size=20> </p>
+	<p class="block-text"> If you were not born in the U.S., at what age did you begin living in the U.S.?<label for="AgeLiveUS" class="error"></label></p>
+ <input type="text" id="AgeLiveUS" size=40 class="required" minlength="5">
 <br>
-	<p class="block-text"> What languages, if any, do you speak other than English? </p>
-<p><input type="text" id="OtherLanguageSpoken" size=40></p>
-<br>
-	<p class="block-text"> Where was your mother born? (City, State, Country) </p>
-<p><input type="text" id="MotherBorn" size=40>  </p>
-<br>
-	<p class="block-text"> Where was your father born? (City, State, Country)</p>
-<p><input type="text" id="FatherBorn" size=40>  </p>
-<br>
-<p class="block-text"> What is your mother's ethnic or racial background? </p>
+	<p class="block-text"> What languages, if any, do you speak other than English? <label for="OtherLanguageSpoken" class="error"></label></p>
+ <input type="text" id="OtherLanguageSpoken" size=40 class="required" minlength="5"><br>
+	<p class="block-text"> Where was your mother born? (City, State, Country) <label for="MotherBorn" class="error"></label></p>
+<input type="text" id="MotherBorn" size=40 class="required" minlength="5"><br>
+	<p class="block-text"> Where was your father born? (City, State, Country)<label for="FatherBorn" class="error"></label></p>
+<input type="text" id="FatherBorn" size=40 class="required" minlength="5"><br><br>
+<p class="block-text"> What is your mother's ethnic or racial background? <label for="MotherEthnicity" class="error"></label></p>
 <p class="block-text"> 
 	
 	&nbsp;&nbsp;&nbsp;&nbsp;
@@ -559,7 +546,7 @@ Country: <input type="text" id="CountryBorn" size=40></p>
 	<input type="radio" name="MotherEthnicity" value="9">
 	South Asian
 	<br>
-	<p class="block-text"> What is your father's ethnic or racial background? </p>
+	<p class="block-text"> What is your father's ethnic or racial background? <label for="FatherEthnicity" class="error"></label></p>
 <p class="block-text"> 
 	
 	&nbsp;&nbsp;&nbsp;&nbsp;
@@ -598,7 +585,7 @@ Country: <input type="text" id="CountryBorn" size=40></p>
 	<input type="radio" name="FatherEthnicity" value="9">
 	South Asian
 	<br>
-<p class="block-text"> What is the highest level of education your mother has completed? </p>
+<p class="block-text"> What is the highest level of education your mother has completed? <label for="MotherEducation" class="error"></label></p>
 <p class="block-text"> 
 	&nbsp;&nbsp;&nbsp;&nbsp;
 	<input type="radio" name="MotherEducation" value="1">
@@ -620,7 +607,7 @@ Bachelor's degree
 	<input type="radio" name="MotherEducation" value="5">
 MA, MD, PhD, or other professional degree
 </p>
-<p class="block-text"> What is the highest level of education your father has completed? </p>
+<p class="block-text"> What is the highest level of education your father has completed? <label for="FatherEducation" class="error"></label></p>
 <p class="block-text"> 
 	&nbsp;&nbsp;&nbsp;&nbsp;
 	<input type="radio" name="FatherEducation" value="1">
@@ -642,7 +629,7 @@ Bachelor's degree
 	<input type="radio" name="FatherEducation" value="5">
 MA, MD, PhD, or other professional degree
 </p>
-<p class="block-text"> When was the last time you permanently lived with your mother? </p>
+<p class="block-text"> When was the last time you permanently lived with your mother? <label for="MotherLive" class="error"></label></p>
 <p class="block-text"> 
 	&nbsp;&nbsp;&nbsp;&nbsp;
 	<input type="radio" name="MotherLive" value="1">
@@ -676,7 +663,7 @@ I currently live with my mother
 	<input type="radio" name="MotherLive" value="8">
 More than 5 years ago
 </p>
-<p class="block-text"> When was the last time you permanently lived with your father? </p>
+<p class="block-text"> When was the last time you permanently lived with your father? </p><label for="FatherLive" class="error"></label></p>
 <p class="block-text"> 
 	&nbsp;&nbsp;&nbsp;&nbsp;
 	<input type="radio" name="FatherLive" value="1">
@@ -710,7 +697,7 @@ I currently live with my father
 	<input type="radio" name="FatherLive" value="8">
 More than 5 years ago
 </p>
-<p class="block-text"> What is your socioeconomic level? </p>
+<p class="block-text"> What is your socioeconomic level? <label for="SES" class="error"></label></p>
 <p class="block-text"> 
 	&nbsp;&nbsp;&nbsp;&nbsp;
 	<input type="radio" name="SES" value="1">
@@ -736,7 +723,7 @@ Upper income
 	<input type="radio" name="SES" value="6">
 I don't know
 </p>
-<p class="block-text"> Approximately what is your annual combined household income? </p>
+<p class="block-text"> Approximately what is your annual combined household income? <label for="Income" class="error"></label></p>
 <p class="block-text"> 
 	&nbsp;&nbsp;&nbsp;&nbsp;
 	<input type="radio" name="Income" value="1">
@@ -783,17 +770,17 @@ $90,001-$100,000
 	Over $100,001
 </p>
 
-<p class="block-text"> What do you think the study was about? </p>
+<p class="block-text"> What do you think the study was about? <label for="StudyAbout" class="error"></label></p>
 <p class="block-text"> 
-<textarea id="StudyAbout" cols=80 rows=5></textarea> </input>
+<textarea id="StudyAbout" cols=80 rows=5></textarea> 
 <br>
 <p class="block-text"> Sometimes participants are suspicious when they participate in surveys like this one. Were you suspicious at any time during the study? If yes, why?  </p>
 <p class="block-text"> 
-<textarea id="Suspicious" cols=80 rows=5></textarea> </input>
+<textarea id="Suspicious" cols=80 rows=5></textarea> 
 <br>
 <p class="block-text"> Was there anything strange or difficult to answer in the study? If so, please describe what it was and why. </p>
 <p class="block-text"> 
-<textarea id="Difficult" cols=80 rows=5></textarea> </input>
+<textarea id="Difficult" cols=80 rows=5></textarea> 
 <br>
 <p class="block-text"> Did you read the instructions and complete the HIT accordingly? </p>
 <p class="block-text"> 
@@ -810,10 +797,10 @@ I was confused	<br>
 <p class="block-text"> Did you use an internet tool or any other outside sources to complete the anagrams at any time? </p>
 <p class="block-text"> 
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="usedtool" value="1">
+	<input type="radio" name="readinstructions" value="1">
 Yes	<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="usedtool" value="0">
+	<input type="radio" name="readinstructions" value="0">
 No
 <br>
 <center>	<button onclick="experiment.finished()">Finish</button></center>
