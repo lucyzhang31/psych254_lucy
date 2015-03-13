@@ -29,7 +29,6 @@
 		</p>
 	<center>
 	<button type="button" onclick="this.blur(); experiment.prescreen()">Start</button>
-		<button type="button" onclick="this.blur(); experiment.afterFeedback()">Test</button>
 
 
 	</center>
@@ -218,7 +217,7 @@ In our research, we are developing different kinds of tasks and questionnaires t
 	<button onclick="experiment.next()">Next</button>
 </p>
 <br>
-Time left: <span id="logout-timer"></span>
+Time left: <span id="logout-timer"></span> seconds
 <br>
 Anagrams completed (of 12): <span id="counter1"></span> 
 
@@ -257,112 +256,116 @@ Please click "Continue" to answer a couple of questions about your experience wi
 	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
 <b>Please answer the following questions about your experience with the Part 1: Word Puzzle Task and how well you did on the task. There are no right or wrong answers. </b>
 	<br><br>
-<form id="check1" method="get" autocomplete="off">
 
-	<p class="block-text"> Overall, how do you feel about how you did on the task? <label for="Feel1" class="error"></label></p>
+	<form id="check1" autocomplete="off">
+	<p class="block-text"> Overall, how do you feel about how you did on the task? <label for="Feel1" id="Feel1" name="Feel1" class="error"></label></p>
 <p class="block-text"> 
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="Feel1" value="1" class="required">
+	<input type="radio" id="Feel1" name="Feel1" value="1" class="required">
 Extremely Displeased
 	<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="Feel1" value="2">
+	<input type="radio" id="Feel1" name="Feel1" value="2">
 Very Displeased
 	<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="Feel1" value="3">
+	<input type="radio" id="Feel1" name="Feel1" value="3">
 Somewhat Displeased
 	<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="Feel1" value="4">
+	<input type="radio" id="Feel1" name="Feel1" value="4">
 Neutral
 	<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="Feel1" value="5">
+	<input type="radio" id="Feel1" name="Feel1" value="5">
 Somewhat Pleased
 	<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="Feel1" value="6">
+	<input type="radio" id="Feel1" name="Feel1" value="6">
 Very Pleased
 	<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="Feel1" value="7">
+	<input type="radio" id="Feel1" name="Feel1" value="7">
 Extremely Pleased
 </p>
 	<p class="block-text"> Overall, how well do you think you think you did on the task?   </p>
-	<p>"On the task, I did..." <label for="Perform1" class="error"></label></p>
+	<p>"On the task, I did..." <label for="Perform1" id="Perform1" name="Perform1" class="error"></label></p>
 <p class="block-text"> 
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="Perform1" value="1" class="required">
+	<input type="radio" id="Perform1" name="Perform1" value="1">
 Extremely Badly
 	<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="Perform1" value="2">
+	<input type="radio" id="Perform1" name="Perform1" value="2">
 Very Badly
 	<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="Perform1" value="3">
+	<input type="radio" id="Perform1" name="Perform1" value="3">
 Somewhat Badly
 	<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="Perform1" value="4">
+	<input type="radio" id="Perform1" name="Perform1" value="4">
 Neither Badly Nor Well
 	<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="Perform1" value="5">
+	<input type="radio" id="Perform1" name="Perform1" value="5">
 Somewhat Well
 	<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="Perform1" value="6">
+	<input type="radio" id="Perform1" name="Perform1" value="6">
 Very Well
 	<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="Perform1" value="7">
+	<input type="radio" id="Perform1" name="Perform1" value="7">
 Extremely Well
 </p>
 <br>
 <p class="block-text"> How many anagrams do you think you solved out of 12? <label for="guessanagram1" class="error"></label></p>
-<input type="text" id="guessanagram1" size=20 class="required" minlength="1">
+<input type="text" id="guessanagram1" name="guessanagram1" size=20 class="required" minlength="1">
 </p>
-
-<input type="submit" value="Continue"></input>
+        <input class="submit" type="submit" value="Continue" />
 </form>
 </div></div>
 
 <!-- The mother condition slide.-->
 <center>
 <div class="slide" id="mother">
-		<form id="mother" method="get" action="">
 	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
 <b>In this task, you will answer some questions about your mother.	</b><br><br>
     <br><br>
-    <label for="MotherInitials">Please type your mother's initials here: </label>
-    <textarea id="MotherInitials" name="common" cols="10" rows="1" minlength="1" class="required" /></textarea>
+    <form id="motherform" method="get" name="mother" autocomplete="off">
+   Please type your mother's initials here: 
+<input type="text" id="MotherInitials" name="MotherInitials" size=20 required minlength="1" />
     <br><br><br>
-<label for="MotherDescription">Describe your mother in a couple of sentences:</label>	<br> <br>
-<textarea id="MotherDescription" name="common" cols="100" rows="20" minlength="1" class="required" /></textarea>
+Describe your mother in a couple of sentences:<br> <br>
+<textarea id="MotherDescription" name="MotherDescription" required cols=80 rows=5 minlength="10" ></textarea>
     <br><br>
     Please click "Continue" to move on to the next task. 
     <br>
-	<input class="submit" type="submit" value="Continue" />
+    <input class="submit" type="submit" value="Continue"/>
+	</form>
+	<script>
+	$("#self").validate();
+	</script>
 </div></div>
 
 <!-- The self condition slide.-->
 <center>
 <div class="slide" id="self">
-	<form id="self" method="get" action="">
 	<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
 <b>In this task, you will answer some questions about yourself.</b>	<br><br>
     <br><br>
-    <label for="SelfInitials">Please type your initials here: </label>
-    	<textarea id="SelfInitials" name="common" cols="10" rows="1" minlength="1" class="required" /></textarea>
+    	<form id="selfform" method="get" name="mother" autocomplete="off">
+  Please type your initials here: 
+<input type="text" id="SelfInitials" name="SelfInitials" size=20 required minlength="2" />
     <br><br><br>
-<label for="SelfDescription">Describe yourself in a couple of sentences:</label>	<br> <br>
-	<textarea id="SelfDescription" name="common" cols="100" rows="20" minlength="1" class="required" /></textarea>
+<p class="block-text"> Describe yourself in a couple of sentences:	</p> <br> <br>
+<textarea id="SelfDescription" name="SelfDescription" required cols=80 rows=5 minlength="10" ></textarea>
     <br><br>
     Please click "Continue" to move on to the next task.
-    <br>
-	<input class="submit" type="submit" value="Continue" />
+    <br><br><br>
+    <input class="submit" type="submit" value="Continue"/>
+	</form>
 </div></div>
 
 
@@ -394,16 +397,16 @@ Extremely Well
 	Word: <h2 id="anagrams2" size="20">{{}}</h2>
 	<br><br>
 	Notes:<br>
-	<textarea id="notes2" cols=50 rows=5></textarea> </input>
+	<textarea id="notes2" name="notes2" cols=50 rows=5></textarea> </input>
 	<br><br>
 	Answer:
-	<input type="text" id="anagramAnswer2"> </input>
+	<input type="text" id="anagramAnswer2" name="anagramAnswer2"> </input>
 	<br>
 	<br>
 	<button onclick="experiment.next2()">Next</button> 
 <br>
 <br>
-Time left: <span id="logout-timer2"></span>
+Time left: <span id="logout-timer2"></span> seconds
 <br>
 Anagrams completed (of 12): <span id="counter2"></span> 
 
@@ -415,45 +418,42 @@ Anagrams completed (of 12): <span id="counter2"></span>
 <!-- Check2: Emotion questions after stage 2 -->
 <div class="slide" id="check2">
 		<div style="width: 500px; margin: 0 auto; text-align: center; background-color: white; padding: 20px 15px 10px 10px">
-	<center>
+<b> Please answer the following questions about your experience with the Part 2: Word Puzzle Task and how well you did on the task. There are no right or wrong answers. </b>
 <br><br>
-<b> You have now completed the Part 2: Word Puzzle Task.  Please answer the following questions about your experience with the Part 2: Word Puzzle Task and how well you did on the task. There are no right or wrong answers. </b>
-<br><br>
-<form id="check2" method="get" autocomplete="off">
-
-<p class="block-text">  Overall, how do you feel about how you did on the task?  <label for="Feel2" class="error"></label></p>
+  <form id="check2form" autocomplete="off">
+<p class="block-text">  Overall, how do you feel about how you did on the task?  <label for="Feel2" id="Feel2" name="Feel2" class="error"></label></p>
 <p class="block-text"> 
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="Feel2" value="1" class="required">
+	<input type="radio" id="Feel2" name="Feel2" value="1">
 Extremely Displeased
 	<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="Feel2" value="2">
+	<input type="radio" id="Feel2" name="Feel2" value="2">
 Very Displeased
 	<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="Feel2" value="3">
+	<input type="radio" id="Feel2" name="Feel2" value="3">
 Somewhat Displeased
 	<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="Feel2" value="4">
+	<input type="radio" id="Feel2" name="Feel2" value="4">
 Neutral
 	<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="Feel2" value="5">
+	<input type="radio" id="Feel2" name="Feel2" value="5">
 Somewhat Pleased
 	<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="Feel2" value="6">
+	<input type="radio" id="Feel2" name="Feel2" value="6">
 Very Pleased
 	<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="Feel2" value="7">
+	<input type="radio" id="Feel2" name="Feel2" value="7">
 Extremely Pleased
 </p>
 <br>
 	<p class="block-text"> Overall, how well do you think you think you did on the task?   </p>
-	<p>"On the task, I did..."<label for="Perform2" class="error"></label></p>
+	<p>"On the task, I did..." <label for="Perform2" id="Perform2" name="Perform2" class="error"></label></p>
 <p class="block-text"> 
 	&nbsp;&nbsp;&nbsp;&nbsp;
 	<input type="radio" name="Perform2" value="1" class="required">
@@ -484,11 +484,11 @@ Very Well
 Extremely Well
 </p>
 <br>
-<p class="block-text"> How many anagrams do you think you solved out of 12?<label for="guessanagram2" class="error"></label></p>
-<input type="text" id="guessanagram2" size=20 class="required" minlength="1">
+<p class="block-text"> How many anagrams do you think you solved out of 12?  <label for="guessanagram2" class="error"></label></p>
+<input type="text" id="guessanagram2" name="guessanagram2" size=20 class="required" minlength="1">
 </p>
 
-<input type="submit" value="Continue"></input>
+<input class="submit" type="submit" value="Continue" />
 </form>
 </center>
 </div>	</div>
@@ -500,18 +500,18 @@ Extremely Well
 <br>
 	<br>
 <form id="demos" method="get" autocomplete="off">
-<p class="block-text"> Where were you born? (City, State, Country)<label for="born" class="error"></label></p>
+<p class="block-text"> Where were you born? (City, State, Country) <label for="born" class="error"></label></p>
  <input type="text" id="born" size=40 class="required" minlength="5">
 	<br>
-	<p class="block-text"> If you were not born in the U.S., at what age did you begin living in the U.S.?<label for="AgeLiveUS" class="error"></label></p>
- <input type="text" id="AgeLiveUS" size=40 class="required" minlength="5">
+	<p class="block-text"> If you were not born in the U.S., at what age did you begin living in the U.S.?</p>
+ <input type="text" id="AgeLiveUS" name="AgeLiveUS" size=40>
 <br>
-	<p class="block-text"> What languages, if any, do you speak other than English? <label for="OtherLanguageSpoken" class="error"></label></p>
- <input type="text" id="OtherLanguageSpoken" size=40 class="required" minlength="5"><br>
-	<p class="block-text"> Where was your mother born? (City, State, Country) <label for="MotherBorn" class="error"></label></p>
-<input type="text" id="MotherBorn" size=40 class="required" minlength="5"><br>
-	<p class="block-text"> Where was your father born? (City, State, Country)<label for="FatherBorn" class="error"></label></p>
-<input type="text" id="FatherBorn" size=40 class="required" minlength="5"><br><br>
+	<p class="block-text"> What languages, if any, do you speak other than English? </p>
+ <input type="text" id="OtherLanguageSpoken" size=40><br>
+	<p class="block-text"> Where was your mother born? (City, State, Country)  <label for="MotherBorn" class="error"></label></p>
+<input type="text" id="MotherBorn" name="MotherBorn" size=40 class="required" minlength="5"><br>
+	<p class="block-text"> Where was your father born? (City, State, Country)  <label for="FatherBorn" class="error"></label></p>
+<input type="text" id="FatherBorn" name="FatherBorn" size=40 class="required" minlength="5"><br><br>
 <p class="block-text"> What is your mother's ethnic or racial background? <label for="MotherEthnicity" class="error"></label></p>
 <p class="block-text"> 
 	
@@ -611,6 +611,10 @@ Bachelor's degree
 	&nbsp;&nbsp;&nbsp;&nbsp;
 	<input type="radio" name="MotherEducation" value="5">
 MA, MD, PhD, or other professional degree
+<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="MotherEducation" value="6">
+I don't know
 </p>
 <p class="block-text"> What is the highest level of education your father has completed? <label for="FatherEducation" class="error"></label></p>
 <p class="block-text"> 
@@ -633,6 +637,10 @@ Bachelor's degree
 	&nbsp;&nbsp;&nbsp;&nbsp;
 	<input type="radio" name="FatherEducation" value="5">
 MA, MD, PhD, or other professional degree
+<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="radio" name="FatherEducation" value="6">
+I don't know
 </p>
 <p class="block-text"> When was the last time you permanently lived with your mother? <label for="MotherLive" class="error"></label></p>
 <p class="block-text"> 
@@ -668,7 +676,7 @@ I currently live with my mother
 	<input type="radio" name="MotherLive" value="8">
 More than 5 years ago
 </p>
-<p class="block-text"> When was the last time you permanently lived with your father? </p><label for="FatherLive" class="error"></label></p>
+<p class="block-text"> When was the last time you permanently lived with your father? <label for="FatherLive" class="error"></label></p>
 <p class="block-text"> 
 	&nbsp;&nbsp;&nbsp;&nbsp;
 	<input type="radio" name="FatherLive" value="1">
@@ -775,6 +783,7 @@ $90,001-$100,000
 	Over $100,001
 </p>
 
+<p class="block-text"> Please answer the following questions honestly, you will not be penalized for your answers.</p>
 <p class="block-text"> What do you think the study was about? <label for="StudyAbout" class="error"></label></p>
 <p class="block-text"> 
 <textarea id="StudyAbout" cols=80 rows=5></textarea> 
@@ -802,13 +811,13 @@ I was confused	<br>
 <p class="block-text"> Did you use an internet tool or any other outside sources to complete the anagrams at any time? </p>
 <p class="block-text"> 
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="readinstructions" value="1">
+	<input type="radio" name="outsidesources" value="1">
 Yes	<br>
 	&nbsp;&nbsp;&nbsp;&nbsp;
-	<input type="radio" name="readinstructions" value="0">
+	<input type="radio" name="outsidesources" value="0">
 No
 <br>
-<center>	<button onclick="experiment.finished()">Finish</button></center>
+<center>	<button onclick="experiment.end()">Finish</button></center>
 
 </div>
 

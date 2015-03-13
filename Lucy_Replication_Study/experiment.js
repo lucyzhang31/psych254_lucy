@@ -28,18 +28,18 @@ function shuffledArray(arrLength)
 
 //Creates the variable all anagram from which to draw anagrams for the first set
 var allAnagrams = [
-      {anagram: "praised"},
-      {anagram: "tacker"},
-      {anagram: "repartee"}, 
-      {anagram: "flirting"}, 
-      {anagram: "dispel"}, 
-      {anagram: "treason"}, 
-      {anagram: "imprints"}, 
-      {anagram: "relatives"},
-      {anagram: "present"}, 
-      {anagram: "hustling"}, 
-      {anagram: "articles"},
-      {anagram: "tablet"}  ],
+      {anagram: "praised", solution: "diapers", difficulty: "easy"},
+      {anagram: "tacker", solution: "racket", difficulty: "easy"},
+      {anagram: "repartee", solution: "repeater", difficulty: "easy"}, 
+      {anagram: "flirting", solution: "trifling", difficulty: "hard"}, 
+      {anagram: "dispel", solution: "lisped", difficulty: "hard"}, 
+      {anagram: "treason", solution: "senator", difficulty: "hard"}, 
+      {anagram: "imprints", solution: "misprint", difficulty: "easy"}, 
+      {anagram: "relatives", solution: "versatile", difficulty: "easy"},
+      {anagram: "present", solution: "serpent", difficulty: "hard"}, 
+      {anagram: "hustling", solution: "sunlight", difficulty: "hard"}, 
+      {anagram: "articles", solution: "recitals", difficulty: "hard"},
+      {anagram: "tablet", solution: "battle", difficulty: "easy"}  ],
 
 myAnagramOrder = shuffledArray(allAnagrams.length);
 
@@ -48,18 +48,18 @@ totalTrialNumber = allAnagrams.length;
 
 //Creates the variable all anagram from which to draw anagrams for the second set
 var allAnagrams2 = [
-      {anagram: "trail"},
-      {anagram: "strain"},
-      {anagram: "verse"}, 
-      {anagram: "backward"}, 
-      {anagram: "refining"}, 
-      {anagram: "covert"}, 
-      {anagram: "silting"}, 
-      {anagram: "relay"}, 
-      {anagram: "wreathes"},
-      {anagram: "proteins"},
-      {anagram: "kitchen"},
-      {anagram: "vowels"}]
+      {anagram2: "trail", solution2: "trial", difficulty2: "easy"},
+      {anagram2: "strain", solution2: "trains", difficulty2: "easy"},
+      {anagram2: "verse", solution2: "serve", difficulty2: "easy"}, 
+      {anagram2: "backward", solution2: "drawback", difficulty2: "hard"}, 
+      {anagram2: "refining", solution2: "infringe", difficulty2: "hard"}, 
+      {anagram2: "covert", solution2: "vector", difficulty2: "easy"}, 
+      {anagram2: "silting", solution2: "listing", difficulty2: "easy"}, 
+      {anagram2: "relay", solution2: "early", difficulty2: "easy"}, 
+      {anagram2: "wreathes", solution2: "weathers", difficulty2: "easy"},
+      {anagram2: "proteins", solution2: "pointers", difficulty2: "hard"},
+      {anagram2: "kitchen", solution2: "thicken", difficulty2: "hard"},
+      {anagram2: "vowels", solution2: "wolves", difficulty2: "hard"}]
       
 myAnagramOrder2 = shuffledArray(allAnagrams2.length);
 
@@ -139,6 +139,8 @@ var demoHandler = function() {
    var StudyAbout = $('#StudyAbout').val();
    var Suspicious = $('#Suspicious').val();
    var Difficult = $('#Difficult').val();
+   var readinstructions = $("[name='readinstructions']:checked").val();
+   var outsidesources = $("[name='outsidesources']:checked").val();
  
  experiment.end();
 
@@ -158,7 +160,9 @@ var demoHandler = function() {
           "Income": Income,
           "StudyAbout": StudyAbout,
           "Suspicious": Suspicious,
-          "Difficult": Difficult
+          "Difficult": Difficult,
+          "readinstructions": readinstructions,
+          "outsidesources": outsidesources,
 });
 }
 
@@ -167,8 +171,6 @@ $("#demos").validate({
   submitHandler: demoHandler,
   rules: {
     born: "required",
-    AgeLiveUS: "required",
-    OtherLanguageSpoken: "required",
     MotherBorn: "required",
     FatherBorn: "required",
     MotherEthnicity: "required",
@@ -182,8 +184,6 @@ $("#demos").validate({
   },
   messages: {
     born: "Required",
-    AgeLiveUS: "Required",
-    OtherLanguageSpoken: "Required",
     MotherBorn: "Required",
     FatherBorn: "Required",
     MotherEthnicity: "Required",
@@ -197,11 +197,10 @@ $("#demos").validate({
   }
 });
 
-
-var check1Handler = function() {
-    var perform1 = $("[name='Perform1']:checked").val();
-    var feel1 = $("[name='Feel1']:checked").val();
-    var guessanagram1 = $('#guessanagram1').val();
+var check1 = function() {
+  var Perform1     = $("[name='Perform1']:checked").val();
+  var Feel1  = $("[name='Feel1']:checked").val();
+  var guessanagram1 = $('#guessanagram1').val();
 
     if(conditionSelf==1) {
       showSlide("self");      
@@ -209,155 +208,116 @@ var check1Handler = function() {
       showSlide("mother");      
     };
         experiment.data.push({
-          "Perform1": perform1,
-          "Feel1": feel1,
+          "Perform1": Perform1,
+          "Feel1": Feel1,
           "guessanagram1": guessanagram1
     });
 }
 // set up form validation for check1
+
 $("#check1").validate({
-  submitHandler: check1Handler,
+  submitHandler: check1,
   rules: {
-    perform1: "required",
-    feel1: "required",
+    Perform1: "required",
+    Feel1: "required",
     guessanagram1: "required"
   },
   messages: {
-    perform1: "Required",
-    feel1: "Required",
+    Perform1: "Required",
+    Feel1: "Required",
     guessanagram1: "Required"
-  }
+  },
 });
 
-var check2Handler = function() {
-    var perform2 = $("[name='Perform2']:checked").val();
-    var feel2 = $("[name='Feel2']:checked").val();
-    var guessanagram2 = $('#guessanagram2').val();
-    
-    showSlide("demographics");
+var check2 = function() {
+  var Perform2     = $("[name='Perform2']:checked").val();
+  var Feel2  = $("[name='Feel2']:checked").val();
+  var guessanagram2 = $('#guessanagram2').val();
 
+    if(conditionSelf==1) {
+      showSlide("demographics");      
+    } else {
+      showSlide("demographics");      
+    };
         experiment.data.push({
-          "Perform2": perform2,
-          "Feel2": feel2,
+          "Perform2": Perform2,
+          "Feel2": Feel2,
           "guessanagram2": guessanagram2
     });
 }
-
 // set up form validation for check2
-$("#check2").validate({
-  submitHandler: check2Handler,
+
+$("#check2form").validate({
+  submitHandler: check2,
   rules: {
-    perform2: "required",
-    feel2: "required",
-    guessanagram2: "required"
+    Perform2: "required",
+    Feel2: "required",
+    Guessanagram2: "required"
   },
   messages: {
-    perform2: "Required",
-    feel2: "Required",
-    guessanagram2: "Required"
-  }
-});
-
-var motherData= {
-motherinitials: "motherinitials", 
-MotherDescription: "MotherDescription"}
-
-function motherHandler() {
-  // extract all questionnaire data into 
-
-  var questionnaireData = {};
-
-  // select the textareas, text inputs, and *checked* radio buttons
-  // then add them to the questionnaireData
-  $("#mother textarea, #mother input[type='text'], #mother input[type='radio']:checked").each(function(i, x) { 
-    questionnaireData[x.name] = $(x).val();
-  })
-    showSlide("instructions2");
-
-  motherData.questionnaire = questionnaireData
-
-  turk.submit(experimentData)
-}
-
-$("#mother").validate({
-  submitHandler: motherHandler,
-  rules: {
-    MotherInitials: "required",
-    MotherDescription: "required"
-  },
-  messages: {
-    MotherInitials: "Required",
-    MotherDescription: "Required"
+    Perform2: "Required",
+    Feel2: "Required",
+    Guessanagram2: "Required"
   }
 });
 
 
-var selfData= {
-selfinitials: "selfinitials", 
-selfDescription: "selfDescription"}
+var self = function() {
+  var SelfInitials     = $('#SelfInitials').val();
+  var SelfDescription  = $('#SelfDescription').val();
 
-function selfHandler() {
-  // extract all questionnaire data into 
-
-  var questionnaireData = {};
-
-  // select the textareas, text inputs, and *checked* radio buttons
-  // then add them to the questionnaireData
-  $("#self textarea, #self input[type='text'], #self input[type='radio']:checked").each(function(i, x) { 
-    questionnaireData[x.name] = $(x).val();
-  })
-    showSlide("instructions2");
-    
-  selfData.questionnaire = questionnaireData
-
-  turk.submit(experimentData)
+    if(conditionSelf==1) {
+      showSlide("instructions2");      
+    } else {
+      showSlide("instructions2");      
+    };
+        experiment.data.push({
+          "SelfInitials": SelfInitials,
+          "SelfDescription": SelfDescription,
+    });
 }
+// set up form validation for check1
 
-$("#self").validate({
-  submitHandler: selfHandler,
+$("#selfform").validate({
+  submitHandler: self,
   rules: {
     SelfInitials: "required",
-    SelfDescription: "required"
+    SelfDescription: "required",
   },
   messages: {
     SelfInitials: "Required",
-    SelfDescription: "Required"
-  }
+    SelfDescription: "Please write at least 2 sentences.",
+  },
 });
-// //test 
-// var experimentData= {
-//     "conditionSelf": conditionSelf, 
-//     "ethnicity": ethnicity, 
-//     "age": age,
-//     "gender": gender,
-//     "education": education,
-//     "employment": employment
 
-// }
-// function prescreenHandler() {
-//   // extract all questionnaire data into 
 
-//   var prescreenData = {};
+var mother = function() {
+  var MotherInitials     = $('#MotherInitials').val();
+  var MotherDescription  = $('#MotherDescription').val();
 
-//   // select the textareas, text inputs, and *checked* radio buttons
-//   // then add them to the prescreenData
-//   $("#form textarea, #form input[type='text'], #form input[type='radio']:checked").each(function(i, x) { 
-//     prescreenData[x.name] = $(x).val();
-//   })
+    if(conditionSelf==1) {
+      showSlide("instructions2");      
+    } else {
+      showSlide("instructions2");      
+    };
+        experiment.data.push({
+          "MotherInitials": MotherInitials,
+          "MotherDescription": MotherDescription,
+    });
+}
+// set up form validation for check1
 
-//   experimentData.questionnaire = prescreenData
-
-//   turk.submit(experimentData)
-
-//   var properEthnicity = (ethnicity == "EastAsian");
-//   var properAge = (age == "18to25");
-
-//     if(properEthnicity && properAge) {
-//     showSlide("instructions");      
-//   } else {
-//     showSlide("ineligible");      
-//   };
-// }
+$("#motherform").validate({
+  submitHandler: mother,
+  rules: {
+    MotherInitials: "required",
+    MotherDescription: "required",
+  },
+  messages: {
+    MotherInitials: "Required",
+    MotherDescription: "Please write at least 2 sentences.",
+  },
+});
 
 // ## The main event to collect data then submit it to Mturk after pause
 var experiment = {
@@ -407,11 +367,16 @@ var experiment = {
         experiment.data.push({
           "trialNumber": trialNumber,
           "anagramText": n.anagram,
+          "anagramsolution": n.solution,
+          "anagramdifficulty": n.difficulty,
           "anagramAnswer": $('#anagramAnswer').val(),
+          "correct": ($('#anagramAnswer').val().trim() == n.solution),
           "notes": $('#notes').val(),
           "reactionTime": endTime - startTime
         });
     }
+    $('#anagramAnswer').val('');
+    $('#notes').val('');
     if(trialNumber == totalTrialNumber ) {
       experiment.callTimeout();
     } else {
@@ -426,7 +391,8 @@ var experiment = {
 //Show the check slide after the failure feedback slide, push data, create variables
 
   afterFeedback: function() {
-    showSlide("check");    
+    showSlide("check");   
+
   },
 
 
@@ -444,16 +410,16 @@ var experiment = {
   
 //show instructions on click
 // instructions2: function() {
-//     var motherinitials = $('#motherinitials').val();
-//     var motherconditionresponse = $('#motherconditionresponse').val();
-//     var selfintials = $('#selfintials').val();
-//     var selfconditionresponse = $('#selfconditionresponse').val();
+//     var MotherInitials = $('#MotherInitials').val();
+//     var MotherDescription = $('#MotherDescription').val();
+//     var SelfInitials = $('#SelfInitials').val();
+//     var SelfDescription = $('#SelfDescription').val();
 
 //   experiment.data.push({
-//           "motherinitials": motherinitials,
-//           "motherconditionresponse": motherconditionresponse,
-//           "selfintials": selfintials,
-//           "selfconditionresponse": selfconditionresponse
+//           "MotherInitials": MotherInitials,
+//           "MotherDescription": MotherDescription,
+//           "SelfInitials": SelfInitials,
+//           "SelfDescription": SelfDescription
 //         });
 //     showSlide("instructions2");
 //   },  
@@ -487,18 +453,23 @@ callTimeout2: function() {
         endTime2 = (new Date()).getTime();
         experiment.data.push({
           "trialNumber2": trialNumber2,
-          "anagramText2": n.anagram,
+          "anagramText2": n.anagram2,
+          "anagramsolution2": n.solution2,
+          "anagramdifficulty2": n.difficulty2,
           "anagramAnswer2": $('#anagramAnswer2').val(),
+          "correct": ($('#anagramAnswer2').val().trim() == n.solution2),          
           "notes2": $('#notes2').val(),
           "reactionTime2": endTime2 - startTime2
         });
     }
+    $('#anagramAnswer2').val('');
+    $('#notes2').val('');
     if(trialNumber2 == totalTrialNumber2 ) {
     experiment.callTimeout2 ();
     } else {
     n = allAnagrams2[myAnagramOrder2[trialNumber2]];
     showSlide("stage2");
-    $("#anagrams2").text(n.anagram);
+    $("#anagrams2").text(n.anagram2);
     startTime2 = (new Date()).getTime();
     trialNumber2 = trialNumber2+1;
     } 
@@ -506,9 +477,9 @@ callTimeout2: function() {
 
 // //Show the check 2 slide after the second trial
 
-//   check2: function() {
-//     showSlide("check2");    
-//   },
+  check2: function() {
+    showSlide("check2");    
+  },
 
 //Check answers from anagrams
 // checkanagrams: function () {
