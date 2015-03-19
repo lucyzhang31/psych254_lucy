@@ -323,7 +323,18 @@ $("#motherform").validate({
 var experiment = {
   data: [],
   end: function() {
-    showSlide("finished");
+  var ethnicity  = $("[name='ethnicity']:checked").val();
+  var age        = $("[name='age']:checked").val();
+  
+  var properEthnicity = (ethnicity == "White");
+  var properAge = (age == "18to25");
+  
+
+  if(properEthnicity && properAge) {
+    showSlide("finished");      
+  } else {
+    showSlide("finishedineligible");      
+  };
     setTimeout(function() { turk.submit(experiment) }, 1500);
   },
 
