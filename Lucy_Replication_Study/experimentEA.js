@@ -85,7 +85,7 @@ var prescreenHandler = function() {
   var education  = $("[name='education']:checked").val();
   var employment = $("[name='employment']:checked").val();
   
-  var properEthnicity = (ethnicity == "White" || ethnicity=="Asian" );
+  var properEthnicity = (ethnicity=="Asian" );
   var properAge = (age == "18to25");
   
   if(properEthnicity && properAge) {
@@ -327,7 +327,7 @@ var experiment = {
   var ethnicity  = $("[name='ethnicity']:checked").val();
   var age        = $("[name='age']:checked").val();
   
-  var properEthnicity = (ethnicity == "White" || ethnicity== "Asian");
+  var properEthnicity = (ethnicity== "Asian");
   var properAge = (age == "18to25");
   
 

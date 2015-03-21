@@ -8,6 +8,7 @@ output: html_document
 This is problem set #3, in which we want you to integrate your knowledge of data wrangling with some basic simulation skills and some linear modeling.
 
 ```{r}
+setwd("/Users/lucyzhang/psych254_lucy/analyses")
 library(dplyr)
 library(ggplot2)
 ```
@@ -19,15 +20,29 @@ Let's start by convincing ourselves that t-tests have the appropriate false posi
 
 First do this using a `for` loop.
 
+Lucy's comments: I wasn't sure how to do this so borrowed the code from a classmate's git to run replications.  It looks like the mean (.0482) is just about the false positive rate of .05.
+
 ```{r}
-d <- 30
-for (i in 1:30) {print(i)}
+
+sim <- data.frame(tstat = rep(NA, 10000), pval = rep(NA, 10000))
+
+for(i in 1:10000){
+  sample <- rnorm(30)
+  sim$tstat[i] <- t.test(sample)$statistic[[1]]
+  sim$pval[i] <- t.test(sample)$p.value[[1]] 
+}
+
+sim$sig <- ifelse(sim$pval < 0.05, 1, 0)
+mean(sim$sig)
 
 ```
 
 Next, do this using the `replicate` function:
-
+Lucy's comments: This looks even closer at .049
 ```{r}
+sim2 <- data.frame(replicate(10000, t.test(rnorm(30))))
+sim2$sig <- ifelse(sim2$p.value < 0.05, 1, 0)
+mean(sim2$sig)
 ```
 
 Ok, that was a bit boring. Let's try something moderately more interesting - let's implement a p-value sniffing simulation, in the style of Simons, Nelson, & Simonsohn (2011).
@@ -38,11 +53,12 @@ First, write a function that implements this sampling regime.
 
 ```{r}
 double.sample <- function () {
+  
 }
 ```
 
 Now call this function 10k times and find out what happens. 
-
+fad
 ```{r}
 ```
 
@@ -72,6 +88,9 @@ and vitamin C. This is super simple. (Try `?ToothGrowth`).
 First plot the data, we'll use `qplot` to understand how `len` (tooth length) depends on `dose` (amount of Vitamin C) and `supp` (delivery method).
 
 ```{r}
+qplot(x=dose, y=len, data=ToothGrowth)
+qplot(x=dose, y=supp, data=ToothGrowth)
+qplot(x=dose, y=len, facets=~supp, data=ToothGrowth)
 ```
 
 So now you see what's going on. 
@@ -79,22 +98,34 @@ So now you see what's going on.
 Next, always make a histogram of the DV before making a linear model! This reveals the distribution and can be helpful in choosing your model type.
 
 ```{r}
+hist(ToothGrowth$len)
+qplot(ToothGrowth$len)
 ```
 
 Now make a linear model of tooth lengths using `lm`. Try making one with main effects and interactions and another with just main  effects. Make sure to assign them to variables so that you can get them later.
 
 ```{r}
+model1<-lm(len~dose + supp, data=ToothGrowth); summary(model1)
+model2<-lm(len~dose*supp, data=ToothGrowth); summary(model2)
+anova(model1, model2)
 ```
 
 Now try taking out the intercept, using a -1 term in the formula. what does this do?
 
 ```{r}
+model3 = lm(len ~ -1 + dose * supp, data=ToothGrowth); summary(model3)
+model4 = lm(len ~ -1 + dose + supp, data=ToothGrowth); summary(model4)
+
 ```
+Lucy's comments: There are sign. main effects of dose and supp on tooth length (model 1). These main effects are qualified by a significant inferaction of dose and supp.  The interactive model is a better fit than the additive model. Not sure why we took out the intercept in the third model...
 
 Thought question: Take a moment to interpret the coefficients of the model. 
-Q1 - What are the units?
-Q2 - How does the interaction relate to the plot?
-Q3 - Should there be an interaction in the model? What does it mean? How important is it?
+Q1 - What are the units? Probably milimeters for the DV: length, and miligrams for dose.  Supp is just presence or absence of VC or OJ, so supp is a categorical variable. 
+
+Q2 - How does the interaction relate to the plot? Looks like a steeper relationship (slope) between dose and length in the presence of VC (higher does leads to a longer tooth whereas lower does leads to a shorter tooth); compared a less steep slope in the presence of OJ
+
+Q3 - Should there be an interaction in the model? What does it mean? How important is it? 
+Yes, there's a significant interaction such that there's a different relationship between dose and length depedning on which suppliment paritcipants received.  The difference in the relationship is not in direction (e.g., it's positive for both suppliments) but in strength.  This interaction is not that important conceptually as the relationship is similar regardless of suppliment type. However, it adds some useful information and is significantly better than the additive model.
 
 Now make predictions from the model you like the best. What should happen with
 doses of 0, 1.5, 2.5, and 10 under both supplements? 
@@ -104,12 +135,17 @@ HINT: use the `predict` function ...
 HINT 2: you will have to make a dataframe to do the prediction with, so use something like `data.frame(dose=...)`.
 
 ```{r}
+d1 = data.frame(dose = c(0, 1.5, 2.5, 10, 0, 1.5, 2.5, 10)),
+                supp = c(rep("OJ", 4), rep("VC", 4)))
+predict(model2, d1)
+
 ```
 
 Now plot the residuals from the original model. How do they look?
 HINT: `?resid`
 
 ```{r}
+plot(resid(model2))
 ```
 
 
@@ -118,8 +154,11 @@ BONUS: test them for normality of distribution using a quantile-quantile plot.
 HINT: `?qqplot` and `?qqnorm`
 
 ```{r}
+residuals<-resid(model2)
+qqnorm(residuals)
 ```
 
+*Lucy comments: the plot looks like they map onto the normal distribution
 
 2B: Exploratory Linear Modeling
 -------------------------------
@@ -129,8 +168,19 @@ What the heck is going on? Load data from Frank, Vul, Saxe (2011, Infancy), a st
 Try to figure out what the most reasonable linear model of the data is.
 
 ```{r}
-d <- read.csv("../data/FVS2011-hands.csv")
+setwd("/Users/lucyzhang/psych254_lucy/data")
+d <- read.csv("FVS2011-hands.csv")
+#Exploring the data
+head(d)
+qplot(d$hand.look)
+qplot(x=age, y=hand.look, facets=~condition, data=d) #looks like for medium faces young kids look hands for the same length as old kids, and older kids have less variability; for plus faces, older kids look for longer at hands than younger kids
 
+m1<-lm(hand.look~condition*age, data=d); summary(m1)
+m2<-lm(hand.look~condition+age, data=d); summary(m2)
+anova(m1,m2) 
+m3<-lm(hand.look~condition*age+ (1|subid), data=d); summary(m3)
+m4<-lm(hand.look~condition+age+ (1|subid), data=d); summary(m4)
+anova(m3, m4)
 ```
 
 Plot that model on the same plot as the data.
@@ -138,9 +188,12 @@ Plot that model on the same plot as the data.
 HINT: you can do this either using `predict` or (if you are feeling confident of your understanding of the models) using the built-in linear models in `ggplot`'s `geom_smooth`. 
 
 ```{r}
+ggplot(d, aes(x=age, y=hand.look, col = condition))+
+  geom_smooth(method = "lm")+
+  theme_classic()
 ```
 
-What do you conclude from this pattern of data?
+What do you conclude from this pattern of data? The older you are the more you look at the hands, this is especially true in the presence of complex faces as opposed to in the presence of simple faces
 
 3: Linear Mixed Effect Models
 =============================
