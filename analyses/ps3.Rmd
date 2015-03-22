@@ -211,22 +211,34 @@ d$age.group <- factor(d$age.group)
 Always begin with a histogram!
 
 ```{r}
+hist(d$age)
+hist(d$correct)
+
 ```
 
 Brief Confidence Interval Digression
 ------------------------------------
 
 Start out by setting up a function for a 95% CI using the normal approximation.
+** I wasn't sure how to set up the CI's but wanted to do the later steps so took the two below functions from classmates
 
 ```{r}
 ci95.norm <- function(x) {
-}
+ci.low = mean(x) - qnorm(0.975)*sd(x)/sqrt(length(x))
+ ci.high = mean(x) + qnorm(0.975)*sd(x)/sqrt(length(x))
+ ci = c(ci.low, ci.high)
+ ci
+  }
 ```
 
 But the number of participants in a group is likely to be < 30, so let's also compute this with a t distribution.
 
 ```{r}
 ci95.t <- function(x) {
+   ci.low = mean(x) - qt(0.975, df = (length(x)-1))*sd(x)/sqrt(length(x))
+  ci.high = mean(x) + qt(0.975, df = (length(x)-1))*sd(x)/sqrt(length(x))
+  ci = c(ci.low, ci.high)
+  ci
 }
 ```
 
@@ -259,14 +271,23 @@ Now make 95% confidence intervals across participants using all the methods abov
 - Bootstrap percentile using my code
 
 ```{r}
+boot1<-ci95.norm(d$correct)
+boot2<-ci95.t(d$correct)
+ratio <- function(d, w) sum(d$correct * w)/sum(d$u * w)
+boot3 <- boot(city, ratio, R = 999, stype = "w", sim = "ordinary")
+boot.ci(boot3, conf = c(0.90, 0.95),
+      type = c("norm", "basic", "perc", "bca"))
+boot4<- c(ci.low(d$correct), ci.high(d$correct)); boot4
+
 ```
 
 Now plot the data by age and condition using `dplyr` and `ggplot2`. Plot some CIs on here - extra credit if you plot all of them and compare visually (you'll need `position = position_dodge()` or some other way to offset them).  
 
 ```{r}
+
 ```
 
-What do you conclude about confidence interval computation?
+What do you conclude about confidence interval computation? There are many ways to do it
 
 Back to LMEMs
 -------------
@@ -280,11 +301,18 @@ OK, now do a basic GLM over the entire data frame, using `age.group`, `condition
 NOTE: this model is not appropriate, because it assumes that each subject's observations are independent from one another. It's still fine to do the analysis, though: it can tell you a lot about the data and is easy and fast to fit, as long as you know that you can't trust the p-values!
 
 ```{r}
+d1<-glm(correct ~ age.group * condition, d, family="binomial"); summary(d1)
 ```
 
 Let's now use `dplyr` to get data frames for by-items (`msi`) and by-subjects (`mss`) analyses. `msi` should contain the mean ratings for every item and `mss` should contain the mean ratings for every subject.
 
 ```{r}
+msi <- d %>% group_by(trial, condition) %>%
+  dplyr::summarise(correct = mean(correct))
+
+mss <- d %>% group_by(subid) %>%
+  dplyr::summarise(correct = mean(correct)) %>%
+  dplyr::inner_join(d[,c("subid", "age.group")], by="subid")
 ```
 
 Now do standard linear models on each of these.
@@ -292,11 +320,18 @@ Now do standard linear models on each of these.
 NOTE: These are not strictly correct either because of the normal approximation on percent correct (model doesn't know it's 0 - 1 bounded and could give you standard error that goes above 1). Again, useful to do and see what happens.
 
 ```{r}
+d2<-lm(correct ~ trial + condition, msi); summary(d2)
+mss$subid<-as.numeric(mss$subid)
+d2<-lm(correct ~ age.group + (1|subid), mss); summary(d2)
+d3<-lm(correct ~ age.group, mss); summary(d3)
+
+
 ```
 
 Do ANOVA on these. Note that ANOVA doesn't let you figure out what is going on with individual levels of age.
 
 ```{r}
+anova (d2, d1) #not sign difference
 ```
 
 On to linear mixed effect models. Create the maximal random effects model a la Barr et al. (2013). Does it converge? If not, what will you do to make it converge? (The internet can be your friend here).
@@ -307,13 +342,18 @@ HINT: make sure that you consider which random effects are appropriate. Consider
 
 
 ```{r}
+d5<-glmer(correct ~ subid * age.group * trial * condition * (condition + trial + age.group|subid), d, family = "binomial")
+d6<-glmer(correct ~ age.group * trial * condition * (condition + trial + age.group|subid), d, family = "binomial") ; summary(d6)
+d7<-glmer(correct ~ age.group * trial * condition * (1|subid), d, family = "binomial") ; summary(d7)
+
 ```
 
-How do these coefficients compare with the independent coefficients linear model? What do you conclude?
+How do these coefficients compare with the independent coefficients linear model? What do you conclude? Like the linear model, this models uggests an effect of age group and of condition.  Effects of the interactions are similar but in no meaningful pattern.  Overall, this model has more information but the other is more parimonious.
 
 Which random effects make the most difference? Find out using `ranef`. Plot the random effects for subject and item.
 
 ```{r}
+
 ```
 
 Make the minimal random effects model with just a subject intecept. How does this compare?
